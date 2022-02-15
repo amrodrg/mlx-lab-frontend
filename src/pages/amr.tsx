@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import Stats from "../components/stats";
 
 interface data {
     city?: string
@@ -31,6 +32,7 @@ export default function Amr(props: IProps) {
                             </div>
                             {/* /End replace */}
                         </div>
+                        <Stats/>
                     </main>
                 </div>
             </div>
