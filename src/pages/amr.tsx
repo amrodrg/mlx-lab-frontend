@@ -7,6 +7,7 @@ interface data {
 
 interface IProps {
     data: data
+    mlData:any
 }
 
 export default function Amr(props: IProps) {
@@ -41,13 +42,18 @@ export async function getStaticProps(context: any) {
 
   const res = await fetch('https://api.around.pet/v1/places/pin/1');
 
+  const mlmodel = await fetch('http://127.0.0.1:8000/');
+
   const data = await res.json();
 
+  const mlData = await  mlmodel.json();
+
+  console.log(mlData);
+
   data.data.city = 'test';
-  console.log(data);
 
   return {
-    props: data,
+    props: {data, mlData},
     revalidate: 60
   };
 }
