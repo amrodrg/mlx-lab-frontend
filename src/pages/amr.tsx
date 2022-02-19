@@ -1,16 +1,42 @@
 import Stats from '../components/stats';
+import {List} from 'postcss/lib/list';
 
-interface data {
+interface aroundData {
     city?: string
     zipcode?: number
 }
 
+interface LayerConfig {
+  batch_input_shape?:List
+  dtype?:number
+  sparse?:boolean
+  ragged?:boolean
+  name?:string
+}
+
+interface MLayer {
+  class_name?:string
+  config?:LayerConfig
+}
+
+interface MConfig {
+  name?:string
+  layers: MLayer[]
+}
+
+interface MLData {
+  class_name?: string
+  config?: MConfig
+}
+
 interface IProps {
-    data: data
-    mlData:any
+    around_data: aroundData
+    mlData:MLData
 }
 
 export default function Amr(props: IProps) {
+  
+  console.log(props.mlData.config.layers);
 
   return (
     <>
@@ -19,7 +45,8 @@ export default function Amr(props: IProps) {
         <div className="py-10">
           <header>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold leading-tight text-gray-900">{props.data.city} {props.data.zipcode}</h1>
+              <h1 className="text-3xl font-bold leading-tight text-gray-900">{'Layers:'}</h1>
+              <h2 className="text-3xl font-bold leading-tight text-gray-900">{props.mlData.config.layers.map(layer =>(<div key={layer.class_name}>{layer.class_name}</div>))}</h2>
             </div>
           </header>
           <main>
@@ -48,12 +75,12 @@ export async function getStaticProps(context: any) {
 
   const mlData = await  mlmodel.json();
 
-  console.log(mlData);
+  //console.log(typeof(data));
 
-  data.data.city = 'test';
+  const around_data = data.data;
 
   return {
-    props: {data, mlData},
+    props: {around_data, mlData},
     revalidate: 60
   };
 }
