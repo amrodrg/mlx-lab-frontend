@@ -1,33 +1,31 @@
-import {useRouter} from 'next/router';
+import * as React from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+// @material-ui/icons
+import PhoneIcon from '@mui/icons-material/Phone';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
 
-export default function Amr() {
+// core components
+import SectionTabs from '../../pages-sections/Components-Sections/SectionTabs.js';
 
-  const router = useRouter();
+export default function IconLabelTabs() {
+  const [value, setValue] = React.useState(0);
 
-  const routParams = router.query.egal;
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
-    <>
-      <div className="min-h-full">
-
-        <div className="py-10">
-          <header>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold leading-tight text-gray-900">{routParams}</h1>
-            </div>
-          </header>
-          <main>
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-              {/* Replace with your content */}
-              <div className="px-4 py-8 sm:px-0">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-              </div>
-              {/* /End replace */}
-            </div>
-          </main>
-        </div>
-      </div>
-    </>
+    <div>
+      <Tabs value={value} onChange={handleChange} aria-label="icon label tabs example">
+        <Tab icon={<PhoneIcon />} label="RECENTS" />
+        <Tab icon={<FavoriteIcon />} label="FAVORITES" />
+        <Tab icon={<PersonPinIcon />} label="NEARBY" />
+      </Tabs>
+      <SectionTabs />
+    </div>
   );
 }
+
 
