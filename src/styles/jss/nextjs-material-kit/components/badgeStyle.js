@@ -1,26 +1,26 @@
 import {
-  primaryColor,
-  warningColor,
   dangerColor,
-  successColor,
   infoColor,
+  primaryColor,
   roseColor,
-} from "styles/jss/nextjs-material-kit.js";
+  successColor,
+  warningColor,
+} from 'styles/jss/nextjs-material-kit.js';
 
 const badgeStyle = {
   badge: {
-    marginRight: "3px",
-    borderRadius: "12px",
-    padding: "5px 12px",
-    textTransform: "uppercase",
-    fontSize: "10px",
-    fontWeight: "500",
-    lineHeight: "1",
-    color: "#fff",
-    textAlign: "center",
-    whiteSpace: "nowrap",
-    verticalAlign: "baseline",
-    display: "inline-block",
+    marginRight: '3px',
+    borderRadius: '12px',
+    padding: '5px 12px',
+    textTransform: 'uppercase',
+    fontSize: '10px',
+    fontWeight: '500',
+    lineHeight: '1',
+    color: '#fff',
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    verticalAlign: 'baseline',
+    display: 'inline-block',
   },
   primary: {
     backgroundColor: primaryColor,
@@ -41,7 +41,7 @@ const badgeStyle = {
     backgroundColor: roseColor,
   },
   gray: {
-    backgroundColor: "#6c757d",
+    backgroundColor: '#6c757d',
   },
 };
 

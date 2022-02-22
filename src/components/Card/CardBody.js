@@ -1,14 +1,13 @@
-import React from "react";
+import React from 'react';
 // nodejs library that concatenates classes
-import classNames from "classnames";
+import classNames from 'classnames';
 // nodejs library to set properties for components
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
-
 // core components
-import styles from "styles/jss/nextjs-material-kit/components/cardBodyStyle.js";
+import styles from '@/styles/jss/nextjs-material-kit/components/cardBodyStyle.js';
 
 const useStyles = makeStyles(styles);
 

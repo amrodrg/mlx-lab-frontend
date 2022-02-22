@@ -175,6 +175,11 @@ const primaryCardHeader = {
   background: 'linear-gradient(60deg, #ab47bc, #8e24aa)',
   ...primaryBoxShadow,
 };
+const mainCardHeader = {
+  color: '#fff',
+  background: 'linear-gradient(60deg, #0079C1, #0079C1)',
+  ...primaryBoxShadow,
+};
 const roseCardHeader = {
   color: '#fff',
   background: 'linear-gradient(60deg, #ec407a, #d81b60)',
@@ -254,6 +259,7 @@ export {
   successCardHeader,
   dangerCardHeader,
   infoCardHeader,
+  mainCardHeader,
   primaryCardHeader,
   roseCardHeader,
   cardActions,
