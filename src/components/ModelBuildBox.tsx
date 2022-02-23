@@ -6,6 +6,7 @@ import Build from '@material-ui/icons/Build';
 import BuildTab from './BuildTab';
 import React, {Fragment} from 'react';
 import ButtonLeadingIcon from './Buttons/ButtonLeadingIcon';
+import HiddenLayer from './BuildBoxComponents/HiddenLayer';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -23,6 +24,7 @@ export default function ModelBuildBox(){
           tabContent: (
             <Fragment>
               <ButtonLeadingIcon></ButtonLeadingIcon>
+              <HiddenLayer number={1}></HiddenLayer>
             </Fragment>
 
           ),

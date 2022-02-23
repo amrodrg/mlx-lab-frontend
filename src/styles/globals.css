@@ -53,6 +53,7 @@ h3 {
 h4 {
   font-size: 1.125rem;
   line-height: 1.5em;
+  color: #0079C1;
 }
 h5 {
   font-size: 1.0625rem;
@@ -62,6 +63,7 @@ h6 {
   font-size: 0.75rem;
   text-transform: uppercase;
   font-weight: 500;
+  color: #0079C1;
 }
 p {
   font-size: 14px;
