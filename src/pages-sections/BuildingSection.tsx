@@ -22,7 +22,7 @@ export default function SectionBuild() {
         <div id="nav-tabs">
           <h3>Build your model</h3>
           <GridContainer>
-            <GridItem xs={12} sm={12} md={7}>
+            <GridItem>
               <h3>
                 <small>Start building your model by adding hidden layers, hidden units and choosing the activation function for the neurons of each layer.</small>
               </h3>
