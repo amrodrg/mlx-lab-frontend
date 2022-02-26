@@ -5,25 +5,27 @@ import * as React from 'react';
 import MainShapSection from '../../pages-sections/Components-Sections/Shap/MainShapSection.js';
 import logoUrl from '../../static-images/shap_header.png';
 import Image from 'next/image'
+import { Container, Row, Col } from "reactstrap";
+
 
 export default function ShapIndex() {
   return (
     <div>
-      <div>
-        <div style={{
-          marginTop: "100px",
-          display: "flex",
-          justifyContent: "center",
-        }}>
-
-        <Image
-          src={logoUrl}
-          width={850}
-          height={400}
-        />
-      </div>
-        <MainShapSection/>
-      </div>
+      <Container>
+        <Row>
+          <Col md>
+            <Image
+              src={logoUrl}
+              
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg>
+          <MainShapSection/>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
