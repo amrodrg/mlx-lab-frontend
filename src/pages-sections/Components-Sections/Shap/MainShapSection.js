@@ -7,23 +7,11 @@ import Face from '@material-ui/icons/Face';
 import Chat from '@material-ui/icons/Chat';
 import Build from '@material-ui/icons/Build';
 // core components
-import styles from '../../../styles/jss/nextjs-material-kit/pages/componentsSections/mainShapStyle.js';
-
-const useStyles = makeStyles(styles);
 
 export default function SectionBuild() {
-  const classes = useStyles();
   return (
-    <div className={classes.section}>
-      <div className={classes.container}>
-
-
-
+    <div>
           hello World
-
-
-
-      </div>
     </div>
   );
 }

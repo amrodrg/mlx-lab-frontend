@@ -114,3 +114,38 @@
     flex-direction: column;
   }
 }
+
+/* shap styles */
+.shap_grid {
+  margin-top: 50px;
+  text-align: center;
+  border-left-width: 7px;
+  border-left-color: #0079C1;
+}
+
+.shap_default_font {
+  font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: x-large;
+}
+
+.shap_title_font {
+  font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: xx-large;
+  align-content: center;
+  font-weight: bold;
+}
+
+.shap_youtube_frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shap_button_style {
+  background-color: red;
+}
+
+.shap_row_offset {
+  margin-bottom: 40px;
+}
+
