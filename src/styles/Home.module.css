@@ -115,7 +115,8 @@
   }
 }
 
-/* shap styles */
+/*       shap styles */
+/* overview */
 .shap_grid {
   margin-top: 100px;
   text-align: center;
@@ -167,3 +168,29 @@
   margin-bottom: 35px;
 }
 
+/* Configure */
+.configure_component_title {
+  font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: xx-large;
+  float: left;
+  font-weight: bolder;
+}
+
+.configure_row_offset {
+  margin-bottom: 40px;
+}
+
+.configure_grid {
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
+
+.configure_explaine_button {
+  text-decoration:none;
+  text-align: center;
+}
+
+.configure_select_dropdown {
+  background-color: red;
+  width: 100%;
+}
