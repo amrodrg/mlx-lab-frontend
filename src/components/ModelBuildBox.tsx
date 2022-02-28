@@ -7,6 +7,7 @@ import BuildTab from './BuildTab';
 import React, {Fragment} from 'react';
 import ButtonLeadingIcon from './Buttons/ButtonLeadingIcon';
 import HiddenLayer from './BuildBoxComponents/HiddenLayer';
+import {QuestionMarkCircleIcon} from '@heroicons/react/solid';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -23,7 +24,15 @@ export default function ModelBuildBox(){
           tabIcon: Face,
           tabContent: (
             <Fragment>
-              <ButtonLeadingIcon></ButtonLeadingIcon>
+              <div className="flex flex-row">
+                <button
+                  type="button"
+                  className="flex h-7 w-7 justify-content-center items-center my-2 mr-1 border border-transparent rounded-full shadow-sm text-white bg-secondary-blue hover:bg-primary-purple focus:outline-nonefocus:ring-offset-2 focus:ring-primary-purple"
+                >
+                  <QuestionMarkCircleIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+                <ButtonLeadingIcon></ButtonLeadingIcon>
+              </div>
               <HiddenLayer number={1}></HiddenLayer>
             </Fragment>
 
