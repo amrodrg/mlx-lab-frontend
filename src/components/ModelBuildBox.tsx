@@ -4,17 +4,66 @@ import Face from '@material-ui/icons/Face';
 import Chat from '@material-ui/icons/Chat';
 import Build from '@material-ui/icons/Build';
 import BuildTab from './BuildTab';
-import React, {Fragment} from 'react';
+import React, {useState} from 'react';
 import ButtonLeadingIcon from './Buttons/ButtonLeadingIcon';
 import HiddenLayer from './BuildBoxComponents/HiddenLayer';
-import {QuestionMarkCircleIcon} from '@heroicons/react/solid';
+import QuestionButton from './Buttons/QuestionButton';
+import {List} from 'postcss/lib/list';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
+interface LayerConfig {
+    batch_input_shape?:List
+    dtype?:number
+    sparse?:boolean
+    ragged?:boolean
+    name?:string
+}
+
+interface MLayer {
+    class_name?:string
+    config?:LayerConfig
+}
+
+interface MConfig {
+    name?:string
+    layers: MLayer[]
+}
+
+interface MLModel{
+    class_name?: string
+    config?: MConfig
+}
+
+interface FetchedUser {
+    title: string
+    id: any
+    createdAt: any
+}
+
 export default function ModelBuildBox(){
   const classes = useStyles();
+  const [modelData, setModelData] = useState<MLModel>();
+  const [neuronsData, setNeuronsData] = useState(3);
+
+  // Build Model with a given number of neurons
+  const makeFetch = async () => {
+    // POST request using fetch with async/await
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ neuronsNumber:neuronsData })
+    };
+      
+    const mlData = await fetch('http://127.0.0.1:8000/', requestOptions);
+    const mlModel = await  mlData.json();
+    await setModelData(mlModel);
+    await console.log(mlModel);
+  };
+
+
   return(
     <BuildTab
       headerColor="main"
@@ -23,18 +72,20 @@ export default function ModelBuildBox(){
           tabName: 'Input Layer',
           tabIcon: Face,
           tabContent: (
-            <Fragment>
+            <>
+
+              {/*{data && <div>{data.class_name}</div>}*/}
+
               <div className="flex flex-row">
-                <button
-                  type="button"
-                  className="flex h-7 w-7 justify-content-center items-center my-2 mr-1 border border-transparent rounded-full shadow-sm text-white bg-secondary-blue hover:bg-primary-purple focus:outline-nonefocus:ring-offset-2 focus:ring-primary-purple"
-                >
-                  <QuestionMarkCircleIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-                <ButtonLeadingIcon></ButtonLeadingIcon>
+                <div className="flex my-2 mr-1">
+                  <QuestionButton/>
+                </div>
+                <ButtonLeadingIcon onClick={makeFetch}/>
               </div>
-              <HiddenLayer number={1}></HiddenLayer>
-            </Fragment>
+
+              <HiddenLayer layerNumber={1} setNeuronsNumber={setNeuronsData} neuronsNumber={neuronsData}/>
+
+            </>
 
           ),
         },

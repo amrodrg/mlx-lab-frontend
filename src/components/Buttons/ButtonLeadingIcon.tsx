@@ -1,9 +1,16 @@
 /* This example requires Tailwind CSS v2.0+ */
 
-export default function Example() {
+import {FC} from 'react';
+
+type Props = {
+    onClick: () => void
+}
+
+const Example: FC<Props> = ({onClick}) => {
   return (
     <>
       <button
+        onClick={onClick}
         type="button"
         className="inline-flex items-center px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-main-blue hover:bg-primary-purple focus:outline-none focus:ring-offset-2 focus:ring-indigo-500"
       >
@@ -14,4 +21,6 @@ export default function Example() {
       </button>
     </>
   );
-}
+};
+
+export default Example;
