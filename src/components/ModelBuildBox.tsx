@@ -37,14 +37,18 @@ interface MLModel{
     config?: MConfig
 }
 
-interface FetchedUser {
-    title: string
-    id: any
-    createdAt: any
+interface Layer {
+    name:string
+    neuronsN:number
+    activationF:string
 }
 
 export default function ModelBuildBox(){
   const classes = useStyles();
+
+  const [layers, setLayers] = useState<Layer[]>();
+
+
   const [modelData, setModelData] = useState<MLModel>();
   const [neuronsData, setNeuronsData] = useState(3);
 
