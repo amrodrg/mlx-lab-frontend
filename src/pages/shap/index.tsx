@@ -16,7 +16,7 @@ const ShapIndex = () => {
       <div>
           <Container className={styles["shap_grid"]}>
           <Row className={styles["shap_row_offset"]}>
-              <Col xl>
+              <Col>
                 <Image
                   src={logoUrl}
                   width={700}
@@ -25,14 +25,14 @@ const ShapIndex = () => {
               </Col>
             </Row>
             <Row className={styles["shap_row_offset"] + " " + styles["shap_default_font"]}>
-              <Col xl>
+              <Col>
                 For Explaining the Model Prediction SHAP (SHapley Additive exPlanations) is used.  
                 SHAP is a game theoretic approach to explain the output of any machine learning model. 
               {/* <MainShapSection/> */}
               </Col>
             </Row>
             <Row className={styles["shap_row_offset shap_title_font"] + " " + styles["shap_title_font"]}>
-              <Col xl>
+              <Col>
                 SHAP
               </Col>
             </Row>
@@ -42,8 +42,8 @@ const ShapIndex = () => {
               </Col>
             </Row>
             <Row className={styles["shap_row_offset"]}>
-              <Col xl>
-                <div className="inline-flex" role="group" aria-label="Button group">
+              <Col>
+                <div role="group" aria-label="Button group" className={styles["configure_explaine_button"]}>
                   <a href='https://christophm.github.io/interpretable-ml-book/shapley.html#general-idea' 
                     target="_blank"
                     style={{textDecoration: 'none'}}
@@ -60,12 +60,12 @@ const ShapIndex = () => {
               </Col>
             </Row>
             <Row className={styles["shap_row_offset"] + " " + styles["shap_title_font"]}>
-              <Col xl>
+              <Col>
                 Short Shapley Values Tutorial
               </Col>
             </Row>
             <Row className={styles["shap_row_offset"] + " " + styles["shap_default_font"]}>
-              <Col xl>
+              <Col>
                 A prediction can be explained by assuming that each feature value of the instance is a “player” in a game where the prediction is the payout.
                 Shapley values tells us how to fairly distribute the “payout” among the players.<p/>
 
@@ -85,12 +85,12 @@ const ShapIndex = () => {
               </Col>
             </Row>
             <Row className={styles["shap_row_offset"] + " " + styles["shap_title_font"]}>
-              <Col xl>
+              <Col>
                 Example
               </Col>
             </Row>
             <Row className={styles["shap_row_offset"] + " " + styles["shap_default_font"]}>
-              <Col xl>
+              <Col>
                 <ul className={styles["shap_bullet_list"]}>
                   <li>No Feature Values </li>
                   <li>Park: near</li>
@@ -99,7 +99,7 @@ const ShapIndex = () => {
                   <li>Park: near + Living-space 50</li>
                 </ul>
               </Col>
-              <Col xl>
+              <Col>
                 <ul className={styles["shap_bullet_list"]}>
                   <li>Park: near + Floor:  2</li>
                   <li>Living-space: 50 + Floor: 2</li>
@@ -108,7 +108,7 @@ const ShapIndex = () => {
               </Col>
             </Row>
             <Row className={styles["shap_row_offset"] + " " + styles["shap_default_font"]}>
-              <Col xl>
+              <Col>
                 For each of these coalitions we compute the predicted apartment price with 
                 and without the feature value Cat: not allowed and take the difference to get the marginal contribution.
                 The Shapley value is the (weighted) average of marginal contributions.

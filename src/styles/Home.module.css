@@ -154,6 +154,7 @@
   position: sticky;
   bottom: 0;
   padding-bottom: 20px;
+  font-weight: bold;
   float: right;
   margin-bottom: 50px;
 }
@@ -169,11 +170,17 @@
 }
 
 /* Configure */
-.configure_component_title {
+.component_title {
   font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: xx-large;
   float: left;
   font-weight: bolder;
+}
+
+.configure_component_style {
+  border-width: 3px;
+  border-color: #0070f3;
+  border-radius: 8px;
 }
 
 .configure_row_offset {
@@ -188,10 +195,10 @@
 .configure_explaine_button {
   text-decoration:none;
   text-align: center;
+  font-weight: bold;
 }
 
 .configure_select_dropdown {
-  background-color: red;
   width: 100%;
 }
 
@@ -202,3 +209,46 @@
   width: 20px;
   height: 20px;
 }
+
+/* Explaination */
+.explaine_model_info_well {
+    background-color: #E5E5E5;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    font-weight: bold;
+    border-width: 3px;
+    text-align: left;
+    border-color: #0070f3;
+}
+
+.explaine_model_legende_well {
+  background-color: #E5E5E5;
+  color: black;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  font-weight: normal;
+  border-width: 3px;
+  border-color: #0070f3;
+}
+
+.explaine_loading_bar {
+  color: #0070f3;
+}
+
+.exapline_info_icon {
+  color: #0070f3;
+  float: right;
+  width: 20px;
+  height: 20px;
+}
+
+.explaine_grid {
+  margin-top: 100px;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+
