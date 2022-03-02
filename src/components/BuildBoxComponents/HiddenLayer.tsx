@@ -12,11 +12,20 @@ type Props = {
 const HiddenLayer: FC<Props> = ({neuronsNumber, setNeuronsNumber, layerNumber}) => {
 
   function decreaseNeurons() {
-    setNeuronsNumber(prev => prev - 1);
+    setNeuronsNumber(prev => {
+      const newLayers = [...prev];
+      if (newLayers[layerNumber-1]>1)
+        newLayers[layerNumber-1] -= 1;
+      return newLayers;
+    });
   }
 
   function increaseNeurons() {
-    setNeuronsNumber(prev => prev + 1);
+    setNeuronsNumber(prev => {
+      const newLayers = [...prev];
+      newLayers[layerNumber-1] += 1;
+      return newLayers;
+    });
   }
 
   return (

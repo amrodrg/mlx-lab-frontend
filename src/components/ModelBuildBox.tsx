@@ -9,11 +9,13 @@ import ButtonLeadingIcon from './Buttons/ButtonLeadingIcon';
 import HiddenLayer from './BuildBoxComponents/HiddenLayer';
 import QuestionButton from './Buttons/QuestionButton';
 import {List} from 'postcss/lib/list';
+import {MinusSmIcon} from '@heroicons/react/solid';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
+// Incoming Data Types
 interface LayerConfig {
     batch_input_shape?:List
     dtype?:number
@@ -37,28 +39,43 @@ interface MLModel{
     config?: MConfig
 }
 
+// Outgoing Data Types
 interface Layer {
-    name:string
-    neuronsN:number
-    activationF:string
+    layerId:number
+    neuronsNum:number
+    activationFun:string
 }
 
 export default function ModelBuildBox(){
   const classes = useStyles();
 
-  const [layers, setLayers] = useState<Layer[]>();
-
-
+  // State variable to translate the incoming Json
   const [modelData, setModelData] = useState<MLModel>();
-  const [neuronsData, setNeuronsData] = useState(3);
 
-  // Build Model with a given number of neurons
+  // The List of Layers
+  const [layers, setLayers] = useState<Layer[]>([{layerId:1, neuronsNum:2, activationFun:'ReLu'}]);
+
+  // The list of neuron's numbers for each layer
+  const [neuronsList, setNeuronsList] = useState([5]);
+
+  // Add a new Layer
+  const addLayer = (layerId, neuronsNumber, activationFunction) => {
+    setNeuronsList(prevState => [...prevState, neuronsNumber]);
+    setLayers(prevState => [...prevState, {layerId:layerId, neuronsNum:neuronsNumber, activationFun:activationFunction}]);
+  };
+
+  // Remove the last Layer
+  const removeLastLayer = () => {
+    setLayers(prevState => [...prevState.slice(0, -1)]);
+  };
+
+  // Build Model with a given list of numbers of neurons for each layer
   const makeFetch = async () => {
     // POST request using fetch with async/await
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ neuronsNumber:neuronsData })
+      body: JSON.stringify({ neuronsNumber:neuronsList, layersNumber:layers.length })
     };
       
     const mlData = await fetch('http://127.0.0.1:8000/', requestOptions);
@@ -72,6 +89,7 @@ export default function ModelBuildBox(){
     <BuildTab
       headerColor="main"
       tabs={[
+
         {
           tabName: 'Input Layer',
           tabIcon: Face,
@@ -84,15 +102,42 @@ export default function ModelBuildBox(){
                 <div className="flex my-2 mr-1">
                   <QuestionButton/>
                 </div>
-                <ButtonLeadingIcon onClick={makeFetch}/>
+                <ButtonLeadingIcon onClick={()=> addLayer(layers.length+1, 1, 'ReLu')}/>
               </div>
 
-              <HiddenLayer layerNumber={1} setNeuronsNumber={setNeuronsData} neuronsNumber={neuronsData}/>
+              {layers.map(layer => {
+                return (<HiddenLayer key={layer.layerId} layerNumber={layer.layerId} setNeuronsNumber={setNeuronsList} neuronsNumber={neuronsList[layer.layerId-1]}/>);
+              })}
+
+              <div className="flex flex-row-reverse justify-content-between">
+                <button
+                  onClick={removeLastLayer}
+                  type="button"
+                  className="inline-flex w-16 p-2.5 items-center, justify-content-center border border-transparent rounded-full shadow-sm text-white bg-main-blue hover:bg-primary-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-purple"
+                >
+                  <MinusSmIcon className="h-5 w-5" aria-hidden="true" />
+                </button>
+
+                <button
+                  onClick={makeFetch}
+                  type="button"
+                  className="inline-flex w-20 p-2.5 items-center, justify-content-center border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-primary-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-purple"
+                >
+                  Fetch
+                </button>
+              </div>
 
             </>
 
           ),
         },
+
+
+
+
+
+
+
         {
           tabName: 'Hidden Layers',
           tabIcon: Chat,
