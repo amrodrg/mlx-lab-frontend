@@ -1,5 +1,6 @@
 import Stats from '../components/stats';
 import {List} from 'postcss/lib/list';
+import ModelBuildBox from '../components/ModelBuildBox';
 
 interface aroundData {
     city?: string
@@ -53,6 +54,7 @@ export default function Amr(props: IProps) {
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               {/* Replace with your content */}
               <div className="px-4 py-8 sm:px-0">
+                <ModelBuildBox></ModelBuildBox>
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
               </div>
               {/* /End replace */}

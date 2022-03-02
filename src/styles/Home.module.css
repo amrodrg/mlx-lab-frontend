@@ -114,3 +114,141 @@
     flex-direction: column;
   }
 }
+
+/*       shap styles */
+/* overview */
+.shap_grid {
+  margin-top: 100px;
+  text-align: center;
+  border-left-width: 7px;
+  border-left-color: #0079C1;
+  margin-bottom: 80px;
+}
+
+.shap_default_font {
+  font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: x-large;
+  text-align: left;
+}
+
+.shap_instance_font {
+  font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: x-large;
+}
+
+.shap_title_font {
+  font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: xx-large;
+  align-content: center;
+  font-weight: bold;
+}
+
+.shap_bullet_list {
+  list-style-type:disc;
+  float: left;
+  margin-left: 40%;
+}
+
+.shap_sticky_button {
+  text-decoration:none;
+  position: sticky;
+  bottom: 0;
+  padding-bottom: 20px;
+  font-weight: bold;
+  float: right;
+  margin-bottom: 50px;
+}
+
+.shap_youtube_frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shap_row_offset {
+  margin-bottom: 35px;
+}
+
+/* Configure */
+.component_title {
+  font-family:  ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: xx-large;
+  float: left;
+  font-weight: bolder;
+}
+
+.configure_component_style {
+  border-width: 3px;
+  border-color: #0070f3;
+  border-radius: 8px;
+}
+
+.configure_row_offset {
+  margin-bottom: 40px;
+}
+
+.configure_grid {
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
+
+.configure_explaine_button {
+  text-decoration:none;
+  text-align: center;
+  font-weight: bold;
+}
+
+.configure_select_dropdown {
+  width: 100%;
+}
+
+.configure_info_icon {
+  color: #0070f3;
+  float: right;
+  margin-top: 19px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Explaination */
+.explaine_model_info_well {
+    background-color: #E5E5E5;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    font-weight: bold;
+    border-width: 3px;
+    text-align: left;
+    border-color: #0070f3;
+}
+
+.explaine_model_legende_well {
+  background-color: #E5E5E5;
+  color: black;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  font-weight: normal;
+  border-width: 3px;
+  border-color: #0070f3;
+}
+
+.explaine_loading_bar {
+  color: #0070f3;
+}
+
+.exapline_info_icon {
+  color: #0070f3;
+  float: right;
+  width: 20px;
+  height: 20px;
+}
+
+.explaine_grid {
+  margin-top: 100px;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+
