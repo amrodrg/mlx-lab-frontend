@@ -8,27 +8,26 @@ import GridContainer from '../components/Grid/GridContainer.js';
 import GridItem from '../components/Grid/GridItem.js';
 
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
-import ModelBuildBox from '../components/ModelBuildBox';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
-export default function BuildingSection() {
+export default function NamingSection() {
   const classes = useStyles();
+
   return (
-    <div className={classes.buildSection}>
+    <div className={classes.nameSection}>
       <div className={classes.container}>
         <div id="nav-tabs">
-          <h3>Build your model</h3>
+          <h3>Give a name to your model</h3>
           <GridContainer>
             <GridItem xs={12} sm={12} md={7}>
               <h3>
-                <small>Start building your model by adding hidden layers, hidden units and choosing the activation function for the neurons of each layer.</small>
+                <small>Your Model will be saved in your account or local on pc under the entered name:</small>
               </h3>
             </GridItem>
           </GridContainer>
-          <ModelBuildBox></ModelBuildBox>
         </div>
       </div>
     </div>

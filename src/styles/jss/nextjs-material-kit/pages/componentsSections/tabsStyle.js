@@ -9,6 +9,14 @@ const tabsStyle = {
   textCenter: {
     textAlign: 'center',
   },
+  buildSection: {
+    background: '#f5e8f7',
+    padding: '70px 0',
+  },
+  nameSection: {
+    background: '#C2E8FF',
+    padding: '70px 0',
+  },
 };
 
 export default tabsStyle;
