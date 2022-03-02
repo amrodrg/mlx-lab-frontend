@@ -10,7 +10,8 @@ import configurePlaceholder from '../../static-images/placeholder.png';
 import * as Icon from 'react-bootstrap-icons';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import { color } from '@mui/system';
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormControl from 'react-bootstrap/FormControl'
 
 const modelList = [
     { key: "Model1", value: "model_1" },
@@ -19,15 +20,26 @@ const modelList = [
   ];
 
 const exampleList = [
+    { key: "0", value: "choose an Example"},
     { key: "1", value: "New instance" },
-    { key: "2", value: "User instance"},
-    { key: "3", value: "Feature importance"}
+    { key: "2", value: "Feature importance"}
   ];
 
 const plotList = [
     { key: "1", value: "force plot" },
     { key: "2", value: "beeswarm plot"},
     { key: "3", value: "summery plot"}
+];
+
+const featureList = [
+    { key: "1", value: "Age"},
+    { key: "2", value: "Income"},
+    { key: "3", value: "Health"},
+    { key: "4", value: "hasPet"},
+    { key: "5", value: "birthplace"},
+    { key: "6", value: "adresse"},
+    { key: "7", value: "numPets"},
+    { key: "8", value: "numBitches"}
 ];
 
 function myTestInputFormat(num) {
@@ -49,15 +61,14 @@ function Placeholder() {
 function FeatureImportance() {
     return (
         <div>
-            FeatureImportance
-        </div>
-    );
-}
-
-function UserExample() {
-    return (
-        <div>
-            UserExample 
+            <div style={{fontWeight: 'bold'}}>Select features to be included</div>
+            {featureList.map((item) => {
+            return (
+                <div>
+                    <Form.Check type="checkbox" label={item.value} />
+                </div>
+                );
+            })}
         </div>
     );
 }
@@ -65,7 +76,17 @@ function UserExample() {
 function NewExample() {
     return (
         <div>
-            NewExample
+            <div style={{fontWeight: 'bold'}}>Fill feature values</div>
+            <InputGroup size="sm">
+                {featureList.map((item) => {
+                                    return (
+                    <div>
+                        <InputGroup.Text id="inputGroup-sizing-sm">{item.value}</InputGroup.Text>
+                        <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                    </div>
+                    );
+                })}
+            </InputGroup>
         </div>
     );
 }
@@ -75,8 +96,6 @@ function ExampleComponent(example) {
     if (instance === "1") {
         return <NewExample/>
     } else if (instance == "2") {
-        return <UserExample/>
-    } else if (instance == "3") {
         return <FeatureImportance/>
     } else {
         return <Placeholder/>
@@ -171,7 +190,7 @@ export default function ConfigureExplainer () {
                     </Col>
                 </Row>
 
-                <Row>
+                <Row> 
                     <Col>
                         <div className={styles['component_title']}> Choose a Plot </div>
                         <Button onClick={() => setShowPlotModal(true)} variant="none" className={styles['configure_info_icon']}>
