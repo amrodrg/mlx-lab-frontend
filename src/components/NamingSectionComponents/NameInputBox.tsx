@@ -16,23 +16,20 @@
 */
 export default function NameInputBox() {
   return (
-    <div>
-      <label htmlFor="model name" className="block text-sm font-medium text-gray-700">
+    <div className=" flex flex-col w-full p-10 mx-5">
+      <label htmlFor="model name" className="block text-sm font-medium text-main-blue">
                 Model's name
       </label>
-      <div className="mt-1">
+      <div className="flex w-full mt-1 justify-center">
         <input
           type="name"
           name="name"
           id="name"
-          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          className="h-40 w-full font-bold lg:text-3xl shadow-md border-2 border-main-blue block rounded-md p-10"
           placeholder="Example: House_Prices_Prediction_Model"
           aria-describedby="name-description"
         />
       </div>
-      <p className="mt-2 text-sm text-gray-500" id="name-description">
-                Your File will be saved with this name.
-      </p>
     </div>
   );
 }
