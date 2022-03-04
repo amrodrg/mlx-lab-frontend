@@ -28,7 +28,9 @@ export default function BuildingSection() {
               </h3>
             </GridItem>
           </GridContainer>
-          <ModelBuildBox></ModelBuildBox>
+          <div className="py-10">
+            <ModelBuildBox/>
+          </div>
         </div>
       </div>
     </div>

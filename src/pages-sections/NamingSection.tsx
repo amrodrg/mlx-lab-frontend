@@ -27,7 +27,7 @@ export default function NamingSection() {
             <NameInputBox/>
             <button
               type="button"
-              className="items-center inline-flex w-64 h-12 p-2.5 items-center, justify-content-center border border-transparent rounded-full shadow-sm text-white bg-main-blue hover:bg-primary-purple"
+              className="items-center inline-flex w-64 h-12 p-2.5 justify-content-center border border-transparent rounded-full shadow-sm text-white bg-main-blue hover:bg-primary-purple"
             >
               Enter
             </button>
