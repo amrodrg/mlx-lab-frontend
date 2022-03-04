@@ -17,6 +17,10 @@ const tabsStyle = {
     background: '#C2E8FF',
     padding: '70px 0',
   },
+  dataSection: {
+    background: '#FFFFFF',
+    padding: '70px 0',
+  },
 };
 
 export default tabsStyle;
