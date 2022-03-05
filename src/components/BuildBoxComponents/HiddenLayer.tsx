@@ -1,59 +1,92 @@
-import {PlusSmIcon as PlusSmIconSolid} from '@heroicons/react/solid';
-import {Col, Container, Row} from 'react-bootstrap';
+import {MinusSmIcon, PlusSmIcon as PlusSmIconSolid} from '@heroicons/react/solid';
+import ActivationSelection from './ActivationSelection';
+import Divider from './Divider';
+import {FC} from 'react';
 
-export default function HiddenLayer(props) {
+type Props = {
+  layerNumber:number
+  neuronsNumber:number
+  setNeuronsNumber?: (neuronsNumber) => void
+}
+
+const HiddenLayer: FC<Props> = ({neuronsNumber, setNeuronsNumber, layerNumber}) => {
+
+  function decreaseNeurons() {
+    setNeuronsNumber(prev => {
+      const newLayers = [...prev];
+      if (newLayers[layerNumber-1]>1)
+        newLayers[layerNumber-1] -= 1;
+      return newLayers;
+    });
+  }
+
+  function increaseNeurons() {
+    setNeuronsNumber(prev => {
+      const newLayers = [...prev];
+      newLayers[layerNumber-1] += 1;
+      return newLayers;
+    });
+  }
+
   return (
+    <div className="flex flex-col">
 
-    <Container style={{margin: 10, justifyContent:'start'}}>
-      <Row>
+      <div className="flex flex-row justify-around  flex-auto w-100 mt-10">
 
-        <Col xs={2} style={{marginTop:5}}>
+
+
+        <div className="flex justify-around flex-1 px-3 py-2">
           {/* eslint-disable-next-line react/prop-types */}
-          <h5 style={{color: '#0079C1'}}>Layer {props.number}</h5>
-        </Col>
-
-        <Col xs={4}>
-          <Container>
-            <Row>
-              <Col>
-                <button
-                  type="button"
-                  className="inline-flex items-center p-1.5 border border-transparent rounded-full shadow-sm text-white bg-main-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </Col>
-
-              <Col>
-                <h5>3</h5>
-              </Col>
+          <h5 style={{color: '#4CA1D3', fontSize: 'x-large'}}>Layer {layerNumber}</h5>
+        </div>
 
 
-              <Col>
-                <button
-                  type="button"
-                  className="inline-flex items-center p-1.5 border border-transparent rounded-full shadow-sm text-white bg-main-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </Col>
 
-            </Row>
-          </Container>
-        </Col>
-
-        <Col>
-          <div style={{borderRadius:'1rem', border:' 2px solid #0079C1', padding:3, display:'flex', justifyContent: 'start'}}>
-            <h6 style={{margin:2}}>ReLu</h6>
+        <div className="flex flex-row justify-center flex-auto w-auto">
+          <div>
+            <button
+              onClick={decreaseNeurons}
+              type="button"
+              className="inline-flex items-center p-2.5 border border-transparent rounded-full shadow-sm text-white bg-secondary-blue hover:bg-primary-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-purple"
+            >
+              <MinusSmIcon className="h-5 w-5" aria-hidden="true" />
+            </button>
           </div>
-        </Col>
+
+
+          <div className="flex justify-center w-auto mx-3">
+            <h5 className="text-3xl border-solid border-3 border-secondary-blue px-2.5 py-0.5 rounded-2xl">{neuronsNumber}</h5>
+          </div>
+
+
+          <div>
+            <button
+              onClick={increaseNeurons}
+              type="button"
+              className="inline-flex items-center p-2.5 border border-transparent rounded-full shadow-sm text-white bg-secondary-blue hover:bg-primary-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-purple"
+            >
+              <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
 
 
 
-      </Row>
+        <div className="flex flex-row justify-around content-around flex-auto w-1/5">
+          <ActivationSelection></ActivationSelection>
+        </div>
 
 
-    </Container>
+      </div>
+
+
+      <Divider></Divider>
+
+
+    </div>
+
 
   );
-}
+};
+
+export default HiddenLayer;

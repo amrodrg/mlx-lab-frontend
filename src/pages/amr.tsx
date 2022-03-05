@@ -70,10 +70,9 @@ export default function Amr(props: IProps) {
 export async function getStaticProps(context: any) {
 
   const res = await fetch('https://api.around.pet/v1/places/pin/1');
+  const data = await res.json();
 
   const mlmodel = await fetch('http://127.0.0.1:8000/');
-
-  const data = await res.json();
 
   const mlData = await  mlmodel.json();
 

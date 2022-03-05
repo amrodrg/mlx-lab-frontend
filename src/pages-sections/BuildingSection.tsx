@@ -14,10 +14,10 @@ import ModelBuildBox from '../components/ModelBuildBox';
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
-export default function SectionBuild() {
+export default function BuildingSection() {
   const classes = useStyles();
   return (
-    <div className={classes.section}>
+    <div className={classes.buildSection}>
       <div className={classes.container}>
         <div id="nav-tabs">
           <h3>Build your model</h3>
@@ -28,7 +28,9 @@ export default function SectionBuild() {
               </h3>
             </GridItem>
           </GridContainer>
-          <ModelBuildBox></ModelBuildBox>
+          <div className="py-10">
+            <ModelBuildBox/>
+          </div>
         </div>
       </div>
     </div>
