@@ -24,6 +24,10 @@ const tabsStyle = {
   introSection: {
     background: '#0079C1',
   },
+  chooseSection: {
+    background: '#FFFFFF',
+    padding: '70px 0',
+  },
 };
 
 export default tabsStyle;
