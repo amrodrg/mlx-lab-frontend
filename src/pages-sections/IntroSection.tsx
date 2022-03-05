@@ -16,7 +16,7 @@ export default function IntroSection() {
     <div className={classes.introSection}>
       <div className="flex flex-row ">
         <div className="flex flex-col w-full bg-main-blue">
-          <button className=" bg-white rounded-full xl:text-2xl lg:text-xl md:text-lg sm:text-sm  content-center lg:font-bold h-28 m-5 p-2 text-main-blue">
+          <button className=" bg-white rounded-full xl:text-2xl lg:text-xl md:text-lg sm:text-sm  content-center font-bold h-28 m-5 p-2 text-main-blue">
                 Build and train your own machine learning model!
           </button>
         </div>
