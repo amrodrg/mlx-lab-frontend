@@ -20,11 +20,16 @@ export default function BuildingSection() {
     <div className={classes.buildSection}>
       <div className={classes.container}>
         <div id="nav-tabs">
-          <h3>Build your model</h3>
+          <h1>Build your model</h1>
           <GridContainer>
             <GridItem>
-              <h3>
-                <small>Start building your model by adding hidden layers, hidden units and choosing the activation function for the neurons of each layer.</small>
+              <h3 className="p-4">
+                <small>Start building your model by adding
+                  <text className="text-main-blue font-bold"> hidden layers</text>,
+                  <text className="text-main-blue font-bold"> hidden units</text> and choosing the
+                  <text className="text-main-blue font-bold"> activation function </text>
+                  for the neurons of each layer.
+                </small>
               </h3>
             </GridItem>
           </GridContainer>

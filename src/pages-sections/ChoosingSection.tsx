@@ -5,8 +5,8 @@ import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
 // core components
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
-import NameInputBox from '../components/NamingSectionComponents/NameInputBox';
-import {ArrowNarrowDownIcon} from '@heroicons/react/outline';
+import ArrowDown from '../components/Buttons/ArrowDown';
+import ChoosingBox from '../components/ChoosingSectionCpmpenents/ChoosingBox';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -19,25 +19,34 @@ export default function ChoosingSection() {
     <div className={classes.chooseSection}>
       <div className={classes.container}>
         <div className="flex flex-col">
-          <h3 className="text-center">Give a name to your model</h3>
-          <h3 className="m-10 mb-5">
-            <small>Your model will be saved in your account or local on pc under the entered name:</small>
-          </h3>
-          <div className="flex flex-row items-center m-5">
-            <NameInputBox/>
-            <button
-              type="button"
-              className="items-center inline-flex w-64 h-12 p-2.5 justify-content-center border border-transparent rounded-full shadow-sm text-white bg-main-blue hover:bg-primary-purple"
-            >
-                            Enter
-            </button>
+          <h1 className="text-center font-black">Choose a modeltype</h1>
+          <div className="flex flex-col items-center mb-10">
+            <h5 className="mx-8 mt-10 text-gray-600 text-center">
+                    In a regression problem, the aim is to predict the output of a continuous value,
+                    like a price or a probability. Contrast this with a classification problem,
+                    where the aim is to select a class from a list of classes (for example,
+                    where a picture contains an apple or an orange, recognizing
+                    which fruit is in the picture).
+            </h5>
+            <div>
+              <button className="my-1">
+                <h5 className="text-main-blue font-normal hover:font-black">
+                        See examples ↓
+                </h5>
+              </button>
+            </div>
           </div>
-          <button
-            type="button"
-            className="h-16 w-16 rounded-full bg-transparent place-self-center"
-          >
-            <ArrowNarrowDownIcon className="h-10 w-10 bg-white rounded-full text-main-blue p-1"/>
-          </button>
+
+
+          <div className="flex flex-row justify-between my-5 mx-12">
+
+            <ChoosingBox modelType={'Regression'}/>
+            <ChoosingBox modelType={'Classification'}/>
+
+          </div>
+
+
+          <ArrowDown/>
         </div>
       </div>
     </div>

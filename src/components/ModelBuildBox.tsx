@@ -91,7 +91,7 @@ export default function ModelBuildBox(){
       tabs={[
 
         {
-          tabName: 'Input Layer',
+          tabName: 'Hidden Layers',
           tabIcon: Face,
           tabContent: (
             <>
@@ -139,7 +139,7 @@ export default function ModelBuildBox(){
 
 
         {
-          tabName: 'Hidden Layers',
+          tabName: 'Input Layer',
           tabIcon: Chat,
           tabContent: (
             <p className={classes.textCenter}>
