@@ -32,7 +32,7 @@ export default function ExamplesSection(){
         type="button"
         className="h-20 w-20 rounded-full place-self-center"
       >
-        <ArrowNarrowUpIcon className="h-14 w-14 bg-secondary-blue rounded-full text-white p-2 hover:bg-main-blue"/>
+        <a href="#"><ArrowNarrowUpIcon className="h-14 w-14 bg-secondary-blue rounded-full text-white p-2 hover:bg-main-blue"/></a>
       </button>
 
     </div>

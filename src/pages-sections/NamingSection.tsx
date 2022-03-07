@@ -20,10 +20,10 @@ export default function NamingSection() {
       <div className={classes.container}>
         <div className="flex flex-col">
           <h1 className="text-center">Give a name to your model</h1>
-          <h3 className="m-10 mb-5">
+          <h3 className="m-10 mb-2">
             <small>Your model will be saved in your account or local on pc under the entered name:</small>
           </h3>
-          <div className="flex flex-row items-center m-5">
+          <div className="flex flex-row items-center w-full m-5">
             <NameInputBox/>
             <button
               type="button"

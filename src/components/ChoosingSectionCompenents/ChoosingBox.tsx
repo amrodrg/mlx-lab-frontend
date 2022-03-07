@@ -9,6 +9,7 @@ const ChoosingBox: FC<Props> = ({modelType}) => {
   return (
     <div className="flex bg-main-blue w-5/12 h-64 rounded-2xl">
       <div className="flex flex-col w-full justify-around items-center py-4">
+
         <div className="flex flex-row items-center">
           <text className="text-white font-bold text-3xl p-3">{modelType}</text>
           <QuestionButton/>

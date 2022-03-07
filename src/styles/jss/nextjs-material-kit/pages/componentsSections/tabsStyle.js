@@ -28,6 +28,10 @@ const tabsStyle = {
     background: '#FFFFFF',
     padding: '70px 0',
   },
+  compileSection: {
+    background: '#FFFFFF',
+    padding: '70px 0',
+  },
 };
 
 export default tabsStyle;

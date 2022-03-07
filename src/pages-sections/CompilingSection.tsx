@@ -8,34 +8,36 @@ import GridContainer from '../components/Grid/GridContainer.js';
 import GridItem from '../components/Grid/GridItem.js';
 
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
-import ModelBuildBox from '../components/BuildBoxComponents/ModelBuildBox';
+import ModelCompileBox from '../components/CompileBoxComponents/ModelCompileBox';
+import ArrowDown from '../components/Buttons/ArrowDown';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
-export default function BuildingSection() {
+export default function CompilingSection() {
   const classes = useStyles();
   return (
-    <div className={classes.buildSection}>
+    <div className={classes.compileSection}>
       <div className={classes.container}>
-        <div id="nav-tabs">
-          <h1>Build your model</h1>
+        <div id="nav-tabs" className="flex flex-col">
+          <h1>Compile your model</h1>
           <GridContainer>
             <GridItem>
               <h3 className="p-4">
-                <small>Start building your model by adding
-                  <text className="text-main-blue font-bold"> hidden layers</text>,
-                  <text className="text-main-blue font-bold"> hidden units</text> and choosing the
-                  <text className="text-main-blue font-bold"> activation function </text>
-                  for the neurons of each layer.
+                <small>Compile your model bei choosing the,
+                  <text className="text-main-blue font-bold"> loss function</text>, the
+                  <text className="text-main-blue font-bold"> optimizer</text>, and the
+                  <text className="text-main-blue font-bold"> metrics </text>
+                  for evaluating the model training.
                 </small>
               </h3>
             </GridItem>
           </GridContainer>
           <div className="py-10 px-8">
-            <ModelBuildBox/>
+            <ModelCompileBox/>
           </div>
+          <ArrowDown/>
         </div>
       </div>
     </div>

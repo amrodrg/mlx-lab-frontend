@@ -7,7 +7,7 @@ export default function ArrowDown() {
       type="button"
       className="h-16 w-16 rounded-full bg-transparent place-self-center"
     >
-      <ArrowNarrowDownIcon className="h-10 w-10 bg-white rounded-full text-main-blue p-1"/>
+      <ArrowNarrowDownIcon className="h-10 w-10 bg-white rounded-full text-main-blue p-1 hover:text-primary-purple"/>
     </button>
   );
 }

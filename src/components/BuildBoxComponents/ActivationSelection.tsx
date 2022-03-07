@@ -23,7 +23,7 @@ export default function ActivationSelection() {
       <select
         id="activation"
         name="activation"
-        className="block w-full pl-28 pr-28 py-1 text-xl border-secondary outline-secondary-blue hover:outline-primary-purple focus:ring-main-blue rounded-pill font-bold text-secondary-blue"
+        className="block w-full pl-28 pr-28 py-1 text-xl border-secondary outline-secondary-blue focus:ring-main-blue rounded-pill font-bold text-secondary-blue"
         defaultValue="ReLu"
       >
         <option>ReLu</option>
