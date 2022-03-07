@@ -6,7 +6,7 @@ import {makeStyles} from '@material-ui/core/styles';
 // core components
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
 import ArrowDown from '../components/Buttons/ArrowDown';
-import ChoosingBox from '../components/ChoosingSectionCpmpenents/ChoosingBox';
+import ChoosingBox from '../components/ChoosingSectionCompenents/ChoosingBox';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

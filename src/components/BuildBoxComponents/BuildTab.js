@@ -10,11 +10,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Icon from '@material-ui/core/Icon';
 // core components
-import Card from './Card/Card.js';
-import CardBody from './Card/CardBody.js';
-import CardHeader from './Card/CardHeader.js';
+import Card from '../Card/Card.js';
+import CardBody from '../Card/CardBody.js';
+import CardHeader from '../Card/CardHeader.js';
 
-import styles from '../styles/jss/nextjs-material-kit/components/buildTabStyle.js';
+import styles from '../../styles/jss/nextjs-material-kit/components/buildTabStyle.js';
 
 const useStyles = makeStyles(styles);
 

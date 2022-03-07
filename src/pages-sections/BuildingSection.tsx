@@ -8,7 +8,7 @@ import GridContainer from '../components/Grid/GridContainer.js';
 import GridItem from '../components/Grid/GridItem.js';
 
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
-import ModelBuildBox from '../components/ModelBuildBox';
+import ModelBuildBox from '../components/BuildBoxComponents/ModelBuildBox';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

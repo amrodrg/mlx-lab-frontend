@@ -5,9 +5,9 @@ import Chat from '@material-ui/icons/Chat';
 import Build from '@material-ui/icons/Build';
 import BuildTab from './BuildTab';
 import React, {useState} from 'react';
-import ButtonLeadingIcon from './Buttons/ButtonLeadingIcon';
-import HiddenLayer from './BuildBoxComponents/HiddenLayer';
-import QuestionButton from './Buttons/QuestionButton';
+import ButtonLeadingIcon from '../Buttons/ButtonLeadingIcon';
+import HiddenLayer from './HiddenLayer';
+import QuestionButton from '../Buttons/QuestionButton';
 import {List} from 'postcss/lib/list';
 import {MinusSmIcon} from '@heroicons/react/solid';
 

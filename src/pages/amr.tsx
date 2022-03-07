@@ -1,6 +1,6 @@
 import Stats from '../components/stats';
 import {List} from 'postcss/lib/list';
-import ModelBuildBox from '../components/ModelBuildBox';
+import ModelBuildBox from '../components/BuildBoxComponents/ModelBuildBox';
 
 interface aroundData {
     city?: string
