@@ -31,10 +31,10 @@ const ModelCompileBox: FC<Props> = ({lossFunc, optimizer, metrics}) => {
           <SelectionComponent options={['Adam', 'SGD']}/>
         </div>
 
-        <div className="flex flex-row justify-between px-10 font-bold text-gray-600 items-center">
-          <div className="flex flex-row items-center space-x-1"><
-            text>Choose the metrics to measure the performance of your model: </text>
-          <QuestionButtonBlue/>
+        <div className="flex flex-row px-16 font-bold text-gray-600 items-center">
+          <div className="flex flex-row w-1/2 items-center">
+            <text className="w-2/3">Choose the metrics to measure the performance of your model: </text>
+            <QuestionButtonBlue/>
           </div>
           <SelectionComponent options={['MAE', 'ACCURACY']}/>
         </div>

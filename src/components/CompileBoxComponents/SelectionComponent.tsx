@@ -6,7 +6,7 @@ type Props = {
 
 const SelectionComponent: FC<Props> = ({options}) => {
   return (
-    <div>
+    <div className="w-1/2">
       <label htmlFor="activation" className="block text-sm font-light text-gray-500">
                 Activation
       </label>

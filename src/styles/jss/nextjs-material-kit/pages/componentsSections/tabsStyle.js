@@ -15,7 +15,7 @@ const tabsStyle = {
     padding: '70px 0',
   },
   nameSection: {
-    background: '#C2E8FF',
+    background: '#0079C1',
     padding: '70px 0',
   },
   dataSection: {

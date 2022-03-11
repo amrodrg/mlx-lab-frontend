@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, {FC} from 'react';
 import QuestionButton from '../Buttons/QuestionButton';
 
@@ -15,7 +16,7 @@ const ChoosingBox: FC<Props> = ({modelType}) => {
           <QuestionButton/>
         </div>
 
-        <button className="bg-white hover:ring-4 hover:ring-white hover:shadow-2xl text-main-blue w-3/5 py-2 rounded-full font-bold text-lg">BUILD</button>
+        <Link href="/buildregression"><button className="bg-white hover:ring-4 hover:ring-white hover:shadow-2xl text-main-blue w-3/5 py-2 rounded-full font-bold text-lg">BUILD</button></Link>
       </div>
     </div>
   );

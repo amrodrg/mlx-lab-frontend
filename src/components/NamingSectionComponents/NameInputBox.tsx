@@ -17,7 +17,7 @@
 export default function NameInputBox() {
   return (
     <div className=" flex flex-col w-full p-10 mx-5">
-      <label htmlFor="model name" className="block text-sm font-medium text-main-blue">
+      <label htmlFor="model name" className="block text-sm font-medium text-white">
                 Model's name
       </label>
       <div className="flex w-full mt-1 justify-center">

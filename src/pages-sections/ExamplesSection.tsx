@@ -15,9 +15,9 @@ export default function ExamplesSection(){
   return(
     <div className="flex flex-col">
       <ExamplesHeader></ExamplesHeader>
-      <img src="/img/Clas_Reg_Example 1.png" className="px-24 py-12"></img>
+      <img src="/img/Clas_Reg_Example 1.png" className="px-52 2xl:px-96 py-12"></img>
       <hr className="bg-secondary-blue"/>
-      <img src="/img/Clas_Reg2.png" className="px-24 py-12"></img>
+      <img src="/img/Clas_Reg2.png" className="px-52 2xl:px-96 py-12"></img>
 
       <div className=" bg-secondary-blue text-white border-2 border-main-blue mx-48 mt-16 text-xl font-bold p-3 rounded-2xl">
         <text>
@@ -26,13 +26,19 @@ export default function ExamplesSection(){
         </text>
       </div>
 
-      <img src="/img/reg_class3.png" className="px-24 py-12"></img>
+      <img src="/img/reg_class3.png" className="px-52 2xl:px-96 py-12"></img>
 
       <button
+        onClick={() => {
+          window.scrollTo({
+            top: 600,
+            behavior: 'smooth',
+          });
+        }}
         type="button"
         className="h-20 w-20 rounded-full place-self-center"
       >
-        <a href="#"><ArrowNarrowUpIcon className="h-14 w-14 bg-secondary-blue rounded-full text-white p-2 hover:bg-main-blue"/></a>
+        <ArrowNarrowUpIcon className="h-14 w-14 bg-secondary-blue rounded-full text-white p-2 hover:bg-main-blue"/>
       </button>
 
     </div>

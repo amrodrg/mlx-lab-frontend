@@ -25,7 +25,14 @@ export default function IntroSection() {
       <div className="flex flex-row">
 
         <div className="flex flex-col w-full bg-main-blue items-center pt-4">
-          <button className="bg-white rounded-full hover:ring-8 hover:ring-white hover:text-2xl 2xl:hover:text-4xl 2xl:text-3xl xl:text-xl lg:text-md md:text-xs sm:text-xs content-center justify-items-center font-bold h-auto w-auto m-5 p-2 text-main-blue">
+          <button
+            onClick={() => {
+              window.scrollTo({
+                top: 700,
+                behavior: 'smooth',
+              });
+            }}
+            className="bg-white rounded-full hover:ring-8 hover:ring-white hover:text-2xl 2xl:hover:text-4xl 2xl:text-3xl xl:text-xl lg:text-md md:text-xs sm:text-xs content-center justify-items-center font-bold h-auto w-auto m-5 p-2 text-main-blue">
             <text className="m-10">MAKE YOUR OWN MACHINE LEARNING MODEL!</text>
           </button>
 

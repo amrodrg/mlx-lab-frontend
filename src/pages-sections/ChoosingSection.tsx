@@ -29,7 +29,14 @@ export default function ChoosingSection() {
                     which fruit is in the picture).
             </h5>
             <div>
-              <button className="my-1">
+              <button
+                onClick={() => {
+                  window.scrollTo({
+                    top: 1480,
+                    behavior: 'smooth',
+                  });
+                }}
+                className="my-1">
                 <h5 className="text-main-blue font-normal hover:font-black">
                         See examples ↓
                 </h5>

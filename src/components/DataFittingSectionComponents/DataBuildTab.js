@@ -14,6 +14,7 @@ import CardHeader from '../Card/CardHeader.js';
 import styles from '../../styles/jss/nextjs-material-kit/components/buildTabStyle.js';
 import {MinusSmIcon, PlusSmIcon as PlusSmIconSolid} from '@heroicons/react/solid';
 import QuestionButtonWhite from '../Buttons/QuestionButtonWhite';
+import QuestionButtonBlue from '../Buttons/QuestionButtonBlue';
 
 const useStyles = makeStyles(styles);
 
@@ -108,10 +109,20 @@ export default function DataBuildTab(props) {
 
         <div className="flex flex-col p-10 justify-between space-y-24">
 
+
           <div className="flex flex-row justify-center space-x-32">
 
 
             <div className="flex flex-col items-center">
+
+              <div className="flex flex-row space-x-1 my-4">
+                <div className=" text-lg text-main-blue font-semibold text-gray-600 shadow-md px-2 mb-4 shadow-gray-300 rounded-md">
+                  Training dataset
+                </div>
+
+                <QuestionButtonBlue/>
+
+              </div>
 
               <button
                 onClick={decreaseTestingPer}
@@ -140,6 +151,16 @@ export default function DataBuildTab(props) {
 
 
             <div className="flex flex-col items-center">
+
+              <div className="flex flex-row space-x-1 my-4">
+
+                <div className=" text-lg text-primary-purple font-semibold text-gray-600 shadow-md px-2 mb-4 shadow-gray-300 rounded-md">
+                  Testing dataset
+                </div>
+
+                <QuestionButtonBlue/>
+
+              </div>
 
               <button
                 onClick={increaseTestingPer}
@@ -170,8 +191,8 @@ export default function DataBuildTab(props) {
           </div>
 
 
-
           <button className="text-4xl font-medium text-secondary-purple hover:border-2 border-secondary-purple rounded-full">Fit</button>
+
 
         </div>
         
