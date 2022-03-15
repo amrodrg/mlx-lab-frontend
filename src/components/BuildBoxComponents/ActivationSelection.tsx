@@ -1,34 +1,29 @@
-/*
-  This example requires Tailwind CSS v2.0+
+import React, {FC} from 'react';
 
-  This example requires some changes to your config:
+type Props = {
+    selectionHandler: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    activationFunction: string
+}
 
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-export default function ActivationSelection() {
+const ActivationSelection: FC<Props> = ({selectionHandler, activationFunction}) => {
+
   return (
     <div>
       <label htmlFor="activation" className="block text-sm font-light text-gray-500">
                 Activation
       </label>
       <select
+        onChange={selectionHandler}
         id="activation"
         name="activation"
         className="block w-full pl-28 pr-28 py-1 text-xl border-secondary outline-secondary-blue focus:ring-main-blue rounded-pill font-bold text-secondary-blue"
-        defaultValue="ReLu"
+        defaultValue={activationFunction}
       >
-        <option>ReLu</option>
-        <option>Sigmoid</option>
+        <option>relu</option>
+        <option>sigmoid</option>
       </select>
     </div>
   );
-}
+};
+
+export default ActivationSelection;

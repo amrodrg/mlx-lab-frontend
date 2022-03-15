@@ -15,6 +15,7 @@ import styles from '../../styles/jss/nextjs-material-kit/components/buildTabStyl
 import {MinusSmIcon, PlusSmIcon as PlusSmIconSolid} from '@heroicons/react/solid';
 import QuestionButtonWhite from '../Buttons/QuestionButtonWhite';
 import QuestionButtonBlue from '../Buttons/QuestionButtonBlue';
+import {RiseLoader} from 'react-spinners';
 
 const useStyles = makeStyles(styles);
 
@@ -191,7 +192,19 @@ export default function DataBuildTab(props) {
           </div>
 
 
-          <button className="text-4xl font-medium text-secondary-purple hover:border-2 border-secondary-purple rounded-full">Fit</button>
+          {
+            props.loading
+              ?
+              <div className="flex self-center">
+                <RiseLoader color='#4f50b7' size={20} margin={8}/>
+              </div>
+              :
+              <button
+                onClick={props.makeFetch}
+                className="text-4xl font-medium text-secondary-purple hover:border-2 border-secondary-purple rounded-full">
+              Fit
+              </button>
+          }
 
 
         </div>
@@ -220,6 +233,7 @@ DataBuildTab.propTypes = {
   testingPercentage: number,
   setTestingPercentage: PropTypes.func,
   epochsNumber:number,
-  setEpochsNumber: PropTypes.func
-
+  setEpochsNumber: PropTypes.func,
+  makeFetch: PropTypes.func,
+  loading: PropTypes.bool
 };

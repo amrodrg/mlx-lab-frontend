@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -14,7 +14,16 @@ import DataFittingBox from '../components/DataFittingSectionComponents/DataFitti
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
-export default function DataFittingSection() {
+type Props = {
+  epochsNum: number
+  setEpochsNum: Dispatch<SetStateAction<number>>
+  testingPer: number
+  setTestingPer: Dispatch<SetStateAction<number>>
+  makeFetch: () => void
+  loading: boolean
+}
+
+const DataFittingSection: FC<Props> = ({epochsNum, setEpochsNum, testingPer, setTestingPer, makeFetch, loading}) => {
   const classes = useStyles();
   return (
     <div className={classes.dataFit}>
@@ -34,10 +43,12 @@ export default function DataFittingSection() {
             </GridItem>
           </GridContainer>
           <div className="py-10 px-52">
-            <DataFittingBox />
+            <DataFittingBox epochsNum={epochsNum} setEpochsNum={setEpochsNum} testingPer={testingPer} setTestingPer={setTestingPer} makeFetch={makeFetch} loading={loading}/>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default DataFittingSection;

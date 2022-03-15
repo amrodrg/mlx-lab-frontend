@@ -1,32 +1,34 @@
 import {makeStyles} from '@material-ui/core/styles';
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle';
 import DataBuildTab from './DataBuildTab';
-import React, {FC, useState} from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
 type Props = {
-    trainingPercentage?: number
-    testingPercentage?: number
+    epochsNum: number
+    setEpochsNum: Dispatch<SetStateAction<number>>
+    testingPer: number
+    setTestingPer: Dispatch<SetStateAction<number>>
+    makeFetch: () => void
+    loading: boolean
 }
 
-const DataFittingBox: FC<Props> = () => {
-
-  const [epochsNumber, setEpochsNumber] = useState(100);
-
-  const [testingPercentage, setTestingPercentage] = useState(20);
+const DataFittingBox: FC<Props> = ({epochsNum, setEpochsNum, testingPer, setTestingPer, makeFetch, loading}) => {
 
   const classes = useStyles();
 
   return(
     <DataBuildTab
       headerColor="main"
-      testingPercentage={testingPercentage}
-      setTestingPercentage={setTestingPercentage}
-      epochsNumber={epochsNumber}
-      setEpochsNumber={setEpochsNumber}
+      testingPercentage={testingPer}
+      setTestingPercentage={setTestingPer}
+      epochsNumber={epochsNum}
+      setEpochsNumber={setEpochsNum}
+      makeFetch={makeFetch}
+      loading={loading}
     />
   );
 };

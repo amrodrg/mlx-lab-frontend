@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -9,12 +9,23 @@ import GridItem from '../components/Grid/GridItem.js';
 
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
 import ModelBuildBox from '../components/BuildBoxComponents/ModelBuildBox';
+import {Layer} from '../Interfaces';
+import {ToastContainer} from 'react-toastify';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
-export default function BuildingSection() {
+type Props = {
+  layers: Layer[]
+  setLayers: Dispatch<SetStateAction<Layer[]>>
+  neuronsList: number[]
+  setNeuronsList: Dispatch<SetStateAction<number[]>>
+  activationList: string[]
+  setActivationList: Dispatch<SetStateAction<string[]>>
+}
+
+const BuildingSection: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsList, activationList, setActivationList}) => {
   const classes = useStyles();
   return (
     <div className={classes.buildSection}>
@@ -34,10 +45,13 @@ export default function BuildingSection() {
             </GridItem>
           </GridContainer>
           <div className="py-10 px-8">
-            <ModelBuildBox/>
+            <ModelBuildBox layers={layers} setLayers={setLayers} neuronsList={neuronsList} setNeuronsList={setNeuronsList} activationList={activationList} setActivationList={setActivationList}/>
+            <ToastContainer/>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default BuildingSection;

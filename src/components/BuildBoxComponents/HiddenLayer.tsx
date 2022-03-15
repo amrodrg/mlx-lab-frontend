@@ -1,15 +1,17 @@
 import {MinusSmIcon, PlusSmIcon as PlusSmIconSolid} from '@heroicons/react/solid';
 import ActivationSelection from './ActivationSelection';
 import Divider from './Divider';
-import {FC} from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 
 type Props = {
   layerNumber:number
   neuronsNumber:number
-  setNeuronsNumber?: (neuronsNumber) => void
+  setNeuronsNumber: (neuronsNumber) => void
+  activationFunction: string
+  setActivationList: Dispatch<SetStateAction<string[]>>
 }
 
-const HiddenLayer: FC<Props> = ({neuronsNumber, setNeuronsNumber, layerNumber}) => {
+const HiddenLayer: FC<Props> = ({neuronsNumber, setNeuronsNumber, layerNumber, activationFunction, setActivationList}) => {
 
   function decreaseNeurons() {
     setNeuronsNumber(prev => {
@@ -27,6 +29,17 @@ const HiddenLayer: FC<Props> = ({neuronsNumber, setNeuronsNumber, layerNumber}) 
       return newLayers;
     });
   }
+
+  const activationFunctionHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const enteredFName = event.target.value;
+    setActivationList(prev => {
+      const newList = [...prev];
+      newList[layerNumber-1] = enteredFName;
+      return newList;
+    });
+    console.log(enteredFName);
+    console.log(activationFunction);
+  };
 
   return (
     <div className="flex flex-col">
@@ -73,7 +86,7 @@ const HiddenLayer: FC<Props> = ({neuronsNumber, setNeuronsNumber, layerNumber}) 
 
 
         <div className="flex flex-row justify-around content-around flex-auto w-1/5">
-          <ActivationSelection></ActivationSelection>
+          <ActivationSelection selectionHandler={activationFunctionHandler} activationFunction={activationFunction}></ActivationSelection>
         </div>
 
 

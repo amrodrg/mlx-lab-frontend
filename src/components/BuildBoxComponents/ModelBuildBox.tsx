@@ -4,12 +4,13 @@ import Face from '@material-ui/icons/Face';
 import Chat from '@material-ui/icons/Chat';
 import Build from '@material-ui/icons/Build';
 import BuildTab from './BuildTab';
-import React, {useState} from 'react';
+import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 import ButtonLeadingIcon from '../Buttons/ButtonLeadingIcon';
 import HiddenLayer from './HiddenLayer';
 import QuestionButton from '../Buttons/QuestionButton';
 import {List} from 'postcss/lib/list';
 import {MinusSmIcon} from '@heroicons/react/solid';
+import {Layer} from '../../Interfaces';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -39,27 +40,25 @@ interface MLModel{
     config?: MConfig
 }
 
-// Outgoing Data Types
-interface Layer {
-    layerId:number
-    neuronsNum:number
-    activationFun:string
+type Props = {
+    layers: Layer[]
+    setLayers: Dispatch<SetStateAction<Layer[]>>
+    neuronsList: number[]
+    setNeuronsList: Dispatch<SetStateAction<number[]>>
+    activationList: string[]
+    setActivationList: Dispatch<SetStateAction<string[]>>
 }
 
-export default function ModelBuildBox(){
+const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsList, activationList, setActivationList}) => {
   const classes = useStyles();
 
   // State variable to translate the incoming Json
   const [modelData, setModelData] = useState<MLModel>();
 
-  // The List of Layers
-  const [layers, setLayers] = useState<Layer[]>([{layerId:1, neuronsNum:2, activationFun:'ReLu'}]);
-
-  // The list of neuron's numbers for each layer
-  const [neuronsList, setNeuronsList] = useState([5]);
 
   // Add a new Layer
   const addLayer = (layerId, neuronsNumber, activationFunction) => {
+    setActivationList(prevState => [...prevState, activationFunction]);
     setNeuronsList(prevState => [...prevState, neuronsNumber]);
     setLayers(prevState => [...prevState, {layerId:layerId, neuronsNum:neuronsNumber, activationFun:activationFunction}]);
   };
@@ -67,22 +66,10 @@ export default function ModelBuildBox(){
   // Remove the last Layer
   const removeLastLayer = () => {
     setLayers(prevState => [...prevState.slice(0, -1)]);
+    setNeuronsList(prevState => [...prevState.slice(0, -1)]);
+    setActivationList(prevState => [...prevState.slice(0, -1)]);
   };
 
-  // Build Model with a given list of numbers of neurons for each layer
-  const makeFetch = async () => {
-    // POST request using fetch with async/await
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ neuronsNumber:neuronsList, layersNumber:layers.length })
-    };
-      
-    const mlData = await fetch('http://127.0.0.1:8000/', requestOptions);
-    const mlModel = await  mlData.json();
-    await setModelData(mlModel);
-    await console.log(mlModel);
-  };
 
 
   return(
@@ -102,11 +89,18 @@ export default function ModelBuildBox(){
                 <div className="flex my-2 mr-1">
                   <QuestionButton/>
                 </div>
-                <ButtonLeadingIcon onClick={()=> addLayer(layers.length+1, 1, 'ReLu')}/>
+                <ButtonLeadingIcon onClick={()=> addLayer(layers.length+1, 1, 'relu')}/>
               </div>
 
               {layers.map(layer => {
-                return (<HiddenLayer key={layer.layerId} layerNumber={layer.layerId} setNeuronsNumber={setNeuronsList} neuronsNumber={neuronsList[layer.layerId-1]}/>);
+                return (
+                  <HiddenLayer key={layer.layerId}
+                    layerNumber={layer.layerId}
+                    setNeuronsNumber={setNeuronsList}
+                    neuronsNumber={neuronsList[layer.layerId-1]}
+                    activationFunction={activationList[layer.layerId-1]}
+                    setActivationList={setActivationList}
+                  />);
               })}
 
               <div className="flex flex-row-reverse justify-content-between">
@@ -118,13 +112,6 @@ export default function ModelBuildBox(){
                   <MinusSmIcon className="h-5 w-5" aria-hidden="true" />
                 </button>
 
-                <button
-                  onClick={makeFetch}
-                  type="button"
-                  className="inline-flex w-20 p-2.5 items-center, justify-content-center border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-primary-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-purple"
-                >
-                  Fetch
-                </button>
               </div>
 
             </>
@@ -173,4 +160,6 @@ export default function ModelBuildBox(){
       ]}
     />
   );
-}
+};
+
+export default ModelBuildBox;

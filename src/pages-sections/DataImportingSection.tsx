@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -15,7 +15,13 @@ import DataLinkGroup from '../components/DataImportingSectionComponents/DataLink
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
-export default function DataImportingSection() {
+type Props = {
+  setLink: (event: React.ChangeEvent<HTMLInputElement>) => void
+  setLabelsRowName: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const DataImportingSection: FC<Props> = ({setLink, setLabelsRowName}) => {
+
   const classes = useStyles();
   return (
     <div className={classes.dataSection}>
@@ -36,21 +42,20 @@ export default function DataImportingSection() {
 
           <div className="flex flex-col">
 
-
-
-            <DataLinkGroup/>
-
-
+            <DataLinkGroup
+              setLink={setLink}
+              setLabelsRowName={setLabelsRowName}
+            />
 
             <ArrowDown/>
 
-
           </div>
-
 
           
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default DataImportingSection;
