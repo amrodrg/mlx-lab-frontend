@@ -4,41 +4,16 @@ import Face from '@material-ui/icons/Face';
 import Chat from '@material-ui/icons/Chat';
 import Build from '@material-ui/icons/Build';
 import BuildTab from './BuildTab';
-import React, {Dispatch, FC, SetStateAction, useState} from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 import ButtonLeadingIcon from '../Buttons/ButtonLeadingIcon';
 import HiddenLayer from './HiddenLayer';
 import QuestionButton from '../Buttons/QuestionButton';
-import {List} from 'postcss/lib/list';
 import {MinusSmIcon} from '@heroicons/react/solid';
 import {Layer} from '../../Interfaces';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const useStyles = makeStyles(styles);
-
-// Incoming Data Types
-interface LayerConfig {
-    batch_input_shape?:List
-    dtype?:number
-    sparse?:boolean
-    ragged?:boolean
-    name?:string
-}
-
-interface MLayer {
-    class_name?:string
-    config?:LayerConfig
-}
-
-interface MConfig {
-    name?:string
-    layers: MLayer[]
-}
-
-interface MLModel{
-    class_name?: string
-    config?: MConfig
-}
 
 type Props = {
     layers: Layer[]
@@ -51,9 +26,6 @@ type Props = {
 
 const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsList, activationList, setActivationList}) => {
   const classes = useStyles();
-
-  // State variable to translate the incoming Json
-  const [modelData, setModelData] = useState<MLModel>();
 
 
   // Add a new Layer
