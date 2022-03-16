@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -15,7 +15,16 @@ import ArrowDown from '../components/Buttons/ArrowDown';
 // @ts-ignore
 const useStyles = makeStyles(styles);
 
-export default function CompilingSection() {
+type Props = {
+  lossFunc: string
+  setLosFunc: Dispatch<SetStateAction<string>>
+  optimizer: string
+  setOptimizer: Dispatch<SetStateAction<string>>
+  metrics: string
+  setMetrics: Dispatch<SetStateAction<string>>
+}
+
+const CompilingSection: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimizer, metrics, setMetrics}) => {
   const classes = useStyles();
   return (
     <div className={classes.compileSection}>
@@ -35,11 +44,13 @@ export default function CompilingSection() {
             </GridItem>
           </GridContainer>
           <div className="py-10 px-8">
-            <ModelCompileBox/>
+            <ModelCompileBox lossFunc={lossFunc} setLosFunc={setLosFunc} optimizer={optimizer} setOptimizer={setOptimizer} metrics={metrics} setMetrics={setMetrics}/>
           </div>
           <ArrowDown/>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default CompilingSection;

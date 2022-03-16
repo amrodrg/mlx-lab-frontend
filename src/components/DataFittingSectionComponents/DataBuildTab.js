@@ -196,12 +196,12 @@ export default function DataBuildTab(props) {
             props.loading
               ?
               <div className="flex self-center">
-                <RiseLoader color='#4f50b7' size={20} margin={8}/>
+                <RiseLoader color='#0079C1' size={20} margin={10} speedMultiplier={2}/>
               </div>
               :
               <button
                 onClick={props.makeFetch}
-                className="text-4xl font-medium text-secondary-purple hover:border-2 border-secondary-purple rounded-full">
+                className="text-4xl font-medium text-main-blue border-2 hover:shadow-xl border-main-blue rounded-full">
               Fit
               </button>
           }

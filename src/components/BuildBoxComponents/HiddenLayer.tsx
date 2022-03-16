@@ -38,7 +38,6 @@ const HiddenLayer: FC<Props> = ({neuronsNumber, setNeuronsNumber, layerNumber, a
       return newList;
     });
     console.log(enteredFName);
-    console.log(activationFunction);
   };
 
   return (

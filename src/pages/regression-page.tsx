@@ -27,6 +27,12 @@ export default function RegressionPage() {
   const [epochsNumber, setEpochsNumber] = useState(100);
   // The testing percentage of data set
   const [testingPercentage, setTestingPercentage] = useState(20);
+  // The Lost function
+  const [lossFunc, setLossFunc] = useState('mae');
+  // Training Optimizer
+  const [optimizer, setOptimizer] = useState('adam');
+  // Evaluation Metrics
+  const [metrics, setMetrics] = useState('accuracy');
 
   const [loading, setLoading] = useState(false);
 
@@ -54,14 +60,17 @@ export default function RegressionPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        neuronsList:neuronsList,
+        neuronsList: neuronsList,
         activationList: activationList,
-        layersNumber:layers.length,
-        dataLink:linkValue,
+        layersNumber: layers.length,
+        dataLink: linkValue,
         labelsName: labelsRowName,
-        modelName:nameValue,
-        epochsNumber:epochsNumber,
-        testingPercentage:testingPercentage
+        modelName: nameValue,
+        epochsNumber: epochsNumber,
+        testingPercentage: testingPercentage,
+        lossFunction: lossFunc,
+        optimizer: optimizer,
+        metrics: metrics
       })
     };
 
@@ -93,7 +102,7 @@ export default function RegressionPage() {
       <DataImportingSection setLink={linkInputHandler} setLabelsRowName={labelsNameHandler}/>
       <NamingSection setName={nameInputHandler}/>
       <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList} setNeuronsList={setNeuronsList} activationList={activationList} setActivationList={setActivationList}/>
-      <CompilingSection/>
+      <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer} setOptimizer={setOptimizer} metrics={metrics} setMetrics={setMetrics}/>
       <DataFittingSection epochsNum={epochsNumber} setEpochsNum={setEpochsNumber} testingPer={testingPercentage} setTestingPer={setTestingPercentage} makeFetch={makeModelFetch} loading={loading}/>
     </div>);
 }
