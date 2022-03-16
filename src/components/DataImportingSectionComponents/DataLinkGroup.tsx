@@ -1,6 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {QuestionMarkCircleIcon} from '@heroicons/react/solid';
 import QuestionButtonBlue from '../Buttons/QuestionButtonBlue';
+import {ExplainModalDataLink, ExplainModalLabelName} from './ExplainModals';
 
 type Props = {
     setLink?: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -9,12 +10,16 @@ type Props = {
 
 const DataLinkGroup: FC<Props> = ({setLink, setLabelsRowName}) => {
 
+  const [showExampleModalDataLink , setShowExampleModalDataLink] = useState(false);
+  const [showExampleModalLabelName , setShowExampleModalLabelName] = useState(false);
+
   return (
     <div className="flex flex-col items-center">
 
       <div className="flex flex-row items-center w-full mx-5 mt-5 mb-2">
 
         <button
+          onClick={() => setShowExampleModalDataLink(true)}
           type="button"
           className="flex h-10 w-10 justify-content-center items-center rounded-full text-main-blue bg-transparent hover:text-secondary-blue"
         >
@@ -53,7 +58,7 @@ const DataLinkGroup: FC<Props> = ({setLink, setLabelsRowName}) => {
 
       <div className="flex flex-row items-center justify-center w-full mx-5 mt-2 mb-20">
 
-        <QuestionButtonBlue/>
+        <QuestionButtonBlue onClick={() => setShowExampleModalLabelName(true)}/>
 
 
         <div className=" flex flex-col w-2/5 p-6 ml-2 mr-10 mb-4">
@@ -83,7 +88,12 @@ const DataLinkGroup: FC<Props> = ({setLink, setLabelsRowName}) => {
                 Check
         </button>
 
+
       </div>
+
+
+      <ExplainModalDataLink showExampleModal={showExampleModalDataLink} setShowExampleModal={setShowExampleModalDataLink}/>
+      <ExplainModalLabelName showExampleModal={showExampleModalLabelName} setShowExampleModal={setShowExampleModalLabelName}/>
 
 
       {/*<Divider/>*/}
