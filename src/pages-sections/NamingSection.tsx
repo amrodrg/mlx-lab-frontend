@@ -25,7 +25,7 @@ const NamingSection: FC<Props> = ({setName}) => {
         <div className="flex flex-col">
           <h1 className="text-center text-white">Give a name to your model</h1>
           <h3 className="m-10 mb-2">
-            <small className="text-white">Your model will be saved in your account or local on pc under the entered name:</small>
+            <small className="text-white">Your model will be saved in your account or locally on your pc under the entered name:</small>
           </h3>
           <div className="flex flex-row items-center w-full m-5">
             <NameInputBox setName={setName}/>
