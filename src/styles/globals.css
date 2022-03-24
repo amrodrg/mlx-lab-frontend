@@ -39,15 +39,17 @@ h6 {
 h1 {
   font-size: 3.3125rem;
   line-height: 1.15em;
+  color: #0079C1;
 }
 h2 {
   font-size: 2.25rem;
   line-height: 1.5em;
+  color: #0079C1;
+  font-weight:bolder;
 }
 h3 {
   font-size: 1.56800rem;
   line-height: 1.4em;
-  color: #0079C1;
   font-weight:bold;
 }
 h4 {

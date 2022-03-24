@@ -1,4 +1,4 @@
-import {container} from '@/styles/jss/nextjs-material-kit.js';
+import {container, secondContainer} from '@/styles/jss/nextjs-material-kit.js';
 
 const tabsStyle = {
   section: {
@@ -6,15 +6,16 @@ const tabsStyle = {
     padding: '70px 0',
   },
   container,
+  secondContainer,
   textCenter: {
     textAlign: 'center',
   },
   buildSection: {
-    background: '#f5e8f7',
+    background: '#faf5fb',
     padding: '70px 0',
   },
   nameSection: {
-    background: '#C2E8FF',
+    background: '#0079C1',
     padding: '70px 0',
   },
   dataSection: {
@@ -23,6 +24,18 @@ const tabsStyle = {
   },
   introSection: {
     background: '#0079C1',
+  },
+  chooseSection: {
+    background: '#FFFFFF',
+    padding: '70px 0',
+  },
+  compileSection: {
+    background: '#FFFFFF',
+    padding: '70px 0',
+  },
+  dataFit: {
+    background: '#faf5fb',
+    padding: '70px 0',
   },
 };
 

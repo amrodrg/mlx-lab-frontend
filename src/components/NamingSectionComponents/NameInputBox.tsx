@@ -1,27 +1,18 @@
-/*
-  This example requires Tailwind CSS v2.0+
+import React, {FC} from 'react';
 
-  This example requires some changes to your config:
+type Props = {
+    setName?: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-export default function NameInputBox() {
+const NameInputBox : FC<Props> = ({setName}) => {
   return (
     <div className=" flex flex-col w-full p-10 mx-5">
-      <label htmlFor="model name" className="block text-sm font-medium text-main-blue">
+      <label htmlFor="model name" className="block text-sm font-medium text-white">
                 Model's name
       </label>
       <div className="flex w-full mt-1 justify-center">
         <input
+          onChange={setName}
           type="name"
           name="name"
           id="name"
@@ -32,4 +23,6 @@ export default function NameInputBox() {
       </div>
     </div>
   );
-}
+};
+
+export default NameInputBox;
