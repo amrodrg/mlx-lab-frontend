@@ -92,6 +92,9 @@ function NewExample() {
 }
 
 function ExampleComponent(example) {
+
+    console.log(example);
+
     const instance = example.example;
     if (instance === "1") {
         return <NewExample/>
@@ -145,7 +148,7 @@ export default function ConfigureExplainer () {
 
                 <Row>
                     <Col md={6}>
-                        <div className={styles['component_title']}> Testdata </div>
+                        <div className={styles['component_title']}> Background Examples </div>
                         <Button onClick={() => setShowPlotModal(true)} variant="none" className={styles['configure_info_icon']}>
                             <Icon.InfoCircleFill/>
                         </Button>

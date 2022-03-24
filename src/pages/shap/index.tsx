@@ -28,7 +28,6 @@ const ShapIndex = () => {
               <Col>
                 For Explaining the Model Prediction SHAP (SHapley Additive exPlanations) is used.  
                 SHAP is a game theoretic approach to explain the output of any machine learning model. 
-              {/* <MainShapSection/> */}
               </Col>
             </Row>
             <Row className={styles["shap_row_offset shap_title_font"] + " " + styles["shap_title_font"]}>
