@@ -16,11 +16,12 @@ import DataLinkGroup from '../components/DataImportingSectionComponents/DataLink
 const useStyles = makeStyles(styles);
 
 type Props = {
+  dataLinkValue: string
   setLink: (event: React.ChangeEvent<HTMLInputElement>) => void
   setLabelsRowName: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const DataImportingSection: FC<Props> = ({setLink, setLabelsRowName}) => {
+const DataImportingSection: FC<Props> = ({dataLinkValue ,setLink, setLabelsRowName}) => {
 
   const classes = useStyles();
   return (
@@ -43,6 +44,7 @@ const DataImportingSection: FC<Props> = ({setLink, setLabelsRowName}) => {
           <div className="flex flex-col">
 
             <DataLinkGroup
+              dataLinkValue={dataLinkValue}
               setLink={setLink}
               setLabelsRowName={setLabelsRowName}
             />

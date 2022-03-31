@@ -4,11 +4,12 @@ import QuestionButtonBlue from '../Buttons/QuestionButtonBlue';
 import {ExplainModalDataLink, ExplainModalLabelName} from './ExplainModals';
 
 type Props = {
+    dataLinkValue: string
     setLink?: (event: React.ChangeEvent<HTMLInputElement>) => void
     setLabelsRowName: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const DataLinkGroup: FC<Props> = ({setLink, setLabelsRowName}) => {
+const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, setLabelsRowName}) => {
 
   const [showExampleModalDataLink , setShowExampleModalDataLink] = useState(false);
   const [showExampleModalLabelName , setShowExampleModalLabelName] = useState(false);
@@ -36,6 +37,7 @@ const DataLinkGroup: FC<Props> = ({setLink, setLabelsRowName}) => {
           <div className="flex w-full mt-1 justify-center">
             <input
               onChange={setLink}
+              value={dataLinkValue}
               type="name"
               name="name"
               id="name"

@@ -7,12 +7,13 @@ import RegressionHeader from '../components/RegressionHeader';
 import React, {useState} from 'react';
 import {Layer} from '../Interfaces';
 import {toast} from 'react-toastify';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 
 export default function RegressionPage() {
 
   // The entered data link
-  const [linkValue, setLinkValue] = useState('');
+  const [linkValue, setLinkValue] = useLocalStorage('DataLink', '');
   // Data labels row name
   const [labelsRowName, setLabelsRowName] = useState('');
   // The entered Model's name
@@ -99,7 +100,7 @@ export default function RegressionPage() {
   return(
     <div>
       <RegressionHeader/>
-      <DataImportingSection setLink={linkInputHandler} setLabelsRowName={labelsNameHandler}/>
+      <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} setLabelsRowName={labelsNameHandler}/>
       <NamingSection setName={nameInputHandler}/>
       <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList} setNeuronsList={setNeuronsList} activationList={activationList} setActivationList={setActivationList}/>
       <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer} setOptimizer={setOptimizer} metrics={metrics} setMetrics={setMetrics}/>
