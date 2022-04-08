@@ -8,16 +8,26 @@ import React, {useState} from 'react';
 import {Layer} from '../Interfaces';
 import {toast} from 'react-toastify';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import {useDispatch, useSelector} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {ModelNameActionCreator} from  '../redux/index';
 
 
 export default function RegressionPage() {
 
+  // imported values from Redux Store
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const {modelName} = useSelector((state) => state);
+
+  // Action Creators of Redux
+  const dispatch = useDispatch();
+  const modelNameAC = bindActionCreators(ModelNameActionCreator, dispatch);
+
   // The entered data link
   const [linkValue, setLinkValue] = useLocalStorage('DataLink', '');
   // Data labels row name
-  const [labelsRowName, setLabelsRowName] = useState('');
-  // The entered Model's name
-  const [nameValue, setNameValue] = useState('');
+  const [labelsRowName, setLabelsRowName] = useLocalStorage('LabelsRowName', '');
   // The List of Layers
   const [layers, setLayers] = useState<Layer[]>([{layerId:1, neuronsNum:2, activationFun:'ReLu'}]);
   // The list of neuron's numbers for each layer
@@ -51,7 +61,7 @@ export default function RegressionPage() {
 
   const nameInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredName = event.target.value;
-    setNameValue(enteredName);
+    modelNameAC.enterModelName(enteredName);
   };
 
   // Build a Model with a given number of layers and a given number of neurons for each layer
@@ -66,7 +76,7 @@ export default function RegressionPage() {
         layersNumber: layers.length,
         dataLink: linkValue,
         labelsName: labelsRowName,
-        modelName: nameValue,
+        modelName: modelName,
         epochsNumber: epochsNumber,
         testingPercentage: testingPercentage,
         lossFunction: lossFunc,
@@ -87,6 +97,12 @@ export default function RegressionPage() {
         top: 240,
         behavior: 'smooth',
       });
+    } else if (modelName == '') {
+      toast.error(' Please enter a name for your model!');
+      window.scrollTo({
+        top: 780,
+        behavior: 'smooth',
+      });
     }
     else {
       setLoading(true);
@@ -100,8 +116,8 @@ export default function RegressionPage() {
   return(
     <div>
       <RegressionHeader/>
-      <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} setLabelsRowName={labelsNameHandler}/>
-      <NamingSection setName={nameInputHandler}/>
+      <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} labelsRowName={labelsRowName} setLabelsRowName={labelsNameHandler}/>
+      <NamingSection modelName={modelName} setName={nameInputHandler}/>
       <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList} setNeuronsList={setNeuronsList} activationList={activationList} setActivationList={setActivationList}/>
       <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer} setOptimizer={setOptimizer} metrics={metrics} setMetrics={setMetrics}/>
       <DataFittingSection epochsNum={epochsNumber} setEpochsNum={setEpochsNumber} testingPer={testingPercentage} setTestingPer={setTestingPercentage} makeFetch={makeModelFetch} loading={loading}/>

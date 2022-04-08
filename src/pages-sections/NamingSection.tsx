@@ -13,10 +13,11 @@ import {ArrowNarrowDownIcon} from '@heroicons/react/outline';
 const useStyles = makeStyles(styles);
 
 type Props = {
+  modelName: string
   setName?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const NamingSection: FC<Props> = ({setName}) => {
+const NamingSection: FC<Props> = ({modelName, setName}) => {
   const classes = useStyles();
 
   return (
@@ -28,7 +29,7 @@ const NamingSection: FC<Props> = ({setName}) => {
             <small className="text-white">Your model will be saved in your account or locally on your pc under the entered name:</small>
           </h3>
           <div className="flex flex-row items-center w-full m-5">
-            <NameInputBox setName={setName}/>
+            <NameInputBox modelName={modelName} setName={setName}/>
             <button
               type="button"
               className="items-center inline-flex w-64 h-12 p-2.5 justify-content-center border border-transparent rounded-full shadow-sm text-main-blue font-bold bg-white hover:bg-primary-purple"

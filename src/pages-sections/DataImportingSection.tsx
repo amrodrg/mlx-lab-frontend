@@ -18,10 +18,11 @@ const useStyles = makeStyles(styles);
 type Props = {
   dataLinkValue: string
   setLink: (event: React.ChangeEvent<HTMLInputElement>) => void
+  labelsRowName: string
   setLabelsRowName: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const DataImportingSection: FC<Props> = ({dataLinkValue ,setLink, setLabelsRowName}) => {
+const DataImportingSection: FC<Props> = ({dataLinkValue ,setLink, labelsRowName, setLabelsRowName}) => {
 
   const classes = useStyles();
   return (
@@ -46,6 +47,7 @@ const DataImportingSection: FC<Props> = ({dataLinkValue ,setLink, setLabelsRowNa
             <DataLinkGroup
               dataLinkValue={dataLinkValue}
               setLink={setLink}
+              labelsRowName={labelsRowName}
               setLabelsRowName={setLabelsRowName}
             />
 

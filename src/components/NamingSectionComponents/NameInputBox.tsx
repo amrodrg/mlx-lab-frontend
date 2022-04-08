@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 
 type Props = {
+    modelName: string
     setName?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const NameInputBox : FC<Props> = ({setName}) => {
+const NameInputBox : FC<Props> = ({modelName, setName}) => {
   return (
     <div className=" flex flex-col w-full p-10 mx-5">
       <label htmlFor="model name" className="block text-sm font-medium text-white">
@@ -12,6 +13,7 @@ const NameInputBox : FC<Props> = ({setName}) => {
       </label>
       <div className="flex w-full mt-1 justify-center">
         <input
+          value={modelName}
           onChange={setName}
           type="name"
           name="name"

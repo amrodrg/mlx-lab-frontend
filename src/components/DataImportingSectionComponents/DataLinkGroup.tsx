@@ -5,11 +5,12 @@ import {ExplainModalDataLink, ExplainModalLabelName} from './ExplainModals';
 
 type Props = {
     dataLinkValue: string
-    setLink?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    setLink: (event: React.ChangeEvent<HTMLInputElement>) => void
+    labelsRowName: string
     setLabelsRowName: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, setLabelsRowName}) => {
+const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, labelsRowName, setLabelsRowName}) => {
 
   const [showExampleModalDataLink , setShowExampleModalDataLink] = useState(false);
   const [showExampleModalLabelName , setShowExampleModalLabelName] = useState(false);
@@ -71,12 +72,13 @@ const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, setLabelsRowName}) =>
 
           <div className="flex w-full mt-1 justify-center">
             <input
+              value={labelsRowName}
               onChange={setLabelsRowName}
               type="name"
               name="name"
               id="name"
               className="h-4 w-full px-7 py-6 font-bold lg:text-lg shadow-md border-1 border-secondary-blue block rounded-2xl"
-              placeholder="Example: Charges"
+              placeholder="Example: charges"
               aria-describedby="name-description"
             />
           </div>
