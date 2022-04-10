@@ -1,6 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import {MinusIcon, PlusIcon} from '@heroicons/react/solid';
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -10,15 +10,40 @@ type Props = {
     loss?: number
     mae?: number
     accuracy?: number
+    median?: number
+    mean?: number
 }
 
-const EvaluationStats: FC<Props> = ({ loss, mae, accuracy}) => {
+const EvaluationStats: FC<Props> = ({ loss, mae, accuracy, median, mean}) => {
+
+  const [lossToMean, setLossToMean] = useState(0);
+  const [lossToMedian, setLossToMedian] = useState(0);
+  const [accuracyVal, setAccuracyVal] = useState(0);
+  const [accuracyLoss, setAccuracyLoss] = useState(0);
+
+  const calculatePerformanceValues = () => {
+    if (mean) {
+      const LToMn = (loss/mean) * 100;
+      setLossToMean(LToMn);
+      const accu = 100 - LToMn;
+      setAccuracyVal(accu);
+      setAccuracyLoss(100 - accu);
+    }
+    if (median) {
+      const LToMd = (loss/median) * 100;
+      setLossToMedian(LToMd);
+    }
+  };
 
   const stats = [
-    { name: 'Loss in Prediction to Mean Value', stat: loss? loss: '0', previousStat: '70,946', change: '12%', changeType: 'increase' },
-    { name: 'Loss in Prediction to Median Value', stat: mae? mae: '0', previousStat: '56.14', change: '2.02%', changeType: 'increase' },
-    { name: 'Model Accuracy', stat: accuracy||accuracy === 0? accuracy: '0%', previousStat: '100%', change: '76.00%', changeType: 'decrease' },
+    { name: 'Loss in Prediction to Mean Value', positiveEffect: false, stat: loss||loss === 0? loss: '0', previousStat: mean||mean === 0? mean: '0', change: (lossToMean).toFixed(2) + '%', changeType: 'decrease' },
+    { name: 'Loss in Prediction to Median Value', positiveEffect: false, stat: mae||mae === 0? mae: '0', previousStat: median||median === 0? median: '0', change: (lossToMedian.toFixed(2)) + '%', changeType: 'decrease' },
+    { name: 'Model Accuracy', positiveEffect: true, stat: accuracyVal.toFixed(2) + '%', previousStat: '100%', change: (accuracyLoss.toFixed(2)) + '%', changeType: 'decrease' },
   ];
+
+  useEffect(() => {
+    calculatePerformanceValues();
+  }, [mean, median]);
     
   return (
     <div>
@@ -29,7 +54,7 @@ const EvaluationStats: FC<Props> = ({ loss, mae, accuracy}) => {
 
             <dt className="text-base font-normal text-gray-900">{item.name}</dt>
             <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
-              <div className="flex items-baseline text-2xl font-semibold text-main-blue">
+              <div className={classNames(item.positiveEffect? 'text-green-600': 'text-red-600','flex items-baseline text-2xl font-semibold')}>
                 {item.stat}
                 <span className="ml-2 text-sm font-medium text-gray-500">from {item.previousStat}</span>
               </div>

@@ -9,6 +9,8 @@ const initialEvaluationValues = {
   loss: 0,
   mae : 0,
   accuracy: 0,
+  median: 0,
+  mean: 0
 };
 
 
@@ -54,7 +56,9 @@ export default function EvaluationPage() {
             setEvaluationValues({
               loss: evaluationData.loss,
               mae: evaluationData.loss,
-              accuracy: evaluationData.accuracy
+              accuracy: evaluationData.accuracy,
+              median: evaluationData.median,
+              mean: evaluationData.mean
             });
           }
           );
@@ -66,7 +70,13 @@ export default function EvaluationPage() {
   return(
     <div>
       <EvaluationHeader/>
-      <EvaluationSection loss={evaluationValues.loss} mae={evaluationValues.mae} accuracy={evaluationValues.accuracy}/>
+      <EvaluationSection
+        loss={evaluationValues.loss}
+        mae={evaluationValues.mae}
+        accuracy={evaluationValues.accuracy}
+        median={evaluationValues.median}
+        mean={evaluationValues.mean}
+      />
     </div>);
 }
 

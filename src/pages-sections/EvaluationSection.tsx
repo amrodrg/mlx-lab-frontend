@@ -19,9 +19,11 @@ type Props = {
     loss?: number
     mae?: number
     accuracy?: number
+    median?: number
+    mean?: number
 }
 
-const EvaluationSection: FC<Props> = ({loss, mae, accuracy}) => {
+const EvaluationSection: FC<Props> = ({loss, mae, accuracy, median, mean}) => {
 
   const classes = useStyles();
   return (
@@ -40,7 +42,7 @@ const EvaluationSection: FC<Props> = ({loss, mae, accuracy}) => {
 
           <div className="flex flex-col">
 
-            <EvaluationStats loss={loss} mae={mae} accuracy={accuracy}/>
+            <EvaluationStats loss={loss} mae={mae} accuracy={accuracy} median={median} mean={mean}/>
 
 
           </div>

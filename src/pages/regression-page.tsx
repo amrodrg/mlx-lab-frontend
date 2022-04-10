@@ -34,11 +34,11 @@ export default function RegressionPage() {
   // Data labels row name
   const [labelsRowName, setLabelsRowName] = useLocalStorage('LabelsRowName', '');
   // The List of Layers
-  const [layers, setLayers] = useState<Layer[]>([{layerId:1, neuronsNum:2, activationFun:'ReLu'}]);
+  const [layers, setLayers] = useLocalStorage('layersKey', [{layerId:1, neuronsNum:2, activationFun:'ReLu'}]);
   // The list of neuron's numbers for each layer
-  const [neuronsList, setNeuronsList] = useState([5]);
+  const [neuronsList, setNeuronsList] = useLocalStorage('neuronsListKey', [5]);
   // The list of activation functions for each layer
-  const [activationList, setActivationList] = useState(['relu']);
+  const [activationList, setActivationList] = useLocalStorage('activationListKey', ['relu']);
   // The number of epochs
   const [epochsNumber, setEpochsNumber] = useState(100);
   // The testing percentage of data set
