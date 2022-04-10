@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 
 
-function getSavedValue( key: string, initialValue: any) {
+export function getSavedValue( key: string, initialValue: any) {
 
   if (typeof window !== 'undefined') {
     // 👉️ can use localStorage here

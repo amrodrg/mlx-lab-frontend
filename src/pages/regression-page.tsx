@@ -9,11 +9,16 @@ import {Layer} from '../Interfaces';
 import {toast} from 'react-toastify';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import {useDispatch, useSelector} from 'react-redux';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {bindActionCreators} from 'redux';
 import {ModelNameActionCreator} from  '../redux/index';
+import {useRouter} from 'next/router';
 
 
 export default function RegressionPage() {
+
+  const router = useRouter();
 
   // imported values from Redux Store
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -37,7 +42,7 @@ export default function RegressionPage() {
   // The number of epochs
   const [epochsNumber, setEpochsNumber] = useState(100);
   // The testing percentage of data set
-  const [testingPercentage, setTestingPercentage] = useState(20);
+  const [testingPercentage, setTestingPercentage] = useLocalStorage('TestPercentage', 20);
   // The Lost function
   const [lossFunc, setLossFunc] = useState('mae');
   // Training Optimizer
@@ -109,7 +114,8 @@ export default function RegressionPage() {
       const mlData = await fetch('http://127.0.0.1:8000/', requestOptions);
       const mlModel = await  mlData.json();
       await console.log(mlModel);
-      setLoading(false);
+      await setLoading(false);
+      router.push('/evaluation-page');
     }
   };
     

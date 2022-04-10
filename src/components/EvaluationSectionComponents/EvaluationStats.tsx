@@ -9,15 +9,15 @@ function classNames(...classes) {
 type Props = {
     loss?: number
     mae?: number
-    performance?: number
+    accuracy?: number
 }
 
-const EvaluationStats: FC<Props> = ({ loss, mae, performance}) => {
+const EvaluationStats: FC<Props> = ({ loss, mae, accuracy}) => {
 
   const stats = [
-    { name: 'Loss in Prediction Value', stat: loss? loss: '71,897', previousStat: '70,946', change: '12%', changeType: 'increase' },
-    { name: 'Meaning Absolute Error', stat: mae? mae: '58.16', previousStat: '56.14', change: '2.02%', changeType: 'increase' },
-    { name: 'Model Performance', stat: performance? performance: '24.00%', previousStat: '100%', change: '76.00%', changeType: 'decrease' },
+    { name: 'Loss in Prediction to Mean Value', stat: loss? loss: '0', previousStat: '70,946', change: '12%', changeType: 'increase' },
+    { name: 'Loss in Prediction to Median Value', stat: mae? mae: '0', previousStat: '56.14', change: '2.02%', changeType: 'increase' },
+    { name: 'Model Accuracy', stat: accuracy||accuracy === 0? accuracy: '0%', previousStat: '100%', change: '76.00%', changeType: 'decrease' },
   ];
     
   return (

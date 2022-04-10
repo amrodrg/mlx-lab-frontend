@@ -16,11 +16,12 @@ import Link from 'next/link';
 const useStyles = makeStyles(styles);
 
 type Props = {
-    setLink?: (event: React.ChangeEvent<HTMLInputElement>) => void
-    setLabelsRowName?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    loss?: number
+    mae?: number
+    accuracy?: number
 }
 
-const EvaluationSection: FC<Props> = ({setLink, setLabelsRowName}) => {
+const EvaluationSection: FC<Props> = ({loss, mae, accuracy}) => {
 
   const classes = useStyles();
   return (
@@ -31,7 +32,7 @@ const EvaluationSection: FC<Props> = ({setLink, setLabelsRowName}) => {
           <GridContainer>
             <GridItem>
               <h5 className="p-4 mr-20">
-                  The following numbers show the performence and accuracy of your model.
+                  The following numbers show the performance and accuracy of your model.
               </h5>
             </GridItem>
           </GridContainer>
@@ -39,7 +40,7 @@ const EvaluationSection: FC<Props> = ({setLink, setLabelsRowName}) => {
 
           <div className="flex flex-col">
 
-            <EvaluationStats/>
+            <EvaluationStats loss={loss} mae={mae} accuracy={accuracy}/>
 
 
           </div>
