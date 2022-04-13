@@ -47,21 +47,20 @@ export default function RegressionPage() {
   const [lossFunc, setLossFunc] = useState('mae');
   // Training Optimizer
   const [optimizer, setOptimizer] = useState('adam');
-  // Evaluation Metrics
-  const [metrics, setMetrics] = useState('accuracy');
+  // Learning Rate
+  const [learningRate, setLearningRate] = useState(0.01);
+
 
   const [loading, setLoading] = useState(false);
 
   const linkInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredLink = event.target.value;
     setLinkValue(enteredLink);
-    console.log(enteredLink);
   };
 
   const labelsNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredName = event.target.value;
     setLabelsRowName(enteredName);
-    console.log(enteredName);
   };
 
   const nameInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +85,7 @@ export default function RegressionPage() {
         testingPercentage: testingPercentage,
         lossFunction: lossFunc,
         optimizer: optimizer,
-        metrics: metrics
+        learningRate: learningRate
       })
     };
 
@@ -125,7 +124,7 @@ export default function RegressionPage() {
       <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} labelsRowName={labelsRowName} setLabelsRowName={labelsNameHandler}/>
       <NamingSection modelName={modelName} setName={nameInputHandler}/>
       <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList} setNeuronsList={setNeuronsList} activationList={activationList} setActivationList={setActivationList}/>
-      <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer} setOptimizer={setOptimizer} metrics={metrics} setMetrics={setMetrics}/>
+      <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer} setOptimizer={setOptimizer} learningRate={learningRate} setLearningRate={setLearningRate} />
       <DataFittingSection epochsNum={epochsNumber} setEpochsNum={setEpochsNumber} testingPer={testingPercentage} setTestingPer={setTestingPercentage} makeFetch={makeModelFetch} loading={loading}/>
     </div>);
 }

@@ -20,11 +20,11 @@ type Props = {
   setLosFunc: Dispatch<SetStateAction<string>>
   optimizer: string
   setOptimizer: Dispatch<SetStateAction<string>>
-  metrics: string
-  setMetrics: Dispatch<SetStateAction<string>>
+  learningRate: number
+  setLearningRate:  React.Dispatch<React.SetStateAction<number>>
 }
 
-const CompilingSection: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimizer, metrics, setMetrics}) => {
+const CompilingSection: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimizer, learningRate, setLearningRate}) => {
   const classes = useStyles();
   return (
     <div className={classes.compileSection}>
@@ -44,7 +44,7 @@ const CompilingSection: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimi
             </GridItem>
           </GridContainer>
           <div className="py-10 px-8">
-            <ModelCompileBox lossFunc={lossFunc} setLosFunc={setLosFunc} optimizer={optimizer} setOptimizer={setOptimizer} metrics={metrics} setMetrics={setMetrics}/>
+            <ModelCompileBox lossFunc={lossFunc} setLosFunc={setLosFunc} optimizer={optimizer} setOptimizer={setOptimizer} learningRate={learningRate} setLearningRate={setLearningRate} />
           </div>
           <ArrowDown/>
         </div>
