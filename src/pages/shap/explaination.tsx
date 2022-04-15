@@ -8,9 +8,6 @@ import NextLink from 'next/link';
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import configurePlaceholder from '../../static-images/placeholder.png';
 
-// Plots 
-
-// Later own component
 function Placeholder() {
     return (
         <div>

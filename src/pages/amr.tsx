@@ -72,7 +72,7 @@ export async function getStaticProps(context: any) {
 
   const mlmodel = await fetch('http://127.0.0.1:8000/');
 
-  const mlData = await  mlmodel.json();
+  const mlData = await mlmodel.json();
 
   //console.log(typeof(data));
 
