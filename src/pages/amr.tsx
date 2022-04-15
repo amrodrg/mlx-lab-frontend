@@ -1,11 +1,6 @@
 import Stats from '../components/stats';
 import {List} from 'postcss/lib/list';
 
-interface aroundData {
-    city?: string
-    zipcode?: number
-}
-
 interface LayerConfig {
   batch_input_shape?:List
   dtype?:number
@@ -30,7 +25,6 @@ interface MLData {
 }
 
 interface IProps {
-    around_data: aroundData
     mlData:MLData
 }
 
@@ -67,19 +61,13 @@ export default function Amr(props: IProps) {
 
 export async function getStaticProps(context: any) {
 
-  const res = await fetch('https://api.around.pet/v1/places/pin/1');
-  const data = await res.json();
-
   const mlmodel = await fetch('http://127.0.0.1:8000/');
 
   const mlData = await mlmodel.json();
 
-  //console.log(typeof(data));
-
-  const around_data = data.data;
 
   return {
-    props: {around_data, mlData},
+    props: {mlData},
     revalidate: 60
   };
 }

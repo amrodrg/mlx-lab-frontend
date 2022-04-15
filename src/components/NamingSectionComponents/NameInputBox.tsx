@@ -7,7 +7,7 @@ type Props = {
 
 const NameInputBox : FC<Props> = ({modelName, setName}) => {
   return (
-    <div className=" flex flex-col w-full p-10 mx-5">
+    <div className=" flex flex-col w-full p-10 ml-5 mr-32">
       <label htmlFor="model name" className="block text-sm font-medium text-white">
                 Model's name
       </label>

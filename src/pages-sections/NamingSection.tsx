@@ -30,12 +30,6 @@ const NamingSection: FC<Props> = ({modelName, setName}) => {
           </h3>
           <div className="flex flex-row items-center w-full m-5">
             <NameInputBox modelName={modelName} setName={setName}/>
-            <button
-              type="button"
-              className="items-center inline-flex w-64 h-12 p-2.5 justify-content-center border border-transparent rounded-full shadow-sm text-main-blue font-bold bg-white hover:bg-primary-purple"
-            >
-              Enter
-            </button>
           </div>
           <button
             type="button"
