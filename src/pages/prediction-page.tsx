@@ -72,7 +72,7 @@ export default function PredictionPage() {
               <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:p-0 lg:h-full">
                 <div className="aspect-w-10 aspect-h-8 rounded-xl shadow-md overflow-scroll sm:aspect-w-4 sm:aspect-h-7 lg:aspect-none lg:h-full bg-white">
 
-                  <PredictionList predictionList={predictionItems}/>
+                  <PredictionList predictionList={predictionItems} loading={loading}/>
 
                 </div>
               </div>
