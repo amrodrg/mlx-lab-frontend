@@ -23,15 +23,19 @@ const PredictionList: FC<Props> = ({predictionList, explainFunc, loading}) => {
   return (
     <ul role="list" className="divide-y divide-gray-200">
       <div className="ml-3 mt-1">
-        <p className="text-2xl font-bold text-sky-900 mt-4 mx-2"> Results: </p>
+        <p className="text-3xl font-bold text-sky-900 mt-4 mx-2"> Results: </p>
       </div>
       {predictionList && predictionList.map((prediction) => (
         <li key={prediction.idx} className="py-4 flex">
-          <div className="h-10 w-10 rounded-full bg-main-blue">
-            <img src={'img/ai-healing-white.svg'} className="h-10 w-10 p-1"/>
+          <div className="h-10 w-10 rounded-full bg-main-blue text-center">
+            {
+              predictionList.length>1
+                ? <p className="text-white text-2xl font-bold mt-1">{prediction.idx + 1}</p>
+                : <img src={'img/ai-healing-white.svg'} className="h-10 w-10 p-1"/>
+            }
           </div>
-          <div className="ml-3 mt-1">
-            <p className="text-lg font-bold text-gray-900">{prediction.prediction}</p>
+          <div className="ml-4 mt-1">
+            <p className="text-2xl font-bold text-gray-900">{prediction.prediction}</p>
           </div>
         </li>
       ))}
