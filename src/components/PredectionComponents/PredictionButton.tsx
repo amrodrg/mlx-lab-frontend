@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 
-export const PredictionButton = () => {
+type Props = {
+  predictionFetch: () => void
+}
+
+export const PredictionButton: FC<Props> = ({predictionFetch}) => {
   return (
     <button
+      onClick={predictionFetch}
       type="button"
       className="items-center inline-flex w-60 h-14 p-1 justify-content-center border border-transparent rounded-2xl shadow-sm text-xl text-white font-bold bg-fuchsia-900 hover:bg-primary-purple"
     >

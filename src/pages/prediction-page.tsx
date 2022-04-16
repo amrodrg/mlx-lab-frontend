@@ -1,28 +1,59 @@
 
-import React, {Fragment, useState} from 'react';
-import { Popover, Transition } from '@headlessui/react';
-import {
-  CloudUploadIcon,
-  CogIcon,
-  LockClosedIcon,
-  MenuIcon,
-  RefreshIcon,
-  ServerIcon,
-  ShieldCheckIcon,
-  XIcon,
-} from '@heroicons/react/outline';
-import { ChevronRightIcon, ExternalLinkIcon } from '@heroicons/react/solid';
+import React, {useEffect, useState} from 'react';
 import PredictLinkInput from '../components/PredectionComponents/PredictLinkInput';
 import {PredictionButton} from '../components/PredectionComponents/PredictionButton';
+import {toast, ToastContainer} from 'react-toastify';
+import {useSelector} from 'react-redux';
+import PredictionList from '../components/PredectionComponents/PredictionList';
+
+export interface PredictionObjekt {
+  idx: number
+  prediction: number
+}
 
 export default function PredictionPage() {
 
-  const [predictLink, setPredictLink] = useState('');
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const {modelName} = useSelector((state) => state);
+
+  const [predictionDataLink, setPredictionDataLink] = useState('');
+  const [predictionItems, setPredictionItems] = useState();
+  const [loading, setLoading] = useState(false);
 
   const linkInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredLink = event.target.value;
-    setPredictLink(enteredLink);
+    setPredictionDataLink(enteredLink);
     console.log(enteredLink);
+  };
+
+  const makePredictionFetch = async () => {
+    // POST request using fetch with async/await
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        modelName: modelName,
+        predictionDataLink: predictionDataLink,
+
+      })
+    };
+
+    if (predictionDataLink == '') {
+      toast.error(' Please enter a data link!');
+      window.scrollTo({
+        top: 100,
+        behavior: 'smooth',
+      });
+    }
+    else {
+      setLoading(true);
+      const predictionData = await fetch('http://127.0.0.1:8000/predict', requestOptions);
+      const predictionString = await  predictionData.json();
+      await setPredictionItems(predictionString);
+      await setLoading(false);
+      await console.log(predictionString);
+    }
   };
 
   return (
@@ -37,21 +68,25 @@ export default function PredictionPage() {
           <div className="lg:mx-auto lg:pl-40 lg:pr-8 lg:grid lg:grid-cols-3">
 
 
-            <div className="relative lg:-my-8">
+            <div className="relative lg:-my-8 h-96 ">
               <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:p-0 lg:h-full">
-                <div className="aspect-w-10 aspect-h-8 rounded-xl shadow-md overflow-hidden sm:aspect-w-16 sm:aspect-h-7 lg:aspect-none lg:h-full bg-white">
+                <div className="aspect-w-10 aspect-h-8 rounded-xl shadow-md overflow-scroll sm:aspect-w-4 sm:aspect-h-7 lg:aspect-none lg:h-full bg-white">
+
+                  <PredictionList predictionList={predictionItems}/>
 
                 </div>
               </div>
             </div>
 
 
-            <div className="mt-12 lg:m-0 lg:col-span-2 lg:pl-8 w-full">
-              <div className="flex flex-row items-center mx-auto px-4 sm:max-w-2xl sm:px-6 lg:px-0 lg:py-20 lg:max-w-none">
+            <div className="mt-12 col-span-2 pl-8 w-full">
+              <div className="flex flex-row items-center">
 
-                <PredictLinkInput predictLink={predictLink} predictLinkInputHandler={linkInputHandler}/>
+                <PredictLinkInput predictLink={predictionDataLink} predictLinkInputHandler={linkInputHandler}/>
 
-                <PredictionButton/>
+                <PredictionButton predictionFetch={makePredictionFetch}/>
+
+                <ToastContainer/>
 
               </div>
             </div>
