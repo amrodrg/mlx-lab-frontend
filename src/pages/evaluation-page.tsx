@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import EvaluationHeader from '../components/EvaluationSectionComponents/EvaluationHeader';
 import EvaluationSection from '../pages-sections/EvaluationSection';
-import {toast} from 'react-toastify';
 import {useSelector} from 'react-redux';
 import {getSavedValue} from '@/hooks/useLocalStorage';
 

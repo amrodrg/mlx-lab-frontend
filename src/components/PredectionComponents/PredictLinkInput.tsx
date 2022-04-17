@@ -10,7 +10,7 @@ const PredictLinkInput: FC<Props> = ({predictLink, predictLinkInputHandler}) => 
     <div className=" flex flex-col w-full p-6 ml-2 mr-8 mb-4">
 
       <label htmlFor="model name" className="block text-sm font-medium text-white">
-                Please enter a data link
+                Please enter a data link (your data should be saved in a CSV file on Google Drive)
       </label>
 
       <div className="flex w-full mt-1 justify-center">
