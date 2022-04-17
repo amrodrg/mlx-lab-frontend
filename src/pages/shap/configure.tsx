@@ -7,102 +7,19 @@ import Form from 'react-bootstrap/Form'
 import NumericInput from 'react-numeric-input'
 import * as Icon from 'react-bootstrap-icons'
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
+import Button from 'react-bootstrap/Button'
 import {getSavedValue} from '@/hooks/useLocalStorage'
 import Card from 'react-bootstrap/Card'
 import {useSelector} from 'react-redux'
 
-const modelList = [
-    { key: "Model1", value: "model_1" },
-    { key: "real_estate", value: "real estate model" },
-    { key: "fashion_model", value: "fashion model" }
-  ];
-
-const exampleList = [
-    { key: "1", value: "New instance" },
-    { key: "2", value: "Feature importance"}
-  ];
-
-const plotList = [
-    { key: "1", value: "force plot" },
-    { key: "2", value: "beeswarm plot"},
-    { key: "3", value: "summery plot"}
-];
-
-const initModelInfo = {
-    modelName: "",
-    lastModified: "",
-    dataLink: "",
-    features: "",
-    featuresString: "",
-    labelToPredict: ""
+interface IFeatures {
+    featuresData:{name:string, value?:string}[];
 }
 
-const featureList = [
-    { key: "1", value: ""},
-    { key: "2", value: ""},
-    { key: "3", value: ""},
-    { key: "4", value: ""},
-    { key: "5", value: ""},
-    { key: "6", value: ""},
-    { key: "7", value: ""}
-];
-
-function myBackgroundInputFormat(num) {
-    return num + '%';
-}
-
-function FeatureImportance() {
-    return (
-        <div>
-            <div style={{fontWeight: 'bold'}}>Select features to be included</div>
-            {featureList.map((item) => {
-            return (
-                <div>
-                    <Form.Check type="checkbox" label={item.value} />
-                </div>
-                );
-            })}
-        </div>
-    );
-}
-
-function NewExample() {
-    return (
-        <div>
-            <div style={{fontWeight: 'bold'}}>Fill feature values</div>
-            <InputGroup size="sm">
-                {featureList.map((item) => {
-                                    return (
-                    <div>
-                        <InputGroup.Text id="inputGroup-sizing-sm">{item.key}</InputGroup.Text>
-                        <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" value={item.value}/>
-                    </div>
-                    );
-                })}
-            </InputGroup>
-
-            {exampleList.map((item) => {
-                                return (
-                                    <option value={item.key}>{item.value}</option>
-                                );
-                            })}
-
-
-
-        </div>
-    );
-}
-
-function ExampleComponent(example) {
-    const instance = example.example;
-    if (instance === "1") {
-        return <NewExample/>
-    } else if (instance == "2") {
-        return <FeatureImportance/>
-    }
+interface IFeaturesBoolean {
+    featuresData:{name:string, value:boolean}[];
 }
 
 export default function ConfigureExplainer () {
@@ -114,7 +31,7 @@ export default function ConfigureExplainer () {
     const getValues = async () => {
         const dataLink = getSavedValue('DataLink', '');
         const labelName = getSavedValue('LabelsRowName', '');
-        return {dataLink, labelName, modelName};
+        return {dataLink, labelName};
       };
 
     const getModelInformation = async (linkValue, labelName) => {
@@ -138,22 +55,137 @@ export default function ConfigureExplainer () {
           .then(values => {
             getModelInformation(values.dataLink, values.labelName)
               .then(modelInformation => {
-                console.log(modelInformation);
+
                 setModelInformation({
                     modelName: modelInformation.modelName,
                     dataLink: modelInformation.dataLink,
                     lastModified: modelInformation.lastModified,
-                    features: modelInformation.modelFeatures,
                     featuresString: modelInformation.modelFeaturesString,
                     labelToPredict: modelInformation.labelToPredict
                 });
+
+                console.log("hello testtttttttt" , modelInformation.featureBooleanArray)
+
+                setFeatureBooleanArray(modelInformation.featureBooleanArray);
+                setFeatureNewExampleArray(modelInformation.featureNewExampleArray);
               }
             );
           }
         );
     }, []);
 
+    const modelList = [
+        { key: "Model1", value: "model_1" },
+        { key: "real_estate", value: "real estate model" },
+        { key: "fashion_model", value: "fashion model" }
+      ];
+    
+    const exampleList = [
+        { key: "1", value: "New instance" },
+        { key: "2", value: "Feature importance"}
+      ];
+    
+    const plotList = [
+        { key: "1", value: "force plot" },
+        { key: "2", value: "beeswarm plot"},
+        { key: "3", value: "summery plot"}
+    ];
+    
+    const initModelInfo = {
+        modelName: "",
+        lastModified: "",
+        dataLink: "",
+        featuresString: "",
+        labelToPredict: ""
+    }
+
+    const initFeatureBooleanArray = []
+
+    const initFeatureNewExampleArray = []
+    
+    // select model
+    const [selectedModel, setModelState] = useState("");
+
+    // amount of background examples
+    const [backgroundValue, setBackgroundValue] = useState("20");
+         
+    // choose an example (instance)
+    const [selectedExample, setExampleState] = useState("1");
+        
+    // select a plot
+    const [selectedPlot, setPlotState] = useState("");
+        
+    // modals
+    const [showTestdataModal, setShowTestdataModal] = useState(false);
+    const [showExmapleModal , setShowExampleModal] = useState(false);
+    const [showPlotModal , setShowPlotModal] = useState(false);
+        
+    // model Inforamtion box
+    const [modelInformation, setModelInformation] = useState(initModelInfo);
+
+    // feature boolean Array
+    const [featureBooleanArray, setFeatureBooleanArray] = useState(initFeatureBooleanArray)
+
+    const [featureNewExampleArray, setFeatureNewExampleArray] = useState(initFeatureNewExampleArray)
+
+
+    function myBackgroundInputFormat(num) {
+        return num + '%';
+    }
+
+    function ExampleComponent(props) {
+        const instance = props.example;
+        if (instance === "1") {
+            return <NewExample featuresData={props.featuresNewExample}/>
+        } else if (instance == "2") {
+            return <FeatureImportance featuresData={props.featuresBoolean}/>
+        }
+    }
+
+    const NewExample = (props: IFeatures) => {
+
+        // console.log("hello ", props)
+
+        return (
+            <div>
+                {/* <div style={{fontWeight: 'bold'}}>Fill feature values</div>
+                <InputGroup size="sm">
+                    {props.featuresData.map(prop => (
+                        <div>
+                            <InputGroup.Text id="inputGroup-sizing-sm">{prop.name}</InputGroup.Text>
+                            <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" value={prop.value} 
+                                         onChange={e => {
+                                                console.log("e.target.value dfadfqefqefqwefqefefefe4efqefkqeopdkfopqejfpoqej", e.target.value);
+                                            }}/>
+                        </div>
+                    ))}
+                </InputGroup> */}
+            </div>
+        );
+    }
+
+    function FeatureImportance(props: IFeaturesBoolean) {
+        return (
+            <div>
+                <div style={{fontWeight: 'bold'}}>Select features to be included</div>
+                {props.featuresData.map((item) => {
+                return (
+                    <div>
+                        <Form.Check type="checkbox" label={item.name} checked={item.value} 
+                                    onChange={e => {
+                                        console.log("e.target.value dfadfqefqefqwefqefefefe4efqefkqeopdkfopqejfpoqej", e.target.value);
+                                     }}/>
+                    </div>
+                    );
+                })}
+            </div>
+        );
+    }
+
     const exlpaineModel = async () => {
+
+        console.log(modelInformation)
+
         const requestArgs = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -162,33 +194,11 @@ export default function ConfigureExplainer () {
                 background_value: backgroundValue
                 
 
-
-
             })
           };
 
-        const mlData = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
+        const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
     }
-
-    // select model
-    const [selectedModel, setModelState] = useState("");
-
-    // amount of background examples
-    const [backgroundValue, setBackgroundValue] = useState("20");
- 
-    // choose an example (instance)
-    const [selectedExample, setExampleState] = useState("1");
-
-    // select a plot
-    const [selectedPlot, setPlotState] = useState("");
-
-    // modals
-    const [showTestdataModal, setShowTestdataModal] = useState(false);
-    const [showExmapleModal , setShowExampleModal] = useState(false);
-    const [showPlotModal , setShowPlotModal] = useState(false);
-
-    // model Inforamtion box
-    const [modelInformation, setModelInformation] = useState(initModelInfo);
 
     return (
         <div>
@@ -206,7 +216,6 @@ export default function ConfigureExplainer () {
                     <Col>
                         <Form.Select className={styles['configure_component_style'] + " " + styles['configure_select_dropdown']}
                                      onChange={e => {
-                                        console.log("e.target.value", e.target.value);
                                         setModelState(e.target.value);
                                      }}
                                      value={selectedModel}>
@@ -267,7 +276,6 @@ export default function ConfigureExplainer () {
                     <Col>
                         <Form.Select className={styles['configure_component_style']}
                                      onChange={e => {
-                                        console.log("e.target.value", e.target.value);
                                         setExampleState(e.target.value);
                                      }} 
                                      value={selectedExample}>
@@ -279,7 +287,7 @@ export default function ConfigureExplainer () {
                         </Form.Select>
                     </Col>
                     <Col>
-                        <ExampleComponent example={selectedExample}/>
+                        <ExampleComponent example={selectedExample} featuresNewExample={featureNewExampleArray} featuresBoolean={featureBooleanArray}/>
                     </Col>
                 </Row>
 
@@ -295,7 +303,6 @@ export default function ConfigureExplainer () {
                     <Col>
                         <Form.Select    className={styles['configure_component_style']}
                                         onChange={e => {
-                                            console.log("e.target.value", e.target.value);
                                             setPlotState(e.target.value);
                                         }} 
                                         value={selectedPlot}>
