@@ -12,14 +12,11 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import {getSavedValue} from '@/hooks/useLocalStorage'
 import Card from 'react-bootstrap/Card'
+import useLocalStorage from '@/hooks/useLocalStorage';
 import {useSelector} from 'react-redux'
 
 interface IFeatures {
-    featuresData:{name:string, value?:string}[];
-}
-
-interface IFeaturesBoolean {
-    featuresData:{name:string, value:boolean}[];
+    featuresData:{name:string}[];
 }
 
 export default function ConfigureExplainer () {
@@ -64,10 +61,7 @@ export default function ConfigureExplainer () {
                     labelToPredict: modelInformation.labelToPredict
                 });
 
-                console.log("hello testtttttttt" , modelInformation.featureBooleanArray)
-
-                setFeatureBooleanArray(modelInformation.featureBooleanArray);
-                setFeatureNewExampleArray(modelInformation.featureNewExampleArray);
+                setFeatureArray(modelInformation.featureArray);
               }
             );
           }
@@ -99,10 +93,6 @@ export default function ConfigureExplainer () {
         labelToPredict: ""
     }
 
-    const initFeatureBooleanArray = []
-
-    const initFeatureNewExampleArray = []
-    
     // select model
     const [selectedModel, setModelState] = useState("");
 
@@ -113,7 +103,7 @@ export default function ConfigureExplainer () {
     const [selectedExample, setExampleState] = useState("1");
         
     // select a plot
-    const [selectedPlot, setPlotState] = useState("");
+    const [selectedPlot, setPlotState] = useState("1");
         
     // modals
     const [showTestdataModal, setShowTestdataModal] = useState(false);
@@ -122,12 +112,73 @@ export default function ConfigureExplainer () {
         
     // model Inforamtion box
     const [modelInformation, setModelInformation] = useState(initModelInfo);
+    // feature Array
+    const [featureArray, setFeatureArray] = useState([]);
 
-    // feature boolean Array
-    const [featureBooleanArray, setFeatureBooleanArray] = useState(initFeatureBooleanArray)
+    // feature Boolean Array
+    const [featureBooleanArray] = useState({});
+    // feature Example Array
+    const [featureExampleArray] = useState({});
 
-    const [featureNewExampleArray, setFeatureNewExampleArray] = useState(initFeatureNewExampleArray)
+    const handleCheckBox = event => {
+        featureBooleanArray[event.target.value] = event.target.checked;
+        console.log(featureBooleanArray)
+    }
 
+    const handleExampleValues = event => {
+        featureExampleArray[event.target.id] = event.target.value;
+        console.log(featureExampleArray)
+    }
+
+    const NewExample = (props: IFeatures) => {
+        if (featureArray.length === 0) {
+            return (
+                <div></div>
+            );
+        }
+
+        return (
+            <div>
+                <div style={{fontWeight: 'bold'}}>Fill feature values</div>
+                <InputGroup size="sm">
+                    {props.featuresData.map(prop => (
+                        <div>
+                            <InputGroup.Text id="inputGroup-sizing-sm">{prop.name}</InputGroup.Text>
+                            <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                         value={featureExampleArray[prop.name]} 
+                                         id={prop.name}
+                                         onChange={handleExampleValues}/>
+                        </div>
+                    ))}
+                </InputGroup>
+            </div>
+        );
+    }
+
+    function FeatureImportance(props: IFeatures) {
+        if (featureArray.length === 0) {
+            return (
+                <div></div>
+            );
+        }
+
+        return (
+            <div>
+                <div style={{fontWeight: 'bold'}}>Select features to be included</div>
+                {props.featuresData.map((item) => {
+                return (
+                    <div>
+                        <Form.Check type="checkbox" 
+                                    label={item.name} 
+                                    value={item.name} 
+                                    onChange={handleCheckBox}
+                                    checked={featureBooleanArray[item.name]}/>
+                    </div>
+                    );
+                })}
+            </div>
+        );
+    }
 
     function myBackgroundInputFormat(num) {
         return num + '%';
@@ -136,64 +187,28 @@ export default function ConfigureExplainer () {
     function ExampleComponent(props) {
         const instance = props.example;
         if (instance === "1") {
-            return <NewExample featuresData={props.featuresNewExample}/>
-        } else if (instance == "2") {
-            return <FeatureImportance featuresData={props.featuresBoolean}/>
+            return <NewExample featuresData={props.features}/>
+        } else if (instance === "2") {
+            return <FeatureImportance featuresData={props.features}/>
         }
     }
 
-    const NewExample = (props: IFeatures) => {
-
-        // console.log("hello ", props)
-
-        return (
-            <div>
-                {/* <div style={{fontWeight: 'bold'}}>Fill feature values</div>
-                <InputGroup size="sm">
-                    {props.featuresData.map(prop => (
-                        <div>
-                            <InputGroup.Text id="inputGroup-sizing-sm">{prop.name}</InputGroup.Text>
-                            <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" value={prop.value} 
-                                         onChange={e => {
-                                                console.log("e.target.value dfadfqefqefqwefqefefefe4efqefkqeopdkfopqejfpoqej", e.target.value);
-                                            }}/>
-                        </div>
-                    ))}
-                </InputGroup> */}
-            </div>
-        );
-    }
-
-    function FeatureImportance(props: IFeaturesBoolean) {
-        return (
-            <div>
-                <div style={{fontWeight: 'bold'}}>Select features to be included</div>
-                {props.featuresData.map((item) => {
-                return (
-                    <div>
-                        <Form.Check type="checkbox" label={item.name} checked={item.value} 
-                                    onChange={e => {
-                                        console.log("e.target.value dfadfqefqefqwefqefefefe4efqefkqeopdkfopqejfpoqej", e.target.value);
-                                     }}/>
-                    </div>
-                    );
-                })}
-            </div>
-        );
-    }
-
     const exlpaineModel = async () => {
-
-        console.log(modelInformation)
+        const dataLink = getSavedValue('DataLink', '');
+        const labelName = getSavedValue('LabelsRowName', ''); 
 
         const requestArgs = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
-                modelName: "incurance",
-                background_value: backgroundValue
-                
-
+                modelName: modelName,
+                dataLink: dataLink,
+                labelName: labelName,
+                backgroundValue: backgroundValue,
+                example: selectedExample,
+                fBooleanArray : featureBooleanArray,
+                fExampleArray: featureExampleArray,
+                plot: selectedPlot
             })
           };
 
@@ -287,7 +302,7 @@ export default function ConfigureExplainer () {
                         </Form.Select>
                     </Col>
                     <Col>
-                        <ExampleComponent example={selectedExample} featuresNewExample={featureNewExampleArray} featuresBoolean={featureBooleanArray}/>
+                        <ExampleComponent example={selectedExample} features={featureArray}/>
                     </Col>
                 </Row>
 
