@@ -5,6 +5,7 @@ import styles from '../../styles/Home.module.css';
 import Card from 'react-bootstrap/Card'
 import Image from 'next/image'
 import NextLink from 'next/link';
+import {useSelector} from 'react-redux'
 import configurePlaceholder from '../../static-images/placeholder.png';
 import {getSavedValue} from '@/hooks/useLocalStorage';
 
@@ -28,17 +29,25 @@ function ForcePlot() {
     );
 }
 
+function SummeryPlot() {
+    return (
+        <div>
+            Summeery Plot
+        </div>
+    );
+}
 
 function PlotComponent(prop) {
     const buttons = prop.plot;
     if (buttons === "1") {
-        return <Placeholder/>
-    } else if (buttons == "2") {
         return <ForcePlot/>
-    }
+    } else if (buttons == "2") {
+        return <SummeryPlot/>
+    } else if (buttons === "3") {
+        return <Placeholder/>
+    } 
 }
 
-// Buttons
 function ShapConfigureButtons() {
     return (
         <div>
@@ -87,35 +96,76 @@ function ButtonsComponent(prop) {
 
 export default function ExplainationPlot () {
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const {modelName} = useSelector((state) => state);
+
     const getValues = async () => {
         const shapValues = getSavedValue('shapValues', {});
-        return {shapValues};
+        const labelName = getSavedValue('LabelsRowName', ''); 
+        const dataLink = getSavedValue('DataLink', '');
+        const plot = getSavedValue('plot', '');
+        const example = getSavedValue('example', '');
+        const backgroundValue = getSavedValue('backgroundValue', '');
+        return {shapValues, labelName, dataLink, plot, example, backgroundValue};
       };
 
-    const getExplainerInformation = async (shapValues) => {
+    const getExplainerInformation = async (shapValues, labelName, dataLink, plot, example, backgroundValue) => {
 
         const requestArgs = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                shapValues: shapValues
+                modelName: modelName,
+                dataLink: dataLink,
+                shapValues: shapValues,
+                labelName: labelName,
+                plot:plot,
+                example:example,
+                backgroundValue:backgroundValue
             })
         };
 
         const explainer_information = await fetch('http://127.0.0.1:8000/shap/explainer_information', requestArgs);
-        // const modelInformationJs = await  explainer_information.json();
-        return explainer_information;
+        const modelInformationJs = await  explainer_information.json();
+        return modelInformationJs;
+    }
+
+    const initExplainationlInfo = {
+        modelName: "",
+        lastModified: "",
+        dataLink: "",
+        plot:"",
+        backgroundData:"",
+        featuresString: "",
+        labelToPredict: ""
     }
 
     useEffect(
-        
         () => {
         getValues()
           .then(values => {
-            getExplainerInformation(values.shapValues)
+            getExplainerInformation(values.shapValues, values.labelName, values.dataLink, values.plot, values.example, values.backgroundValue)
+            .then(explainsationInformation => {
+                setExplainerInformation({
+                    plot: explainsationInformation.plot,
+                    backgroundData: explainsationInformation.background_value,
+                    modelName: explainsationInformation.modelName,
+                    dataLink: explainsationInformation.dataLink,
+                    lastModified: explainsationInformation.lastModified,
+                    featuresString: explainsationInformation.modelFeaturesString,
+                    labelToPredict: explainsationInformation.labelToPredict
+                });
+            }
+            );
           }
         );
     }, []);
+
+    const [explainerInformation, setExplainerInformation] = useState(initExplainationlInfo);
+
+    // Plot Const
+    const [plotNumber, setPlotNumber] = getSavedValue('plot', '');
 
     return (
         <div>
@@ -129,11 +179,12 @@ export default function ExplainationPlot () {
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
                         <Card className={styles['explaine_model_info_well']}>
-                            <Card.Text> Model Name :</Card.Text>
-                            <Card.Text> Create on :</Card.Text>
-                            <Card.Text> Features : </Card.Text>
-                            <Card.Text> Example : </Card.Text>
-                            <Card.Text> Plot : </Card.Text>
+                            <Card.Text> Model Name: {explainerInformation.modelName}</Card.Text>
+                            <Card.Text> Create on: {explainerInformation.lastModified}</Card.Text>
+                            <Card.Text> Background data: {explainerInformation.backgroundData}%</Card.Text>
+                            <Card.Text> Features: {explainerInformation.featuresString}</Card.Text>
+                            <Card.Text> Label To Predict: {explainerInformation.labelToPredict}</Card.Text>
+                            <Card.Text> Plot: {explainerInformation.plot}</Card.Text>
                         </Card>
                     </Col>
                 </Row>
@@ -142,7 +193,6 @@ export default function ExplainationPlot () {
                     <Col>
                         <Card className={styles['explaine_model_info_well'] + " " + styles["shap_row_offset"]}>
                             <Card.Title> Legende </Card.Title>
-
                         </Card>
                     </Col>
                 </Row>
@@ -150,7 +200,7 @@ export default function ExplainationPlot () {
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
 
-                        <PlotComponent plot={"1"}/>
+                        <PlotComponent plot={plotNumber}/>
 
                     </Col>
                 </Row>

@@ -53,7 +53,6 @@ export default function ConfigureExplainer () {
     }
   
     useEffect(
-        
         () => {
         getValues()
           .then(values => {
@@ -104,13 +103,13 @@ export default function ConfigureExplainer () {
     const [selectedModel, setModelState] = useState("");
 
     // amount of background examples
-    const [backgroundValue, setBackgroundValue] = useState("20");
+    const [backgroundValue, setBackgroundValue] = useLocalStorage('backgroundValue', "20");
          
     // choose an example (instance)
-    const [selectedExample, setExampleState] = useState("1");
+    const [selectedExample, setExampleState] = useLocalStorage('example', "1");
         
     // select a plot
-    const [selectedPlot, setPlotState] = useState("1");
+    const [selectedPlot, setPlotState] = useLocalStorage('plot', "1");
         
     // modals
     const [showTestdataModal, setShowTestdataModal] = useState(false);
@@ -221,7 +220,6 @@ export default function ConfigureExplainer () {
         } else {
             return <div></div>
         }
-
     }
 
     const exlpaineModel = async () => {
