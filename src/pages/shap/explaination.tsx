@@ -5,7 +5,6 @@ import styles from '../../styles/Home.module.css';
 import Card from 'react-bootstrap/Card'
 import Image from 'next/image'
 import NextLink from 'next/link';
-import ProgressBar from 'react-bootstrap/ProgressBar'
 import configurePlaceholder from '../../static-images/placeholder.png';
 
 function Placeholder() {
@@ -87,6 +86,20 @@ function ButtonsComponent(prop) {
 
 export default function ExplainationPlot () {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <div>
             <Container className={styles["explaine_grid"]}>
@@ -100,23 +113,11 @@ export default function ExplainationPlot () {
                     <Col>
                         <Card className={styles['explaine_model_info_well']}>
                             <Card.Text> Model Name :</Card.Text>
-                            <Card.Text> Model Type :</Card.Text>
                             <Card.Text> Create on :</Card.Text>
                             <Card.Text> Testdata : </Card.Text>
                             <Card.Text> Example : </Card.Text>
                             <Card.Text> Plot : </Card.Text>
                         </Card>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <div className={styles['component_title']}> Calculating Shapley Values </div>
-                    </Col>
-                </Row>
-                <Row className={styles["shap_row_offset"]}>
-                    <Col>
-                        <ProgressBar animated now={60} className={styles['explaine_loading_bar']}/>
                     </Col>
                 </Row>
 

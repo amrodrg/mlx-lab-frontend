@@ -198,6 +198,13 @@
   font-weight: bold;
 }
 
+.spinners {
+  margin-top: 20px;
+  text-decoration:none;
+  text-align: center;
+  font-weight: bold;
+}
+
 .configure_select_dropdown {
   width: 100%;
 }

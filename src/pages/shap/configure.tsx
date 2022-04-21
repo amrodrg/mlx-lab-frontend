@@ -2,7 +2,6 @@ import * as React from 'react'
 import {useEffect, useState } from 'react'
 import { Container, Row, Col } from "reactstrap"
 import styles from '../../styles/Home.module.css'
-import NextLink from 'next/link'
 import Form from 'react-bootstrap/Form'
 import NumericInput from 'react-numeric-input'
 import * as Icon from 'react-bootstrap-icons'
@@ -12,14 +11,19 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import {getSavedValue} from '@/hooks/useLocalStorage'
 import Card from 'react-bootstrap/Card'
-import useLocalStorage from '@/hooks/useLocalStorage';
 import {useSelector} from 'react-redux'
+import {useRouter} from 'next/router';
+import {toast} from 'react-toastify';
+import Spinner from 'react-bootstrap/Spinner'
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IFeatures {
     featuresData:{name:string}[];
 }
 
 export default function ConfigureExplainer () {
+
+    const router = useRouter();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -47,7 +51,9 @@ export default function ConfigureExplainer () {
         return modelInformationJs;
     }
   
-    useEffect(() => {
+    useEffect(
+        
+        () => {
         getValues()
           .then(values => {
             getModelInformation(values.dataLink, values.labelName)
@@ -119,6 +125,8 @@ export default function ConfigureExplainer () {
     const [featureBooleanArray] = useState({});
     // feature Example Array
     const [featureExampleArray] = useState({});
+
+    const [loading, setLoading] = useState(false);
 
     const handleCheckBox = event => {
         featureBooleanArray[event.target.value] = event.target.checked;
@@ -193,6 +201,26 @@ export default function ConfigureExplainer () {
         }
     }
 
+    function SpinnerComponent(props) {
+        const show = props.spinnerStatus
+        if (show) {
+            return (
+                <div className={styles["spinners"]}>
+                    <Spinner animation="border" variant="primary" />
+                    <Spinner animation="border" variant="secondary" />
+                    <Spinner animation="border" variant="success" />
+                    <Spinner animation="border" variant="danger" />
+                    <Spinner animation="border" variant="warning" />
+                    <Spinner animation="border" variant="info" />
+                    <Spinner animation="border" variant="dark" />
+                </div>
+                );
+        } else {
+            return <div></div>
+        }
+
+    }
+
     const exlpaineModel = async () => {
         const dataLink = getSavedValue('DataLink', '');
         const labelName = getSavedValue('LabelsRowName', ''); 
@@ -212,7 +240,20 @@ export default function ConfigureExplainer () {
             })
           };
 
-        const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
+        if (Object.keys(featureExampleArray).length === 0) {
+            toast('At least one instance value must be given');
+            console.log("hello show error")
+        } else {
+            setLoading(true);
+            const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
+    
+            if (explaindModel.status === 200) {
+                setLoading(false);
+                router.push('/shap/explaination');
+            } else {
+                toast.error('Explainer could not be build please make sure all your entries are currect');
+            }
+        }
     }
 
     return (
@@ -333,14 +374,22 @@ export default function ConfigureExplainer () {
                 <Row>
                     <Col>
                         <div className={styles["configure_explaine_button"]}>
-                            <NextLink href="/shap/explaination">
-                                <a className="py-2 px-20 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-lg focus:shadow-outline"
-                                    style={{textDecoration: 'none'}}
-                                    onClick={exlpaineModel}> 
-                                    Explaine
-                                </a>
-                            </NextLink>
+
+                            <a className="py-2 px-20 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-lg focus:shadow-outline"
+                                style={{textDecoration: 'none'}}
+                                onClick={exlpaineModel}> 
+                                Explaine
+                            </a>
+
                         </div>
+                    </Col>
+                </Row>
+
+                <Row>
+                </Row>
+                <Row className={styles["shap_row_offset"]}>
+                    <Col>
+                        <SpinnerComponent spinnerStatus={loading}/>
                     </Col>
                 </Row>
 
