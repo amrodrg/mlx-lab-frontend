@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useState } from 'react'
+import {useEffect, useState } from 'react'
 import { Container, Row, Col } from "reactstrap";
 import styles from '../../styles/Home.module.css';
 import Card from 'react-bootstrap/Card'
 import Image from 'next/image'
 import NextLink from 'next/link';
 import configurePlaceholder from '../../static-images/placeholder.png';
+import {getSavedValue} from '@/hooks/useLocalStorage';
 
 function Placeholder() {
     return (
@@ -86,19 +87,35 @@ function ButtonsComponent(prop) {
 
 export default function ExplainationPlot () {
 
+    const getValues = async () => {
+        const shapValues = getSavedValue('shapValues', {});
+        return {shapValues};
+      };
 
+    const getExplainerInformation = async (shapValues) => {
 
+        const requestArgs = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                shapValues: shapValues
+            })
+        };
 
+        const explainer_information = await fetch('http://127.0.0.1:8000/shap/explainer_information', requestArgs);
+        // const modelInformationJs = await  explainer_information.json();
+        return explainer_information;
+    }
 
-
-
-
-
-
-
-
-
-
+    useEffect(
+        
+        () => {
+        getValues()
+          .then(values => {
+            getExplainerInformation(values.shapValues)
+          }
+        );
+    }, []);
 
     return (
         <div>
@@ -114,7 +131,7 @@ export default function ExplainationPlot () {
                         <Card className={styles['explaine_model_info_well']}>
                             <Card.Text> Model Name :</Card.Text>
                             <Card.Text> Create on :</Card.Text>
-                            <Card.Text> Testdata : </Card.Text>
+                            <Card.Text> Features : </Card.Text>
                             <Card.Text> Example : </Card.Text>
                             <Card.Text> Plot : </Card.Text>
                         </Card>
@@ -147,5 +164,3 @@ export default function ExplainationPlot () {
         </div>
     );
 }
-
-

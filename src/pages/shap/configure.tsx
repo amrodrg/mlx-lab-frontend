@@ -4,6 +4,7 @@ import { Container, Row, Col } from "reactstrap"
 import styles from '../../styles/Home.module.css'
 import Form from 'react-bootstrap/Form'
 import NumericInput from 'react-numeric-input'
+import useLocalStorage from '@/hooks/useLocalStorage';
 import * as Icon from 'react-bootstrap-icons'
 import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -128,6 +129,8 @@ export default function ConfigureExplainer () {
 
     const [loading, setLoading] = useState(false);
 
+    const [shapValues, setShapValues] = useLocalStorage('shapValues', {});
+
     const handleCheckBox = event => {
         featureBooleanArray[event.target.value] = event.target.checked;
         console.log(featureBooleanArray)
@@ -242,11 +245,14 @@ export default function ConfigureExplainer () {
 
         if (Object.keys(featureExampleArray).length === 0) {
             toast('At least one instance value must be given');
+            toast.error(' Please enter the name of the labels row of your data set!');
             console.log("hello show error")
         } else {
             setLoading(true);
             const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
-    
+            const explaindModeljs = await  explaindModel.json()
+            setShapValues(explaindModeljs)
+
             if (explaindModel.status === 200) {
                 setLoading(false);
                 router.push('/shap/explaination');
