@@ -86,8 +86,8 @@ export default function ConfigureExplainer () {
       ];
     
     const plotList = [
-        { key: "1", value: "force plot" },
-        { key: "2", value: "beeswarm plot"},
+        { key: "1", value: ""},
+        { key: "2", value: "force plot" },
         { key: "3", value: "summery plot"}
     ];
     
@@ -132,12 +132,10 @@ export default function ConfigureExplainer () {
 
     const handleCheckBox = event => {
         featureBooleanArray[event.target.value] = event.target.checked;
-        console.log(featureBooleanArray)
     }
 
     const handleExampleValues = event => {
         featureExampleArray[event.target.id] = event.target.value;
-        console.log(featureExampleArray)
     }
 
     const NewExample = (props: IFeatures) => {
@@ -242,9 +240,9 @@ export default function ConfigureExplainer () {
           };
 
         if (Object.keys(featureExampleArray).length === 0) {
-            toast('At least one instance value must be given');
-            toast.error(' Please enter the name of the labels row of your data set!');
-            console.log("hello show error")
+            toast.error('At least one instance value must be given');
+        } else if (selectedPlot ===  "1") {
+            toast.error('First select a plot');
         } else {
             setLoading(true);
             const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);

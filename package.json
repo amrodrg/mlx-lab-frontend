@@ -43,7 +43,8 @@
     "reactstrap": "^9.0.1",
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "shapjs": "^0.35.3"
   },
   "devDependencies": {
     "@types/node": "17.0.18",

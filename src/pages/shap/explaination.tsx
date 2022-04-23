@@ -8,6 +8,7 @@ import NextLink from 'next/link';
 import {useSelector} from 'react-redux'
 import configurePlaceholder from '../../static-images/placeholder.png';
 import {getSavedValue} from '@/hooks/useLocalStorage';
+import AdditiveForceVisualizer from './AdditiveForceVisualizer';
 
 function Placeholder() {
     return (
@@ -24,7 +25,17 @@ function Placeholder() {
 function ForcePlot() {
     return (
         <div>
-            Force Plot
+            <AdditiveForceVisualizer
+                outNames={["Probability of flower"]}
+                baseValue={0.2}
+                link="identity"
+                features={[
+                    { name: "F1", effect: 0.3, value: 1 },
+                    { name: "F2", effect: -0.6, value: 1 },
+                    { name: "F3", effect: -0.2, value: 2 },
+                    { name: "F4", effect: 0, value: 0 }
+                ]}
+            />
         </div>
     );
 }
@@ -39,13 +50,11 @@ function SummeryPlot() {
 
 function PlotComponent(prop) {
     const buttons = prop.plot;
-    if (buttons === "1") {
+    if (buttons === "2") {
         return <ForcePlot/>
-    } else if (buttons == "2") {
+    } else if (buttons == "3") {
         return <SummeryPlot/>
-    } else if (buttons === "3") {
-        return <Placeholder/>
-    } 
+    }
 }
 
 function ShapConfigureButtons() {
@@ -156,6 +165,8 @@ export default function ExplainationPlot () {
                     featuresString: explainsationInformation.modelFeaturesString,
                     labelToPredict: explainsationInformation.labelToPredict
                 });
+
+                console.log(explainsationInformation.forcePlot)
             }
             );
           }
@@ -165,7 +176,7 @@ export default function ExplainationPlot () {
     const [explainerInformation, setExplainerInformation] = useState(initExplainationlInfo);
 
     // Plot Const
-    const [plotNumber, setPlotNumber] = getSavedValue('plot', '');
+    const [plotNumber, setPlotNumber] = getSavedValue('plot', '1');
 
     return (
         <div>
