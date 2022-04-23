@@ -128,7 +128,7 @@ export default function ConfigureExplainer () {
 
     const [loading, setLoading] = useState(false);
 
-    const [shapValues, setShapValues] = useLocalStorage('shapValues', {});
+    const [shapValues, setShapValues] = useLocalStorage('shapValues', []);
 
     const handleCheckBox = event => {
         featureBooleanArray[event.target.value] = event.target.checked;
@@ -247,7 +247,10 @@ export default function ConfigureExplainer () {
             setLoading(true);
             const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
             const explaindModeljs = await  explaindModel.json()
+
             setShapValues(explaindModeljs)
+
+            console.log(shapValues)
 
             if (explaindModel.status === 200) {
                 setLoading(false);

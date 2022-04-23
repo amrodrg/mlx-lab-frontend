@@ -3,105 +3,10 @@ import {useEffect, useState } from 'react'
 import { Container, Row, Col } from "reactstrap";
 import styles from '../../styles/Home.module.css';
 import Card from 'react-bootstrap/Card'
-import Image from 'next/image'
 import NextLink from 'next/link';
 import {useSelector} from 'react-redux'
-import configurePlaceholder from '../../static-images/placeholder.png';
 import {getSavedValue} from '@/hooks/useLocalStorage';
 import AdditiveForceVisualizer from './AdditiveForceVisualizer';
-
-function Placeholder() {
-    return (
-        <div>
-            <Image
-                src={configurePlaceholder}
-                width={800}
-                height={400}
-            />
-        </div>
-    );
-}
-
-function ForcePlot() {
-    return (
-        <div>
-            <AdditiveForceVisualizer
-                outNames={["Probability of flower"]}
-                baseValue={0.2}
-                link="identity"
-                features={[
-                    { name: "F1", effect: 0.3, value: 1 },
-                    { name: "F2", effect: -0.6, value: 1 },
-                    { name: "F3", effect: -0.2, value: 2 },
-                    { name: "F4", effect: 0, value: 0 }
-                ]}
-            />
-        </div>
-    );
-}
-
-function SummeryPlot() {
-    return (
-        <div>
-            Summeery Plot
-        </div>
-    );
-}
-
-function PlotComponent(prop) {
-    const buttons = prop.plot;
-    if (buttons === "2") {
-        return <ForcePlot/>
-    } else if (buttons == "3") {
-        return <SummeryPlot/>
-    }
-}
-
-function ShapConfigureButtons() {
-    return (
-        <div>
-            <div role="group" aria-label="Button group" className={styles["configure_explaine_button"]}>
-                <NextLink href="/shap">
-                    <a className="py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-l-lg focus:shadow-outline"
-                        style={{textDecoration: 'none'}}> 
-                        SHAP tutorial
-                    </a>
-                </NextLink>
-
-                <NextLink href="/shap/configure">
-                    <a className="py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-r-lg focus:shadow-outline"
-                        style={{textDecoration: 'none'}}> 
-                        New configuration
-                    </a>
-                </NextLink>
-          </div>
-      </div>
-      );
-}
-
-function ConfigureButtons() {
-    return (
-        <div>
-            <div className={styles["configure_explaine_button"]}>
-                <NextLink href="/shap/explaination">
-                    <a className="py-2 px-20 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-lg focus:shadow-outline"
-                        style={{textDecoration: 'none'}}> 
-                        Configure
-                    </a>
-                </NextLink>
-            </div>
-        </div>
-    );
-}
-
-function ButtonsComponent(prop) {
-    const buttons = prop.buttonGroup;
-    if (buttons === "1") {
-        return <ShapConfigureButtons/>
-    } else if (buttons == "2") {
-        return <ConfigureButtons/>
-    }
-}
 
 export default function ExplainationPlot () {
 
@@ -110,7 +15,7 @@ export default function ExplainationPlot () {
     const {modelName} = useSelector((state) => state);
 
     const getValues = async () => {
-        const shapValues = getSavedValue('shapValues', {});
+        const shapValues = getSavedValue('shapValues', []);
         const labelName = getSavedValue('LabelsRowName', ''); 
         const dataLink = getSavedValue('DataLink', '');
         const plot = getSavedValue('plot', '');
@@ -140,16 +45,6 @@ export default function ExplainationPlot () {
         return modelInformationJs;
     }
 
-    const initExplainationlInfo = {
-        modelName: "",
-        lastModified: "",
-        dataLink: "",
-        plot:"",
-        backgroundData:"",
-        featuresString: "",
-        labelToPredict: ""
-    }
-
     useEffect(
         () => {
         getValues()
@@ -157,27 +52,37 @@ export default function ExplainationPlot () {
             getExplainerInformation(values.shapValues, values.labelName, values.dataLink, values.plot, values.example, values.backgroundValue)
             .then(explainsationInformation => {
                 setExplainerInformation({
-                    plot: explainsationInformation.plot,
                     backgroundData: explainsationInformation.background_value,
                     modelName: explainsationInformation.modelName,
                     dataLink: explainsationInformation.dataLink,
+                    baseValue: explainsationInformation.baseValue,
                     lastModified: explainsationInformation.lastModified,
                     featuresString: explainsationInformation.modelFeaturesString,
                     labelToPredict: explainsationInformation.labelToPredict
                 });
-
-                console.log(explainsationInformation.forcePlot)
+                
+                console.log("base value: ", explainsationInformation.baseValue)
+                setShapResult(values.shapValues)
             }
             );
           }
         );
     }, []);
 
+    /////////////////////////////////////////////// Variables
+    const initExplainationlInfo = {
+        modelName: "",
+        lastModified: "",
+        dataLink: "",
+        baseValue: "",
+        backgroundData:"",
+        featuresString: "",
+        labelToPredict: ""
+    }
     const [explainerInformation, setExplainerInformation] = useState(initExplainationlInfo);
+    const [shapResult, setShapResult] = useState([]);
 
-    // Plot Const
-    const [plotNumber, setPlotNumber] = getSavedValue('plot', '1');
-
+    ///////////////////////////////////////////// Page Content
     return (
         <div>
             <Container className={styles["explaine_grid"]}>
@@ -191,11 +96,10 @@ export default function ExplainationPlot () {
                     <Col>
                         <Card className={styles['explaine_model_info_well']}>
                             <Card.Text> Model Name: {explainerInformation.modelName}</Card.Text>
-                            <Card.Text> Create on: {explainerInformation.lastModified}</Card.Text>
+                            <Card.Text> Created on: {explainerInformation.lastModified}</Card.Text>
                             <Card.Text> Background data: {explainerInformation.backgroundData}%</Card.Text>
                             <Card.Text> Features: {explainerInformation.featuresString}</Card.Text>
                             <Card.Text> Label To Predict: {explainerInformation.labelToPredict}</Card.Text>
-                            <Card.Text> Plot: {explainerInformation.plot}</Card.Text>
                         </Card>
                     </Col>
                 </Row>
@@ -210,15 +114,36 @@ export default function ExplainationPlot () {
 
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
-
-                        <PlotComponent plot={plotNumber}/>
-
+                        <div>
+                            <AdditiveForceVisualizer
+                                outNames={[explainerInformation.labelToPredict]}
+                                baseValue={explainerInformation.baseValue}
+                                link="identity"
+                                features={shapResult}
+                            />
+                        </div>
                     </Col>
                 </Row>
 
                 <Row>
                     <Col>
-                        <ButtonsComponent buttonGroup={"1"}/>
+                        <div>
+                            <div role="group" aria-label="Button group" className={styles["configure_explaine_button"]}>
+                                <NextLink href="/shap">
+                                    <a className="py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-l-lg focus:shadow-outline"
+                                        style={{textDecoration: 'none'}}> 
+                                        SHAP tutorial
+                                    </a>
+                                </NextLink>
+                
+                                <NextLink href="/shap/configure">
+                                    <a className="py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-r-lg focus:shadow-outline"
+                                        style={{textDecoration: 'none'}}> 
+                                        New configuration
+                                    </a>
+                                </NextLink>
+                            </div>
+                        </div>
                     </Col>
                 </Row>
             </Container>
