@@ -14,8 +14,9 @@ export default function ExplainationPlot () {
     // @ts-ignore
     const {modelName} = useSelector((state) => state);
 
+    const shapValues = getSavedValue('shapValues', []);
+
     const getValues = async () => {
-        const shapValues = getSavedValue('shapValues', []);
         const labelName = getSavedValue('LabelsRowName', ''); 
         const dataLink = getSavedValue('DataLink', '');
         const plot = getSavedValue('plot', '');
@@ -60,9 +61,6 @@ export default function ExplainationPlot () {
                     featuresString: explainsationInformation.modelFeaturesString,
                     labelToPredict: explainsationInformation.labelToPredict
                 });
-                
-                console.log("base value: ", explainsationInformation.baseValue)
-                setShapResult(values.shapValues)
             }
             );
           }
@@ -80,7 +78,34 @@ export default function ExplainationPlot () {
         labelToPredict: ""
     }
     const [explainerInformation, setExplainerInformation] = useState(initExplainationlInfo);
-    const [shapResult, setShapResult] = useState([]);
+
+    const ShapVisual = (props) => {
+        const explainations = props.shapValues
+
+        if (explainations.length === 0) {
+            return (
+                <div></div>
+            );
+        }
+
+        return (
+            <div>
+                {explainations.map((entries) => {
+
+                    console.log(entries)
+
+                    return (
+                        <AdditiveForceVisualizer
+                            outNames={[explainerInformation.labelToPredict]}
+                            baseValue={explainerInformation.baseValue}
+                            link="identity"
+                            features={entries}
+                        />
+                    );
+                })}
+            </div>
+        );
+    }
 
     ///////////////////////////////////////////// Page Content
     return (
@@ -114,14 +139,7 @@ export default function ExplainationPlot () {
 
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
-                        <div>
-                            <AdditiveForceVisualizer
-                                outNames={[explainerInformation.labelToPredict]}
-                                baseValue={explainerInformation.baseValue}
-                                link="identity"
-                                features={shapResult}
-                            />
-                        </div>
+                        <ShapVisual shapValues={shapValues}/> 
                     </Col>
                 </Row>
 

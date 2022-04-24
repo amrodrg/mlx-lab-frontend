@@ -5,6 +5,7 @@ import styles from '../../styles/Home.module.css'
 import Form from 'react-bootstrap/Form'
 import NumericInput from 'react-numeric-input'
 import useLocalStorage from '@/hooks/useLocalStorage';
+import {toast, ToastContainer} from 'react-toastify';
 import * as Icon from 'react-bootstrap-icons'
 import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -14,7 +15,6 @@ import {getSavedValue} from '@/hooks/useLocalStorage'
 import Card from 'react-bootstrap/Card'
 import {useSelector} from 'react-redux'
 import {useRouter} from 'next/router';
-import {toast} from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -82,16 +82,10 @@ export default function ConfigureExplainer () {
     
     const exampleList = [
         { key: "1", value: "New instance" },
-        { key: "2", value: "Feature importance"}
+        { key: "2", value: "Import Google Drive CSV file"}
       ];
-    
-    const plotList = [
-        { key: "1", value: ""},
-        { key: "2", value: "force plot" },
-        { key: "3", value: "summery plot"}
-    ];
-    
-    const initModelInfo = {
+
+      const initModelInfo = {
         modelName: "",
         lastModified: "",
         dataLink: "",
@@ -107,9 +101,6 @@ export default function ConfigureExplainer () {
          
     // choose an example (instance)
     const [selectedExample, setExampleState] = useLocalStorage('example', "1");
-        
-    // select a plot
-    const [selectedPlot, setPlotState] = useLocalStorage('plot', "1");
         
     // modals
     const [showTestdataModal, setShowTestdataModal] = useState(false);
@@ -130,13 +121,16 @@ export default function ConfigureExplainer () {
 
     const [shapValues, setShapValues] = useLocalStorage('shapValues', []);
 
-    const handleCheckBox = event => {
-        featureBooleanArray[event.target.value] = event.target.checked;
-    }
+    const [predictionDataLink, setPredictionDataLink] = useState('');
 
     const handleExampleValues = event => {
         featureExampleArray[event.target.id] = event.target.value;
     }
+
+    const linkInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const enteredLink = event.target.value;
+        setPredictionDataLink(enteredLink);
+    };
 
     const NewExample = (props: IFeatures) => {
         if (featureArray.length === 0) {
@@ -163,7 +157,7 @@ export default function ConfigureExplainer () {
         );
     }
 
-    function FeatureImportance(props: IFeatures) {
+    function ImportCSV() {
         if (featureArray.length === 0) {
             return (
                 <div></div>
@@ -172,18 +166,14 @@ export default function ConfigureExplainer () {
 
         return (
             <div>
-                <div style={{fontWeight: 'bold'}}>Select features to be included</div>
-                {props.featuresData.map((item) => {
-                return (
-                    <div>
-                        <Form.Check type="checkbox" 
-                                    label={item.name} 
-                                    value={item.name} 
-                                    onChange={handleCheckBox}
-                                    checked={featureBooleanArray[item.name]}/>
-                    </div>
-                    );
-                })}
+                <div style={{fontWeight: 'bold'}}>google drive data link</div>
+                <input
+                    value={predictionDataLink}
+                    onChange={linkInputHandler}
+                    className="form-control"
+                    placeholder="link.csv"
+                    aria-describedby="name-description"
+                />
             </div>
         );
     }
@@ -197,7 +187,7 @@ export default function ConfigureExplainer () {
         if (instance === "1") {
             return <NewExample featuresData={props.features}/>
         } else if (instance === "2") {
-            return <FeatureImportance featuresData={props.features}/>
+            return <ImportCSV/>
         }
     }
 
@@ -233,24 +223,22 @@ export default function ConfigureExplainer () {
                 labelName: labelName,
                 backgroundValue: backgroundValue,
                 example: selectedExample,
+                predictionDataLink: predictionDataLink,
                 fBooleanArray : featureBooleanArray,
                 fExampleArray: featureExampleArray,
-                plot: selectedPlot
             })
           };
 
-        if (Object.keys(featureExampleArray).length === 0) {
+        if (Object.keys(featureExampleArray).length === 0 && selectedExample === '1') {
             toast.error('At least one instance value must be given');
-        } else if (selectedPlot ===  "1") {
-            toast.error('First select a plot');
+        } else if (predictionDataLink ===  "" && selectedExample === '2') {
+            toast.error('Data Link must be given');
         } else {
             setLoading(true);
             const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
             const explaindModeljs = await  explaindModel.json()
 
             setShapValues(explaindModeljs)
-
-            console.log(shapValues)
 
             if (explaindModel.status === 200) {
                 setLoading(false);
@@ -352,30 +340,6 @@ export default function ConfigureExplainer () {
                     </Col>
                 </Row>
 
-                <Row> 
-                    <Col>
-                        <div className={styles['component_title']}> Choose a Plot </div>
-                        <Button onClick={() => setShowPlotModal(true)} variant="none" className={styles['configure_info_icon']}>
-                            <Icon.InfoCircleFill/>
-                        </Button>
-                    </Col>
-                </Row>
-                <Row className={styles["shap_row_offset"]}>
-                    <Col>
-                        <Form.Select    className={styles['configure_component_style']}
-                                        onChange={e => {
-                                            setPlotState(e.target.value);
-                                        }} 
-                                        value={selectedPlot}>
-                                {plotList.map((item) => {
-                                    return (
-                                        <option value={item.key}>{item.value}</option>
-                                    );
-                                })}
-                        </Form.Select>
-                    </Col>
-                </Row>
-
                 <Row>
                     <Col>
                         <div className={styles["configure_explaine_button"]}>
@@ -385,6 +349,8 @@ export default function ConfigureExplainer () {
                                 onClick={exlpaineModel}> 
                                 Explaine
                             </a>
+
+                            <ToastContainer/>
 
                         </div>
                     </Col>
