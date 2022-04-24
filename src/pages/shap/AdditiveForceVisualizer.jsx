@@ -160,7 +160,7 @@ class AdditiveForceVisualizer extends React.Component {
     }
 
     // Set the dimensions of the plot
-    let width = this.svg.node().parentNode.offsetWidth;
+    let width = 1300;
     if (width == 0) return setTimeout(() => this.draw(this.props), 500);
     this.svg.style("height", 150 + "px");
     this.svg.style("width", width + "px");

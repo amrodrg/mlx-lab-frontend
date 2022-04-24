@@ -2,9 +2,13 @@
 import React, {useEffect, useState} from 'react';
 import PredictLinkInput from '../components/PredectionComponents/PredictLinkInput';
 import {PredictionButton} from '../components/PredectionComponents/PredictionButton';
+import { ExplainationButton } from 'components/PredectionComponents/ExplainationButton';
 import {toast, ToastContainer} from 'react-toastify';
 import {useSelector} from 'react-redux';
+import {useRouter} from 'next/router';
+import useLocalStorage from '@/hooks/useLocalStorage';
 import PredictionList from '../components/PredectionComponents/PredictionList';
+import {getSavedValue} from '@/hooks/useLocalStorage';
 
 export interface PredictionObjekt {
   idx: number
@@ -13,6 +17,8 @@ export interface PredictionObjekt {
 
 export default function PredictionPage() {
 
+  const router = useRouter();
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const {modelName} = useSelector((state) => state);
@@ -20,6 +26,8 @@ export default function PredictionPage() {
   const [predictionDataLink, setPredictionDataLink] = useState('');
   const [predictionItems, setPredictionItems] = useState();
   const [loading, setLoading] = useState(false);
+
+  const [shapValues, setShapValues] = useLocalStorage('shapValues', []);
 
   const linkInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredLink = event.target.value;
@@ -56,6 +64,39 @@ export default function PredictionPage() {
     }
   };
 
+  const makeExplainationFetch = async () => {
+    // POST request using fetch with async/await
+    const dataLink = getSavedValue('DataLink', '');
+    const labelsRowName = getSavedValue('LabelsRowName', '');
+
+    const requestShapOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        modelName: modelName,
+        predictionDataLink: predictionDataLink,
+        dataLink: dataLink,
+        labelName: labelsRowName
+      })
+    }
+
+    if (predictionDataLink == '') {
+      toast.error(' Please enter a data link!');
+      window.scrollTo({
+        top: 100,
+        behavior: 'smooth',
+      });
+    }
+    else {
+      setLoading(true);
+      const shapValuesData = await fetch('http://127.0.0.1:8000/shap/prediction_shap_values', requestShapOptions)
+      const shapValuesDatajs = await  shapValuesData.json()
+      await setShapValues(shapValuesDatajs);
+      await setLoading(false);
+      router.push('/shap/explaination');
+    }
+  }
+
   return (
     <div className="relative overflow-hidden">
       <main>
@@ -85,6 +126,8 @@ export default function PredictionPage() {
                 <PredictLinkInput predictLink={predictionDataLink} predictLinkInputHandler={linkInputHandler}/>
 
                 <PredictionButton predictionFetch={makePredictionFetch}/>
+
+                <ExplainationButton explainationFetch={makeExplainationFetch}/>
 
                 <ToastContainer/>
 

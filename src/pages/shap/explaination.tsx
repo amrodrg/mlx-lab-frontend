@@ -17,15 +17,13 @@ export default function ExplainationPlot () {
     const shapValues = getSavedValue('shapValues', []);
 
     const getValues = async () => {
-        const labelName = getSavedValue('LabelsRowName', ''); 
+        const labelName = getSavedValue('LabelsRowName', '');
         const dataLink = getSavedValue('DataLink', '');
-        const plot = getSavedValue('plot', '');
-        const example = getSavedValue('example', '');
         const backgroundValue = getSavedValue('backgroundValue', '');
-        return {shapValues, labelName, dataLink, plot, example, backgroundValue};
-      };
+        return {shapValues, labelName, dataLink, backgroundValue};
+    };
 
-    const getExplainerInformation = async (shapValues, labelName, dataLink, plot, example, backgroundValue) => {
+    const getExplainerInformation = async (shapValues, labelName, dataLink, backgroundValue) => {
 
         const requestArgs = {
             method: 'POST',
@@ -35,8 +33,6 @@ export default function ExplainationPlot () {
                 dataLink: dataLink,
                 shapValues: shapValues,
                 labelName: labelName,
-                plot:plot,
-                example:example,
                 backgroundValue:backgroundValue
             })
         };
@@ -50,7 +46,7 @@ export default function ExplainationPlot () {
         () => {
         getValues()
           .then(values => {
-            getExplainerInformation(values.shapValues, values.labelName, values.dataLink, values.plot, values.example, values.backgroundValue)
+            getExplainerInformation(values.shapValues, values.labelName, values.dataLink, values.backgroundValue)
             .then(explainsationInformation => {
                 setExplainerInformation({
                     backgroundData: explainsationInformation.background_value,

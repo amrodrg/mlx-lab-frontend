@@ -112,8 +112,6 @@ export default function ConfigureExplainer () {
     // feature Array
     const [featureArray, setFeatureArray] = useState([]);
 
-    // feature Boolean Array
-    const [featureBooleanArray] = useState({});
     // feature Example Array
     const [featureExampleArray] = useState({});
 
@@ -224,8 +222,7 @@ export default function ConfigureExplainer () {
                 backgroundValue: backgroundValue,
                 example: selectedExample,
                 predictionDataLink: predictionDataLink,
-                fBooleanArray : featureBooleanArray,
-                fExampleArray: featureExampleArray,
+                fExampleArray: featureExampleArray
             })
           };
 
