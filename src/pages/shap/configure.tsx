@@ -13,10 +13,14 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import {getSavedValue} from '@/hooks/useLocalStorage'
 import Card from 'react-bootstrap/Card'
-import {useSelector} from 'react-redux'
 import {useRouter} from 'next/router';
 import Spinner from 'react-bootstrap/Spinner'
 import 'react-toastify/dist/ReactToastify.css';
+import {useDispatch, useSelector} from 'react-redux';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import {bindActionCreators} from 'redux';
+import {ModelNameActionCreator} from  '../../redux/index';
 
 interface IFeatures {
     featuresData:{name:string}[];
@@ -25,6 +29,10 @@ interface IFeatures {
 export default function ConfigureExplainer () {
 
     const router = useRouter();
+
+    // Action Creators of Redux
+    const dispatch = useDispatch();
+    const modelNameAC = bindActionCreators(ModelNameActionCreator, dispatch);
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -93,9 +101,6 @@ export default function ConfigureExplainer () {
         labelToPredict: ""
     }
 
-    // select model
-    const [selectedModel, setModelState] = useState("");
-
     // amount of background examples
     const [backgroundValue, setBackgroundValue] = useLocalStorage('backgroundValue', "20");
          
@@ -129,6 +134,11 @@ export default function ConfigureExplainer () {
         const enteredLink = event.target.value;
         setPredictionDataLink(enteredLink);
     };
+
+    const modelNameInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const enterdName = event.target.value;
+        modelNameAC.enterModelName(enterdName);
+    } 
 
     const NewExample = (props: IFeatures) => {
         if (featureArray.length === 0) {
@@ -252,25 +262,20 @@ export default function ConfigureExplainer () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Choose a Model</div>
-                        <Button onClick={() => setShowPlotModal(true)} variant="none" className={styles['configure_info_icon']}>
-                            <Icon.InfoCircleFill/>
-                        </Button>
+                        <div className={styles['component_title']}> Enter model name </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
-                        <Form.Select className={styles['configure_component_style'] + " " + styles['configure_select_dropdown']}
-                                     onChange={e => {
-                                        setModelState(e.target.value);
-                                     }}
-                                     value={selectedModel}>
-                            {modelList.map((item) => {
-                                return (
-                                    <option value={item.key}>{item.value}</option>
-                                );
-                            })}
-                        </Form.Select>
+                    <div className={styles["configure_component_style"]}>
+                        <input
+                            value={modelName}
+                            onChange={modelNameInputHandler}
+                            className="form-control"
+                            placeholder="Enter a saved model name"
+                            aria-describedby="name-description"
+                        />
+                    </div>
                     </Col>
                 </Row>
 
