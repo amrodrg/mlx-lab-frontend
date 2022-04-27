@@ -105,12 +105,10 @@ export default function ConfigureExplainer () {
     const [backgroundValue, setBackgroundValue] = useLocalStorage('backgroundValue', "20");
          
     // choose an example (instance)
-    const [selectedExample, setExampleState] = useLocalStorage('example', "1");
+    const [selectedExample, setExampleState] = useLocalStorage('example', "2");
         
-    // modals
+    // modal
     const [showTestdataModal, setShowTestdataModal] = useState(false);
-    const [showExmapleModal , setShowExampleModal] = useState(false);
-    const [showPlotModal , setShowPlotModal] = useState(false);
         
     // model Inforamtion box
     const [modelInformation, setModelInformation] = useState(initModelInfo);
@@ -245,6 +243,8 @@ export default function ConfigureExplainer () {
             const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
             const explaindModeljs = await  explaindModel.json()
 
+            console.log(explaindModeljs)
+
             setShapValues(explaindModeljs)
 
             if (explaindModel.status === 200) {
@@ -299,7 +299,7 @@ export default function ConfigureExplainer () {
                 <Row>
                     <Col md={6}>
                         <div className={styles['component_title']}> Background Examples </div>
-                        <Button onClick={() => setShowPlotModal(true)} variant="none" className={styles['configure_info_icon']}>
+                        <Button onClick={() => setShowTestdataModal(true)} variant="none" className={styles['configure_info_icon']}>
                             <Icon.InfoCircleFill/>
                         </Button>
                     </Col>
@@ -318,9 +318,6 @@ export default function ConfigureExplainer () {
                 <Row>
                     <Col md={6}>
                         <div className={styles['component_title']}> Example </div>
-                        <Button onClick={() => setShowPlotModal(true)} variant="none" className={styles['configure_info_icon']}>
-                            <Icon.InfoCircleFill/>
-                        </Button>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
@@ -367,50 +364,6 @@ export default function ConfigureExplainer () {
                 </Row>
 
                 <Modal
-                    show={showExmapleModal}
-                    onHide={() => setShowExampleModal(false)}
-                    dialogClassName="modal-90w">
-                    <Modal.Header closeButton>
-                    <Modal.Title>
-                        Custom Modal Styling
-                    </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                    <p>
-                        Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-                        commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-                        ipsam atque a dolores quisquam quisquam adipisci possimus
-                        laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-                        accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-                        reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-                        deleniti rem!
-                    </p>
-                    </Modal.Body>
-                </Modal>
-
-                <Modal
-                    show={showPlotModal}
-                    onHide={() => setShowPlotModal(false)}
-                    dialogClassName="modal-90w">
-                    <Modal.Header closeButton>
-                    <Modal.Title>
-                        Custom Modal Styling
-                    </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p>
-                            Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-                            commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-                            ipsam atque a dolores quisquam quisquam adipisci possimus
-                            laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-                            accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-                            reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-                            deleniti rem!
-                        </p>
-                    </Modal.Body>
-                </Modal>
-
-                <Modal
                     show={showTestdataModal}
                     onHide={() => setShowTestdataModal(false)}
                     dialogClassName="modal-90w">
@@ -421,13 +374,17 @@ export default function ConfigureExplainer () {
                     </Modal.Header>
                     <Modal.Body>
                         <p>
-                            Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-                            commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-                            ipsam atque a dolores quisquam quisquam adipisci possimus
-                            laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-                            accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-                            reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-                            deleniti rem!
+                        To solve is the feature omission problem. Lundberg and Lee do this by simpling 
+                        reframing what it means to omit a feature. Rather then omit a feature entirely 
+                        from the model input, they instead replace it with a variety of its typical values,
+                        called the background (noise) of the feature. This background feature values are
+                        taken from a background dataset, a set of around 100 or so typical inputs to 
+                        the model. Instead of computing the marginal contribution as the difference between
+                        the model output with the feature included versus excluded, we instead find the
+                        difference between the model output with the desired feature value versus a 
+                        background value of that feature. We do this for every background feature value
+                        from the background dataset, and take the average of all of those comparisons as
+                        our marginal contribution
                         </p>
                     </Modal.Body>
                 </Modal>

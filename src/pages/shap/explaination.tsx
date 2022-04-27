@@ -15,15 +15,16 @@ export default function ExplainationPlot () {
     const {modelName} = useSelector((state) => state);
 
     const shapValues = getSavedValue('shapValues', []);
+    const [selectedExample, setExampleState] = getSavedValue('example', "2");
 
     const getValues = async () => {
         const labelName = getSavedValue('LabelsRowName', '');
         const dataLink = getSavedValue('DataLink', '');
         const backgroundValue = getSavedValue('backgroundValue', '');
-        return {shapValues, labelName, dataLink, backgroundValue};
+        return {labelName, dataLink, backgroundValue};
     };
 
-    const getExplainerInformation = async (shapValues, labelName, dataLink, backgroundValue) => {
+    const getExplainerInformation = async (labelName, dataLink, backgroundValue) => {
 
         const requestArgs = {
             method: 'POST',
@@ -31,7 +32,6 @@ export default function ExplainationPlot () {
             body: JSON.stringify({
                 modelName: modelName,
                 dataLink: dataLink,
-                shapValues: shapValues,
                 labelName: labelName,
                 backgroundValue:backgroundValue
             })
@@ -46,7 +46,7 @@ export default function ExplainationPlot () {
         () => {
         getValues()
           .then(values => {
-            getExplainerInformation(values.shapValues, values.labelName, values.dataLink, values.backgroundValue)
+            getExplainerInformation(values.labelName, values.dataLink, values.backgroundValue)
             .then(explainsationInformation => {
                 setExplainerInformation({
                     backgroundData: explainsationInformation.background_value,
@@ -84,23 +84,33 @@ export default function ExplainationPlot () {
             );
         }
 
-        return (
-            <div>
-                {explainations.map((entries) => {
-
-                    console.log(entries)
-
-                    return (
-                        <AdditiveForceVisualizer
-                            outNames={[explainerInformation.labelToPredict]}
-                            baseValue={explainerInformation.baseValue}
-                            link="identity"
-                            features={entries}
-                        />
-                    );
-                })}
-            </div>
-        );
+        if (selectedExample === "1") {
+            return (
+                <div>
+                <AdditiveForceVisualizer
+                    outNames={[explainerInformation.labelToPredict]}
+                    baseValue={explainerInformation.baseValue}
+                    link="identity"
+                    features={explainations}
+                />
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    {explainations.map((entries) => {
+                        return (
+                            <AdditiveForceVisualizer
+                                outNames={[explainerInformation.labelToPredict]}
+                                baseValue={explainerInformation.baseValue}
+                                link="identity"
+                                features={entries}
+                            />
+                        );
+                    })}
+                </div>
+            );
+        }
     }
 
     ///////////////////////////////////////////// Page Content
