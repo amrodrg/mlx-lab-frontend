@@ -19,8 +19,8 @@ const ActivationSelection: FC<Props> = ({selectionHandler, activationFunction}) 
         className="block w-full pl-28 pr-28 py-1 text-xl border-secondary outline-secondary-blue focus:ring-main-blue rounded-pill font-bold text-secondary-blue"
         defaultValue={activationFunction}
       >
+        <option>linear</option>
         <option>relu</option>
-        <option>sigmoid</option>
       </select>
     </div>
   );

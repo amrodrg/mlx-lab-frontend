@@ -2,18 +2,104 @@ import React, {FC, useState} from 'react';
 import {QuestionMarkCircleIcon} from '@heroicons/react/solid';
 import QuestionButtonBlue from '../Buttons/QuestionButtonBlue';
 import {ExplainModalDataLink, ExplainModalLabelName} from './ExplainModals';
+import {toast} from 'react-toastify';
+import {ClipLoader, RiseLoader} from 'react-spinners';
+import {Clipboard} from 'react-bootstrap-icons';
 
 type Props = {
     dataLinkValue: string
     setLink: (event: React.ChangeEvent<HTMLInputElement>) => void
-    labelsRowName: string
-    setLabelsRowName: (event: React.ChangeEvent<HTMLInputElement>) => void
+    labelsColumnName: string
+    setLabelsColumnName: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, labelsRowName, setLabelsRowName}) => {
+const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, labelsColumnName, setLabelsColumnName}) => {
 
   const [showExampleModalDataLink , setShowExampleModalDataLink] = useState(false);
   const [showExampleModalLabelName , setShowExampleModalLabelName] = useState(false);
+  const [loadingLinkCheck, setLoadingLinkCheck] = useState(false);
+  const [loadingLabelsCheck, setLoadingLabelsCheck] = useState(false);
+  const [linkChecked, setLinkChecked] = useState(false);
+  const [labelsNameCheck, setLabelsNameChecked] = useState(false);
+
+  const makeCheckDataLinkFetch = async () => {
+    // POST request using fetch with async/await
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        dataLink: dataLinkValue,
+      })
+    };
+
+    if (dataLinkValue == '') {
+      toast.error(' Please enter a data link!');
+      window.scrollTo({
+        top: 240,
+        behavior: 'smooth',
+      });
+    } else {
+      setLoadingLinkCheck(true);
+      await fetch('http://127.0.0.1:8000/check_datalink', requestOptions).then((data) => {
+        if (data.status === 200) {
+          setLoadingLinkCheck(false);
+          toast.success(' Data Link is Valid!');
+        } else if (data.status === 503) {
+          setLoadingLinkCheck(false);
+          toast.error(' Invalid data link!');
+          window.scrollTo({
+            top: 240,
+            behavior: 'smooth',
+          });
+        } else {
+          setLoadingLinkCheck(false);
+        }
+      }).catch((error) => {
+        console.log(error.message);
+      });
+    }
+  };
+
+  const makeCheckDLabelsNameFetch = async () => {
+    // POST request using fetch with async/await
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        dataLink: dataLinkValue,
+        labelsName: labelsColumnName,
+      })
+    };
+
+    if (labelsColumnName == '') {
+      toast.error(' Please enter the name of the labels row of your data set!');
+      window.scrollTo({
+        top: 240,
+        behavior: 'smooth',
+      });
+    } else {
+      setLoadingLabelsCheck(true);
+      await fetch('http://127.0.0.1:8000/check_labelsname', requestOptions).then((data) => {
+        if (data.status === 200) {
+          setLoadingLabelsCheck(false);
+          toast.success(' Labels Column Name is Correct!');
+        } else if (data.status === 503) {
+          setLoadingLabelsCheck(false);
+          toast.error(' Incorrect Labels Column Name!');
+          window.scrollTo({
+            top: 240,
+            behavior: 'smooth',
+          });
+        } else {
+          setLoadingLabelsCheck(false);
+        }
+      }).catch((error) => {
+        console.log(error.message);
+      });
+    }
+  };
+
+
 
   return (
     <div className="flex flex-col items-center">
@@ -51,10 +137,15 @@ const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, labelsRowName, setLab
         </div>
 
         <button
+          onClick={makeCheckDataLinkFetch}
+          disabled={loadingLabelsCheck || loadingLinkCheck}
           type="button"
           className="items-center inline-flex w-64 h-14 p-2.5 justify-content-center border border-transparent rounded-full shadow-sm text-2xl text-white font-bold bg-main-blue hover:bg-primary-purple"
         >
-                  Check
+          {loadingLinkCheck?
+            <div className="flex self-center">
+              <ClipLoader color="white" size={30}/>
+            </div> : 'Check'}
         </button>
 
       </div>
@@ -67,13 +158,13 @@ const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, labelsRowName, setLab
         <div className=" flex flex-col w-2/5 p-6 ml-2 mr-10 mb-4">
 
           <label htmlFor="model name" className="block text-sm font-medium text-secondary-blue">
-                    Please enter the name of your labels row
+                    Please enter the name of your labels column
           </label>
 
           <div className="flex w-full mt-1 justify-center">
             <input
-              value={labelsRowName}
-              onChange={setLabelsRowName}
+              value={labelsColumnName}
+              onChange={setLabelsColumnName}
               type="name"
               name="name"
               id="name"
@@ -86,10 +177,15 @@ const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, labelsRowName, setLab
         </div>
 
         <button
+          onClick={makeCheckDLabelsNameFetch}
+          disabled={loadingLinkCheck || loadingLabelsCheck}
           type="button"
           className="items-center inline-flex w-36 h-13 p-2 justify-content-center border border-transparent rounded-full shadow-sm text-xl text-white font-bold bg-main-blue hover:bg-primary-purple"
         >
-                Check
+          {loadingLabelsCheck?
+            <div className="flex self-center">
+              <ClipLoader color="white" size={27}/>
+            </div> : 'Check'}
         </button>
 
 
@@ -98,51 +194,6 @@ const DataLinkGroup: FC<Props> = ({dataLinkValue, setLink, labelsRowName, setLab
 
       <ExplainModalDataLink showExampleModal={showExampleModalDataLink} setShowExampleModal={setShowExampleModalDataLink}/>
       <ExplainModalLabelName showExampleModal={showExampleModalLabelName} setShowExampleModal={setShowExampleModalLabelName}/>
-
-
-      {/*<Divider/>*/}
-
-      {/*<div className="flex flex-row items-center w-full mx-5 mt-20 mb-5">*/}
-
-
-      {/*  <div className="flex flex-col w-1/2 items-center mt-1">*/}
-      {/*    <QuestionButtonBlue/>*/}
-      {/*    <div className="flex w-full p-6 justify-center">*/}
-      {/*      <input*/}
-      {/*        type="name"*/}
-      {/*        name="name"*/}
-      {/*        id="name"*/}
-      {/*        className="h-40 w-full p-3 font-bold lg:text-lg shadow-md border-1 border-main-blue block rounded-2xl justify-center"*/}
-      {/*        placeholder={'Training data like: “[33, 52, 12, ...]”.'}*/}
-      {/*        aria-describedby="name-description"*/}
-      {/*      />*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-
-
-      {/*  <div className="flex flex-col w-1/2 items-center mt-1 mr-20">*/}
-      {/*    <QuestionButtonBlue/>*/}
-      {/*    <div className="flex w-full p-6 justify-center">*/}
-      {/*      <input*/}
-      {/*        type="name"*/}
-      {/*        name="name"*/}
-      {/*        id="name"*/}
-      {/*        className="h-40 w-full p-7 font-bold lg:text-lg shadow-md border-1 border-main-blue block rounded-2xl"*/}
-      {/*        placeholder='Labels: “[3000, 5000, 1000, ...]”.'*/}
-      {/*        aria-describedby="name-description"*/}
-      {/*      />*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-
-
-      {/*  <button*/}
-      {/*    type="button"*/}
-      {/*    className="items-center inline-flex w-64 h-14 p-2.5 justify-content-center border border-transparent rounded-full shadow-sm text-xl text-white font-bold bg-main-blue hover:bg-primary-purple"*/}
-      {/*  >*/}
-      {/*          Import*/}
-      {/*  </button>*/}
-
-      {/*</div>*/}
 
     </div>
 
