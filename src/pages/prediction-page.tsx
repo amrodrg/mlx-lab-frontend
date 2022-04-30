@@ -23,7 +23,7 @@ export default function PredictionPage() {
   // @ts-ignore
   const {modelName} = useSelector((state) => state);
   const originalDataLink = getSavedValue('DataLink', '');
-  const labelsName = getSavedValue('LabelsRowName', '');
+  const labelsName = getSavedValue('LabelsColumnName', '');
   const testPercentage = getSavedValue('TestPercentage', 20);
 
   const [predictionDataLink, setPredictionDataLink] = useState('');
@@ -72,7 +72,7 @@ export default function PredictionPage() {
   const makeExplainationFetch = async () => {
     // POST request using fetch with async/await
     const dataLink = getSavedValue('DataLink', '');
-    const labelsRowName = getSavedValue('LabelsRowName', '');
+    const labelsColumnName = getSavedValue('LabelsColumnName', '');
 
     const requestShapOptions = {
       method: 'POST',
@@ -81,7 +81,7 @@ export default function PredictionPage() {
         modelName: modelName,
         predictionDataLink: predictionDataLink,
         dataLink: dataLink,
-        labelName: labelsRowName
+        labelName: labelsColumnName
       })
     };
 

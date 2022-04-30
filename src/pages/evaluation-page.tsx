@@ -23,19 +23,19 @@ export default function EvaluationPage() {
 
   const getValues = async () => {
     const dataLink = getSavedValue('DataLink', '');
-    const labelsRowName = getSavedValue('LabelsRowName', '');
+    const labelsColumnName = getSavedValue('LabelsColumnName', '');
     const testPercentage = getSavedValue('TestPercentage', 20);
-    return {dataLink, labelsRowName, testPercentage};
+    return {dataLink, labelsColumnName, testPercentage};
   };
 
-  const makeEvaluationFetch = async (linkValue, labelsRowName, testPercentage) => {
+  const makeEvaluationFetch = async (linkValue, labelsColumnName, testPercentage) => {
     // POST request using fetch with async/await
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         dataLink: linkValue,
-        labelsName: labelsRowName,
+        labelsName: labelsColumnName,
         modelName: modelName,
         testingPercentage: testPercentage,
       })
@@ -49,7 +49,7 @@ export default function EvaluationPage() {
   useEffect(() => {
     getValues()
       .then(values => {
-        makeEvaluationFetch(values.dataLink, values.labelsRowName, values.testPercentage)
+        makeEvaluationFetch(values.dataLink, values.labelsColumnName, values.testPercentage)
           .then(evaluationData => {
             console.log(evaluationData);
             setEvaluationValues({
