@@ -5,14 +5,13 @@ import CompilingSection from '../pages-sections/CompilingSection';
 import DataFittingSection from '../pages-sections/DataFittingSection';
 import RegressionHeader from '../components/RegressionHeader';
 import React, {useState} from 'react';
-import {Layer} from '../Interfaces';
 import {toast} from 'react-toastify';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import {useDispatch, useSelector} from 'react-redux';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {bindActionCreators} from 'redux';
-import {ModelNameActionCreator} from  '../redux/index';
+import {ModelNameActionCreator} from '../redux/index';
 import {useRouter} from 'next/router';
 
 
@@ -32,9 +31,9 @@ export default function RegressionPage() {
   // The entered data link
   const [linkValue, setLinkValue] = useLocalStorage('DataLink', '');
   // Data labels row name
-  const [labelsRowName, setLabelsRowName] = useLocalStorage('LabelsRowName', '');
+  const [labelsColumnName, setLabelsColumnName] = useLocalStorage('LabelsColumnName', '');
   // The List of Layers
-  const [layers, setLayers] = useLocalStorage('layersKey', [{layerId:1, neuronsNum:2, activationFun:'ReLu'}]);
+  const [layers, setLayers] = useLocalStorage('layersKey', [{layerId: 1, neuronsNum: 2, activationFun: 'ReLu'}]);
   // The list of neuron's numbers for each layer
   const [neuronsList, setNeuronsList] = useLocalStorage('neuronsListKey', [5]);
   // The list of activation functions for each layer
@@ -60,7 +59,7 @@ export default function RegressionPage() {
 
   const labelsNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredName = event.target.value;
-    setLabelsRowName(enteredName);
+    setLabelsColumnName(enteredName);
   };
 
   const nameInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,13 +72,13 @@ export default function RegressionPage() {
     // POST request using fetch with async/await
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         neuronsList: neuronsList,
         activationList: activationList,
         layersNumber: layers.length,
         dataLink: linkValue,
-        labelsName: labelsRowName,
+        labelsName: labelsColumnName,
         modelName: modelName,
         epochsNumber: epochsNumber,
         testingPercentage: testingPercentage,
@@ -95,7 +94,7 @@ export default function RegressionPage() {
         top: 240,
         behavior: 'smooth',
       });
-    } else if (labelsRowName == '') {
+    } else if (labelsColumnName == '') {
       toast.error(' Please enter the name of the labels row of your data set!');
       window.scrollTo({
         top: 240,
@@ -107,25 +106,47 @@ export default function RegressionPage() {
         top: 780,
         behavior: 'smooth',
       });
-    }
-    else {
+    } else {
       setLoading(true);
-      const mlData = await fetch('http://127.0.0.1:8000/', requestOptions);
-      const mlModel = await  mlData.json();
-      await console.log(mlModel);
-      await setLoading(false);
-      router.push('/evaluation-page');
+      await fetch('http://127.0.0.1:8000/', requestOptions).then((data) => {
+        if (data.status === 200) {
+          const mlModel = data.json();
+          console.log(mlModel);
+          setLoading(false);
+          router.push('/evaluation-page');
+        } else if (data.status === 503) {
+          setLoading(false);
+          toast.error(' Invalid data link or incorrect labels column name!');
+          window.scrollTo({
+            top: 240,
+            behavior: 'smooth',
+          });
+        } else if (data.status === 500) {
+          setLoading(false);
+          toast.error(' Data Fitting Failed! Please check your model\'s setting');
+        } else {
+          setLoading(false);
+        }
+      }).catch((error) => {
+        console.log(error.message);
+      });
     }
   };
-    
-  return(
+
+  return (
     <div>
       <RegressionHeader/>
-      <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} labelsRowName={labelsRowName} setLabelsRowName={labelsNameHandler}/>
+      <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} labelsColumnName={labelsColumnName}
+        setLabelsColumnName={labelsNameHandler}/>
       <NamingSection modelName={modelName} setName={nameInputHandler}/>
-      <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList} setNeuronsList={setNeuronsList} activationList={activationList} setActivationList={setActivationList}/>
-      <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer} setOptimizer={setOptimizer} learningRate={learningRate} setLearningRate={setLearningRate} />
-      <DataFittingSection epochsNum={epochsNumber} setEpochsNum={setEpochsNumber} testingPer={testingPercentage} setTestingPer={setTestingPercentage} makeFetch={makeModelFetch} loading={loading}/>
+      <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList}
+        setNeuronsList={setNeuronsList} activationList={activationList}
+        setActivationList={setActivationList}/>
+      <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer}
+        setOptimizer={setOptimizer} learningRate={learningRate}
+        setLearningRate={setLearningRate}/>
+      <DataFittingSection epochsNum={epochsNumber} setEpochsNum={setEpochsNumber} testingPer={testingPercentage}
+        setTestingPer={setTestingPercentage} makeFetch={makeModelFetch} loading={loading}/>
     </div>);
 }
 

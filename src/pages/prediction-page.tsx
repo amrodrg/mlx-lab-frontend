@@ -22,6 +22,9 @@ export default function PredictionPage() {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const {modelName} = useSelector((state) => state);
+  const originalDataLink = getSavedValue('DataLink', '');
+  const labelsName = getSavedValue('LabelsRowName', '');
+  const testPercentage = getSavedValue('TestPercentage', 20);
 
   const [predictionDataLink, setPredictionDataLink] = useState('');
   const [predictionItems, setPredictionItems] = useState();
@@ -43,7 +46,9 @@ export default function PredictionPage() {
       body: JSON.stringify({
         modelName: modelName,
         predictionDataLink: predictionDataLink,
-
+        originalDataLink: originalDataLink,
+        labelsName: labelsName,
+        testingPercentage: testPercentage
       })
     };
 
@@ -78,7 +83,7 @@ export default function PredictionPage() {
         dataLink: dataLink,
         labelName: labelsRowName
       })
-    }
+    };
 
     if (predictionDataLink == '') {
       toast.error(' Please enter a data link!');
@@ -89,13 +94,13 @@ export default function PredictionPage() {
     }
     else {
       setLoading(true);
-      const shapValuesData = await fetch('http://127.0.0.1:8000/shap/prediction_shap_values', requestShapOptions)
-      const shapValuesDatajs = await  shapValuesData.json()
+      const shapValuesData = await fetch('http://127.0.0.1:8000/shap/prediction_shap_values', requestShapOptions);
+      const shapValuesDatajs = await  shapValuesData.json();
       await setShapValues(shapValuesDatajs);
       await setLoading(false);
       router.push('/shap/explaination');
     }
-  }
+  };
 
   return (
     <div className="relative overflow-hidden">
