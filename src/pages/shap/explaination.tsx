@@ -18,7 +18,7 @@ export default function ExplainationPlot () {
     const [selectedExample, setExampleState] = getSavedValue('example', "2");
 
     const getValues = async () => {
-        const labelName = getSavedValue('LabelsRowName', '');
+        const labelName = getSavedValue('LabelsColumnName', '');
         const dataLink = getSavedValue('DataLink', '');
         const backgroundValue = getSavedValue('backgroundValue', '');
         return {labelName, dataLink, backgroundValue};
@@ -57,6 +57,9 @@ export default function ExplainationPlot () {
                     featuresString: explainsationInformation.modelFeaturesString,
                     labelToPredict: explainsationInformation.labelToPredict
                 });
+
+
+                console.log("shap Values: ", shapValues)
             }
             );
           }
@@ -84,6 +87,8 @@ export default function ExplainationPlot () {
             );
         }
 
+        console.log("selected Example: ", selectedExample)
+
         if (selectedExample === "1") {
             return (
                 <div>
@@ -96,6 +101,8 @@ export default function ExplainationPlot () {
                 </div>
             );
         } else {
+            console.log("explainations: ", explainations)
+            
             return (
                 <div>
                     {explainations.map((entries) => {

@@ -40,7 +40,7 @@ export default function ConfigureExplainer () {
 
     const getValues = async () => {
         const dataLink = getSavedValue('DataLink', '');
-        const labelName = getSavedValue('LabelsRowName', '');
+        const labelName = getSavedValue('LabelsColumnName', '');
         return {dataLink, labelName};
       };
 
@@ -218,7 +218,7 @@ export default function ConfigureExplainer () {
 
     const exlpaineModel = async () => {
         const dataLink = getSavedValue('DataLink', '');
-        const labelName = getSavedValue('LabelsRowName', ''); 
+        const labelName = getSavedValue('LabelsColumnName', ''); 
 
         const requestArgs = {
             method: 'POST',
@@ -262,7 +262,7 @@ export default function ConfigureExplainer () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Enter model name </div>
+                        <div className={styles['component_title']}> Model </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
