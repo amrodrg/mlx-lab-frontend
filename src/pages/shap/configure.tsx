@@ -38,19 +38,34 @@ export default function ConfigureExplainer () {
     // @ts-ignore
     const {modelName} = useSelector((state) => state);
 
-    const getValues = async () => {
-        const dataLink = getSavedValue('DataLink', '');
-        const labelName = getSavedValue('LabelsColumnName', '');
-        return {dataLink, labelName};
-      };
+    const updateModelInformation = async (modelName) => {
 
-    const getModelInformation = async (linkValue, labelName) => {
         const requestArgs = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                dataLink: linkValue,
-                labelName: labelName,
+                modelName: modelName
+            })
+        };
+
+        const modelInformation = await fetch('http://127.0.0.1:8000/shap/model_information', requestArgs);
+        const modelInformationJs = await  modelInformation.json();
+
+        setModelInformation({
+            modelName: modelInformationJs.modelName,
+            lastModified: modelInformationJs.lastModified,
+            featuresString: modelInformationJs.modelFeaturesString
+        });
+
+        setFeatureArray(modelInformationJs.featureArray);
+        setModelList(modelInformationJs.modelList)
+    }
+
+    const getModelInformation = async () => {
+        const requestArgs = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
                 modelName: modelName
             })
         };
@@ -62,31 +77,19 @@ export default function ConfigureExplainer () {
   
     useEffect(
         () => {
-        getValues()
-          .then(values => {
-            getModelInformation(values.dataLink, values.labelName)
-              .then(modelInformation => {
+        getModelInformation()
+            .then(modelInformation => {
 
-                setModelInformation({
-                    modelName: modelInformation.modelName,
-                    dataLink: modelInformation.dataLink,
-                    lastModified: modelInformation.lastModified,
-                    featuresString: modelInformation.modelFeaturesString,
-                    labelToPredict: modelInformation.labelToPredict
-                });
-
-                setFeatureArray(modelInformation.featureArray);
-              }
-            );
-          }
-        );
+              setModelInformation({
+                  modelName: modelInformation.modelName,
+                  lastModified: modelInformation.lastModified,
+                  featuresString: modelInformation.modelFeaturesString
+              });
+              setFeatureArray(modelInformation.featureArray);
+              setModelList(modelInformation.modelList)
+            }
+          );
     }, []);
-
-    const modelList = [
-        { key: "Model1", value: "model_1" },
-        { key: "real_estate", value: "real estate model" },
-        { key: "fashion_model", value: "fashion model" }
-      ];
     
     const exampleList = [
         { key: "1", value: "New instance" },
@@ -96,9 +99,7 @@ export default function ConfigureExplainer () {
       const initModelInfo = {
         modelName: "",
         lastModified: "",
-        dataLink: "",
-        featuresString: "",
-        labelToPredict: ""
+        featuresString: ""
     }
 
     // amount of background examples
@@ -114,6 +115,8 @@ export default function ConfigureExplainer () {
     const [modelInformation, setModelInformation] = useState(initModelInfo);
     // feature Array
     const [featureArray, setFeatureArray] = useState([]);
+    // modell array 
+    const [modelList, setModelList] = useState([]);
 
     // feature Example Array
     const [featureExampleArray] = useState({});
@@ -133,9 +136,10 @@ export default function ConfigureExplainer () {
         setPredictionDataLink(enteredLink);
     };
 
-    const modelNameInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const modelNameInputHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const enterdName = event.target.value;
         modelNameAC.enterModelName(enterdName);
+        updateModelInformation(enterdName);
     } 
 
     const NewExample = (props: IFeatures) => {
@@ -147,7 +151,7 @@ export default function ConfigureExplainer () {
 
         return (
             <div>
-                <div style={{fontWeight: 'bold'}}>Fill feature values</div>
+                <div style={{fontWeight: 'bold'}}>Fill Feature Values</div>
                 <InputGroup size="sm">
                     {props.featuresData.map(prop => (
                         <div>
@@ -243,8 +247,6 @@ export default function ConfigureExplainer () {
             const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
             const explaindModeljs = await  explaindModel.json()
 
-            console.log(explaindModeljs)
-
             setShapValues(explaindModeljs)
 
             if (explaindModel.status === 200) {
@@ -267,15 +269,15 @@ export default function ConfigureExplainer () {
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
-                    <div className={styles["configure_component_style"]}>
-                        <input
-                            value={modelName}
-                            onChange={modelNameInputHandler}
-                            className="form-control"
-                            placeholder="Enter a saved model name"
-                            aria-describedby="name-description"
-                        />
-                    </div>
+                        <Form.Select className={styles['configure_component_style']}
+                                     onChange={modelNameInputHandler} 
+                                     value={modelName}>
+                            {modelList.map((item) => {
+                                return (
+                                    <option value={item}>{item}</option>
+                                );
+                            })}
+                        </Form.Select>
                     </Col>
                 </Row>
 
@@ -289,9 +291,7 @@ export default function ConfigureExplainer () {
                         <Card className={styles['explaine_model_info_well']}>
                             <Card.Text> Model Name: {modelInformation.modelName} </Card.Text>
                             <Card.Text> Last Modified: {modelInformation.lastModified} </Card.Text>
-                            <Card.Text> Data Link: {modelInformation.dataLink} </Card.Text>
                             <Card.Text> Features: {modelInformation.featuresString} </Card.Text>
-                            <Card.Text> Label To Predict: {modelInformation.labelToPredict} </Card.Text>
                         </Card>
                     </Col>
                 </Row>
