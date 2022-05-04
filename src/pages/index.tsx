@@ -27,13 +27,6 @@ export default function FirstPage() {
               </div>
               <footer className="mt-8">
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 inline-flex rounded-full border-2 border-white">
-                    <img
-                      className="h-12 w-12 rounded-full"
-                      src="img/me_amr.jpg"
-                      alt=""
-                    />
-                  </div>
                   <div className="ml-4">
                     <div className="text-base font-medium text-white">Amr Dargham</div>
                     <div className="text-base font-medium text-indigo-200">FU-Berlin</div>
@@ -71,13 +64,6 @@ export default function FirstPage() {
               </div>
               <footer className="mt-8">
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 inline-flex rounded-full border-2 border-white">
-                    <img
-                      className="h-12 w-12 rounded-full"
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
                   <div className="ml-4">
                     <div className="text-base font-medium text-white">Mamon Dehabra</div>
                     <div className="text-base font-medium text-indigo-200">FU-Berlin</div>
