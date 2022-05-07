@@ -264,7 +264,7 @@ export default function ConfigureExplainer () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Model </div>
+                        <div className={styles['component_title']}> Modell </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
@@ -283,7 +283,7 @@ export default function ConfigureExplainer () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Model Inforamtion </div>
+                        <div className={styles['component_title']}> Modell Inforamtion </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
@@ -346,7 +346,7 @@ export default function ConfigureExplainer () {
                             <a className="py-2 px-20 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-lg focus:shadow-outline"
                                 style={{textDecoration: 'none'}}
                                 onClick={exlpaineModel}> 
-                                Explaine
+                                Explain
                             </a>
 
                             <ToastContainer/>
@@ -369,7 +369,7 @@ export default function ConfigureExplainer () {
                     dialogClassName="modal-90w">
                     <Modal.Header closeButton>
                     <Modal.Title>
-                        Custom Modal Styling
+                        Background Examples (Training Set)
                     </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

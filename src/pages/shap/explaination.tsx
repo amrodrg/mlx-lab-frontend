@@ -57,9 +57,6 @@ export default function ExplainationPlot () {
                     featuresString: explainsationInformation.modelFeaturesString,
                     labelToPredict: explainsationInformation.labelToPredict
                 });
-
-
-                console.log("shap Values: ", shapValues)
             }
             );
           }
@@ -101,8 +98,6 @@ export default function ExplainationPlot () {
                 </div>
             );
         } else {
-            console.log("explainations: ", explainations)
-            
             return (
                 <div>
                     {explainations.map((entries) => {
@@ -146,6 +141,26 @@ export default function ExplainationPlot () {
                     <Col>
                         <Card className={styles['explaine_model_info_well'] + " " + styles["shap_row_offset"]}>
                             <Card.Title> Legende </Card.Title>
+                            <Card.Body> 
+                            <p>
+                                Base Value: Which is the average of all Predictions
+                                made by the model on the training dataset.
+                            </p>
+
+                            <p>
+                                Output Value: Prediction from the Model
+                            </p>
+
+                            <p>
+                                Features in Red: Influence positively and drives 
+                                the prediction value to go heighter.
+                            </p>
+
+                            <p>
+                                Features in Blue: Influence negatively and drives 
+                                the prediction value to go lower. 
+                            </p>
+                            </Card.Body>
                         </Card>
                     </Col>
                 </Row>
