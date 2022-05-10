@@ -149,6 +149,11 @@
   margin-left: 40%;
 }
 
+.xai_bullet_list {
+  list-style-type:disc;
+  float: left;
+}
+
 .shap_sticky_button {
   text-decoration:none;
   position: sticky;

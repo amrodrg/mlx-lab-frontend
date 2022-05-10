@@ -54,7 +54,13 @@ export default function ConfigureExplainer () {
         setModelInformation({
             modelName: modelInformationJs.modelName,
             lastModified: modelInformationJs.lastModified,
-            featuresString: modelInformationJs.modelFeaturesString
+            featuresString: modelInformationJs.modelFeaturesString,
+            labelName: modelInformationJs.labelName,
+            dataLink: modelInformationJs.dataLink,
+            loss: modelInformationJs.loss,
+            accuracy: modelInformationJs.accuracy,
+            median: modelInformationJs.median,
+            mean: modelInformationJs.mean
         });
 
         setFeatureArray(modelInformationJs.featureArray);
@@ -83,7 +89,13 @@ export default function ConfigureExplainer () {
               setModelInformation({
                   modelName: modelInformation.modelName,
                   lastModified: modelInformation.lastModified,
-                  featuresString: modelInformation.modelFeaturesString
+                  featuresString: modelInformation.modelFeaturesString,
+                  labelName: modelInformation.labelName,
+                  dataLink: modelInformation.dataLink,
+                  loss: modelInformation.loss,
+                  accuracy: modelInformation.accuracy,
+                  median: modelInformation.median,
+                  mean: modelInformation.mean
               });
               setFeatureArray(modelInformation.featureArray);
               setModelList(modelInformation.modelList)
@@ -96,10 +108,16 @@ export default function ConfigureExplainer () {
         { key: "2", value: "Import Google Drive CSV file"}
       ];
 
-      const initModelInfo = {
+    const initModelInfo = {
         modelName: "",
         lastModified: "",
-        featuresString: ""
+        featuresString: "",
+        labelName: "",
+        dataLink: "",
+        loss: "",
+        accuracy: "",
+        median: "",
+        mean: ""
     }
 
     // amount of background examples
@@ -151,7 +169,6 @@ export default function ConfigureExplainer () {
 
         return (
             <div>
-                <div style={{fontWeight: 'bold'}}>Fill Feature Values</div>
                 <InputGroup size="sm">
                     {props.featuresData.map(prop => (
                         <div>
@@ -176,7 +193,6 @@ export default function ConfigureExplainer () {
 
         return (
             <div>
-                <div style={{fontWeight: 'bold'}}>google drive data link</div>
                 <input
                     value={predictionDataLink}
                     onChange={linkInputHandler}
@@ -206,12 +222,6 @@ export default function ConfigureExplainer () {
         if (show) {
             return (
                 <div className={styles["spinners"]}>
-                    <Spinner animation="border" variant="primary" />
-                    <Spinner animation="border" variant="secondary" />
-                    <Spinner animation="border" variant="success" />
-                    <Spinner animation="border" variant="danger" />
-                    <Spinner animation="border" variant="warning" />
-                    <Spinner animation="border" variant="info" />
                     <Spinner animation="border" variant="dark" />
                 </div>
                 );
@@ -292,6 +302,12 @@ export default function ConfigureExplainer () {
                             <Card.Text> Model Name: {modelInformation.modelName} </Card.Text>
                             <Card.Text> Last Modified: {modelInformation.lastModified} </Card.Text>
                             <Card.Text> Features: {modelInformation.featuresString} </Card.Text>
+                            <Card.Text> Label Name: {modelInformation.labelName} </Card.Text>
+                            <Card.Text> Data Link: {modelInformation.dataLink} </Card.Text>
+                            <Card.Text> Loss: {modelInformation.loss} </Card.Text>
+                            <Card.Text> Accuracy: {modelInformation.accuracy} </Card.Text>
+                            <Card.Text> Median: {modelInformation.median} </Card.Text>
+                            <Card.Text> Mean: {modelInformation.mean} </Card.Text>
                         </Card>
                     </Col>
                 </Row>

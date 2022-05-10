@@ -4,9 +4,12 @@ import { Container, Row, Col } from "reactstrap";
 import styles from '../../styles/Home.module.css';
 import Card from 'react-bootstrap/Card'
 import NextLink from 'next/link';
+import Image from 'next/image';
+import forcePlotUrl from '../../static-images/force_plot.png';
 import {useSelector} from 'react-redux'
 import {getSavedValue} from '@/hooks/useLocalStorage';
 import AdditiveForceVisualizer from './AdditiveForceVisualizer';
+import Accordion from 'react-bootstrap/Accordion';
 
 export default function ExplainationPlot () {
 
@@ -18,21 +21,17 @@ export default function ExplainationPlot () {
     const [selectedExample, setExampleState] = getSavedValue('example', "2");
 
     const getValues = async () => {
-        const labelName = getSavedValue('LabelsColumnName', '');
-        const dataLink = getSavedValue('DataLink', '');
         const backgroundValue = getSavedValue('backgroundValue', '');
-        return {labelName, dataLink, backgroundValue};
+        return {backgroundValue};
     };
 
-    const getExplainerInformation = async (labelName, dataLink, backgroundValue) => {
+    const getExplainerInformation = async (backgroundValue) => {
 
         const requestArgs = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 modelName: modelName,
-                dataLink: dataLink,
-                labelName: labelName,
                 backgroundValue:backgroundValue
             })
         };
@@ -46,7 +45,7 @@ export default function ExplainationPlot () {
         () => {
         getValues()
           .then(values => {
-            getExplainerInformation(values.labelName, values.dataLink, values.backgroundValue)
+            getExplainerInformation(values.backgroundValue)
             .then(explainsationInformation => {
                 setExplainerInformation({
                     backgroundData: explainsationInformation.background_value,
@@ -55,7 +54,11 @@ export default function ExplainationPlot () {
                     baseValue: explainsationInformation.baseValue,
                     lastModified: explainsationInformation.lastModified,
                     featuresString: explainsationInformation.modelFeaturesString,
-                    labelToPredict: explainsationInformation.labelToPredict
+                    labelToPredict: explainsationInformation.labelToPredict,
+                    loss: explainsationInformation.loss,
+                    accuracy: explainsationInformation.accuracy,
+                    median: explainsationInformation.median,
+                    mean: explainsationInformation.mean
                 });
             }
             );
@@ -71,7 +74,11 @@ export default function ExplainationPlot () {
         baseValue: "",
         backgroundData:"",
         featuresString: "",
-        labelToPredict: ""
+        labelToPredict: "",
+        loss: "",
+        accuracy: "",
+        median: "",
+        mean: ""
     }
     const [explainerInformation, setExplainerInformation] = useState(initExplainationlInfo);
 
@@ -133,35 +140,28 @@ export default function ExplainationPlot () {
                             <Card.Text> Background data: {explainerInformation.backgroundData}%</Card.Text>
                             <Card.Text> Features: {explainerInformation.featuresString}</Card.Text>
                             <Card.Text> Label To Predict: {explainerInformation.labelToPredict}</Card.Text>
+                            <Card.Text> Loss: {explainerInformation.loss}</Card.Text>
+                            <Card.Text> Accuracy: {explainerInformation.accuracy}</Card.Text>
+                            <Card.Text> Median: {explainerInformation.median}</Card.Text>
+                            <Card.Text> Mean: {explainerInformation.mean}</Card.Text>
                         </Card>
                     </Col>
                 </Row>
 
                 <Row>
                     <Col>
-                        <Card className={styles['explaine_model_info_well'] + " " + styles["shap_row_offset"]}>
-                            <Card.Title> Legende </Card.Title>
-                            <Card.Body> 
-                            <p>
-                                Base Value: Which is the average of all Predictions
-                                made by the model on the training dataset.
-                            </p>
-
-                            <p>
-                                Output Value: Prediction from the Model
-                            </p>
-
-                            <p>
-                                Features in Red: Influence positively and drives 
-                                the prediction value to go heighter.
-                            </p>
-
-                            <p>
-                                Features in Blue: Influence negatively and drives 
-                                the prediction value to go lower. 
-                            </p>
-                            </Card.Body>
-                        </Card>
+                        <Accordion className={styles["shap_row_offset"]}>
+                            <Accordion.Item eventKey="0">
+                            <Accordion.Header>  Visual Explanation </Accordion.Header>
+                            <Accordion.Body>
+                                <Image
+                                    src={forcePlotUrl}
+                                    width={700}
+                                    height={500}
+                                />
+                            </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
                     </Col>
                 </Row>
 
