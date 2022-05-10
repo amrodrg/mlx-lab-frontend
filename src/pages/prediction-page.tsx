@@ -25,6 +25,7 @@ export default function PredictionPage() {
   const originalDataLink = getSavedValue('DataLink', '');
   const labelsName = getSavedValue('LabelsColumnName', '');
   const testPercentage = getSavedValue('TestPercentage', 20);
+  const doNormalize = getSavedValue('DoNormalize', false);
 
   const [predictionDataLink, setPredictionDataLink] = useState('');
   const [predictionItems, setPredictionItems] = useState();
@@ -48,7 +49,8 @@ export default function PredictionPage() {
         predictionDataLink: predictionDataLink,
         originalDataLink: originalDataLink,
         labelsName: labelsName,
-        testingPercentage: testPercentage
+        testingPercentage: testPercentage,
+        doNormalize: doNormalize
       })
     };
 
