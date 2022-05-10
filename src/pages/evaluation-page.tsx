@@ -25,10 +25,11 @@ export default function EvaluationPage() {
     const dataLink = getSavedValue('DataLink', '');
     const labelsColumnName = getSavedValue('LabelsColumnName', '');
     const testPercentage = getSavedValue('TestPercentage', 20);
-    return {dataLink, labelsColumnName, testPercentage};
+    const doNormalize = getSavedValue('DoNormalize', false);
+    return {dataLink, labelsColumnName, testPercentage, doNormalize};
   };
 
-  const makeEvaluationFetch = async (linkValue, labelsColumnName, testPercentage) => {
+  const makeEvaluationFetch = async (linkValue, labelsColumnName, testPercentage, doNormalize) => {
     // POST request using fetch with async/await
     const requestOptions = {
       method: 'POST',
@@ -38,6 +39,7 @@ export default function EvaluationPage() {
         labelsName: labelsColumnName,
         modelName: modelName,
         testingPercentage: testPercentage,
+        doNormalize: doNormalize
       })
     };
     const evaluationData = await fetch('http://127.0.0.1:8000/evaluate', requestOptions);
@@ -49,7 +51,7 @@ export default function EvaluationPage() {
   useEffect(() => {
     getValues()
       .then(values => {
-        makeEvaluationFetch(values.dataLink, values.labelsColumnName, values.testPercentage)
+        makeEvaluationFetch(values.dataLink, values.labelsColumnName, values.testPercentage, values.doNormalize)
           .then(evaluationData => {
             console.log(evaluationData);
             setEvaluationValues({
