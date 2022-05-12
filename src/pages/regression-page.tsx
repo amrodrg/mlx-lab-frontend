@@ -33,11 +33,11 @@ export default function RegressionPage() {
   // Data labels row name
   const [labelsColumnName, setLabelsColumnName] = useLocalStorage('LabelsColumnName', '');
   // The List of Layers
-  const [layers, setLayers] = useLocalStorage('layersKey', [{layerId: 1, neuronsNum: 2, activationFun: 'ReLu'}]);
+  const [layers, setLayers] = useLocalStorage('LayersKey', [{layerId: 1, neuronsNum: 2, activationFun: 'ReLu'}]);
   // The list of neuron's numbers for each layer
-  const [neuronsList, setNeuronsList] = useLocalStorage('neuronsListKey', [5]);
+  const [neuronsList, setNeuronsList] = useLocalStorage('NeuronsListKey', [5]);
   // The list of activation functions for each layer
-  const [activationList, setActivationList] = useLocalStorage('activationListKey', ['relu']);
+  const [activationList, setActivationList] = useLocalStorage('ActivationListKey', ['relu']);
   // The number of epochs
   const [epochsNumber, setEpochsNumber] = useState(100);
   // The testing percentage of data set
@@ -48,6 +48,8 @@ export default function RegressionPage() {
   const [optimizer, setOptimizer] = useState('adam');
   // Learning Rate
   const [learningRate, setLearningRate] = useState(0.01);
+  // Normalize Data
+  const [doNormalize, setDoNormalize] = useLocalStorage('DoNormalize', false);
 
 
   const [loading, setLoading] = useState(false);
@@ -84,7 +86,8 @@ export default function RegressionPage() {
         testingPercentage: testingPercentage,
         lossFunction: lossFunc,
         optimizer: optimizer,
-        learningRate: learningRate
+        learningRate: learningRate,
+        doNormalize: doNormalize
       })
     };
 
@@ -137,7 +140,7 @@ export default function RegressionPage() {
     <div>
       <RegressionHeader/>
       <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} labelsColumnName={labelsColumnName}
-        setLabelsColumnName={labelsNameHandler}/>
+        setLabelsColumnName={labelsNameHandler} doNormalize={doNormalize} setDoNormalize={setDoNormalize}/>
       <NamingSection modelName={modelName} setName={nameInputHandler}/>
       <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList}
         setNeuronsList={setNeuronsList} activationList={activationList}
