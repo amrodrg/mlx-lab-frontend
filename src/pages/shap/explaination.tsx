@@ -144,6 +144,14 @@ export default function ExplainationPlot () {
                             <Card.Text> Accuracy: {explainerInformation.accuracy}</Card.Text>
                             <Card.Text> Median: {explainerInformation.median}</Card.Text>
                             <Card.Text> Mean: {explainerInformation.mean}</Card.Text>
+
+                            <Card.Text> Data Link: 
+                                <a href={explainerInformation.dataLink}
+                                    target="_blank"
+                                    style={{textDecoration: 'none'}}>
+                                    Training Data Link
+                                </a>
+                            </Card.Text>
                         </Card>
                     </Col>
                 </Row>
@@ -160,6 +168,22 @@ export default function ExplainationPlot () {
                                     height={500}
                                 />
                             </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col>
+                        <Accordion className={styles["shap_row_offset"]}>
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header> Summary Plot </Accordion.Header>
+                                <Accordion.Body>
+                                    <img style={{paddingLeft: '300px'}}
+                                        src={"http://localhost:8000/static/" + explainerInformation.modelName  + "_summary_plot.png"}
+                                        alt="summary_plot"
+                                    />
+                                </Accordion.Body>
                             </Accordion.Item>
                         </Accordion>
                     </Col>

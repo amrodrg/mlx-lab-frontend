@@ -12,6 +12,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import {getSavedValue} from '@/hooks/useLocalStorage'
+import Hyperlink from 'react-native-hyperlink'
 import Card from 'react-bootstrap/Card'
 import {useRouter} from 'next/router';
 import Spinner from 'react-bootstrap/Spinner'
@@ -303,7 +304,15 @@ export default function ConfigureExplainer () {
                             <Card.Text> Last Modified: {modelInformation.lastModified} </Card.Text>
                             <Card.Text> Features: {modelInformation.featuresString} </Card.Text>
                             <Card.Text> Label Name: {modelInformation.labelName} </Card.Text>
-                            <Card.Text> Data Link: {modelInformation.dataLink} </Card.Text>
+
+                            <Card.Text> Data Link: 
+                                <a href={modelInformation.dataLink}
+                                    target="_blank"
+                                    style={{textDecoration: 'none'}}>
+                                    Training Data Link
+                                </a>
+                            </Card.Text>
+
                             <Card.Text> Loss: {modelInformation.loss} </Card.Text>
                             <Card.Text> Accuracy: {modelInformation.accuracy} </Card.Text>
                             <Card.Text> Median: {modelInformation.median} </Card.Text>
@@ -330,7 +339,6 @@ export default function ConfigureExplainer () {
                         </div>
                     </Col>
                 </Row>
-
                 <Row>
                     <Col md={6}>
                         <div className={styles['component_title']}> Example </div>
