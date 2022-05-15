@@ -19,11 +19,40 @@ export default function ExplainationPlot () {
 
     const shapValues = getSavedValue('shapValues', []);
     const [selectedExample, setExampleState] = getSavedValue('example', "2");
+    const [summaryExist, setSummaryExist] = useState(false);
 
     const getValues = async () => {
         const backgroundValue = getSavedValue('backgroundValue', '');
         return {backgroundValue};
     };
+
+    function ShowSummaryPlot(props) {
+        const exist = props.exist;
+
+        if (exist) {
+            return (
+                <div>
+                    <Row>
+                        <Col>
+                            <Accordion className={styles["shap_row_offset"]}>
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header> Summary Plot </Accordion.Header>
+                                    <Accordion.Body>
+                                        <img style={{paddingLeft: '300px'}}
+                                            src={"http://localhost:8000/static/" + explainerInformation.modelName  + "_summary_plot.png"}
+                                            alt="summary_plot"
+                                        />
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Col>
+                    </Row>
+                </div>
+            )
+        } else {
+            return <div></div>
+        }
+    }
 
     const getExplainerInformation = async (backgroundValue) => {
 
@@ -60,6 +89,8 @@ export default function ExplainationPlot () {
                     median: explainsationInformation.median,
                     mean: explainsationInformation.mean
                 });
+
+                setSummaryExist(explainsationInformation.summaryExist)
             }
             );
           }
@@ -90,8 +121,6 @@ export default function ExplainationPlot () {
                 <div></div>
             );
         }
-
-        console.log("selected Example: ", selectedExample)
 
         if (selectedExample === "1") {
             return (
@@ -129,21 +158,22 @@ export default function ExplainationPlot () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Model Inforamtion </div>
+                        <div className={styles['component_title']}> Modell Inforamtion </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
                         <Card className={styles['explaine_model_info_well']}>
-                            <Card.Text> Model Name: {explainerInformation.modelName}</Card.Text>
-                            <Card.Text> Created on: {explainerInformation.lastModified}</Card.Text>
-                            <Card.Text> Background data: {explainerInformation.backgroundData}%</Card.Text>
-                            <Card.Text> Features: {explainerInformation.featuresString}</Card.Text>
-                            <Card.Text> Label To Predict: {explainerInformation.labelToPredict}</Card.Text>
-                            <Card.Text> Loss: {explainerInformation.loss}</Card.Text>
-                            <Card.Text> Accuracy: {explainerInformation.accuracy}</Card.Text>
-                            <Card.Text> Median: {explainerInformation.median}</Card.Text>
-                            <Card.Text> Mean: {explainerInformation.mean}</Card.Text>
+                            <Card.Text> Model Name: {explainerInformation.modelName} </Card.Text>
+                            <Card.Text> Created on: {explainerInformation.lastModified} </Card.Text>
+                            <Card.Text> Modell Base Value: {explainerInformation.baseValue} </Card.Text>
+                            <Card.Text> Background data: {explainerInformation.backgroundData}% </Card.Text>
+                            <Card.Text> Features: {explainerInformation.featuresString} </Card.Text>
+                            <Card.Text> Label To Predict: {explainerInformation.labelToPredict} </Card.Text>
+                            <Card.Text> Loss: {explainerInformation.loss} </Card.Text>
+                            <Card.Text> Accuracy: {explainerInformation.accuracy} </Card.Text>
+                            <Card.Text> Median: {explainerInformation.median} </Card.Text>
+                            <Card.Text> Mean: {explainerInformation.mean} </Card.Text>
 
                             <Card.Text> Data Link: 
                                 <a href={explainerInformation.dataLink}
@@ -173,21 +203,7 @@ export default function ExplainationPlot () {
                     </Col>
                 </Row>
 
-                <Row>
-                    <Col>
-                        <Accordion className={styles["shap_row_offset"]}>
-                            <Accordion.Item eventKey="0">
-                                <Accordion.Header> Summary Plot </Accordion.Header>
-                                <Accordion.Body>
-                                    <img style={{paddingLeft: '300px'}}
-                                        src={"http://localhost:8000/static/" + explainerInformation.modelName  + "_summary_plot.png"}
-                                        alt="summary_plot"
-                                    />
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
-                    </Col>
-                </Row>
+                <ShowSummaryPlot exist={summaryExist}/>
 
                 <Row className={styles["shap_row_offset"]}>
                     <Col>

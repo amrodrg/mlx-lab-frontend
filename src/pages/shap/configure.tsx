@@ -3,6 +3,7 @@ import {useEffect, useState } from 'react'
 import { Container, Row, Col } from "reactstrap"
 import styles from '../../styles/Home.module.css'
 import Form from 'react-bootstrap/Form'
+import FormCheck from 'react-bootstrap/FormCheck'
 import NumericInput from 'react-numeric-input'
 import useLocalStorage from '@/hooks/useLocalStorage';
 import {toast, ToastContainer} from 'react-toastify';
@@ -12,7 +13,6 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import {getSavedValue} from '@/hooks/useLocalStorage'
-import Hyperlink from 'react-native-hyperlink'
 import Card from 'react-bootstrap/Card'
 import {useRouter} from 'next/router';
 import Spinner from 'react-bootstrap/Spinner'
@@ -99,7 +99,8 @@ export default function ConfigureExplainer () {
                   mean: modelInformation.mean
               });
               setFeatureArray(modelInformation.featureArray);
-              setModelList(modelInformation.modelList)
+              setModelList(modelInformation.modelList);
+              setSummaryExist(modelInformation.summaryExist);
             }
           );
     }, []);
@@ -141,6 +142,9 @@ export default function ConfigureExplainer () {
     const [featureExampleArray] = useState({});
 
     const [loading, setLoading] = useState(false);
+
+    const [summaryExist, setSummaryExist] = useState(true);
+    const [calculateSummary, setCalculateSummary] = useState(false);
 
     const [shapValues, setShapValues] = useLocalStorage('shapValues', []);
 
@@ -218,6 +222,29 @@ export default function ConfigureExplainer () {
         }
     }
 
+    function SummaryCheckComponent(props) {
+        const exist = props.exist;
+
+        if (exist === false) {
+            return (
+                <div>
+                    <Row className={styles["shap_row_offset"]}>
+                        <Col>
+                            <Form.Check
+                                type="checkbox"
+                                onChange={() => setCalculateSummary(!calculateSummary)}
+                                checked={calculateSummary}
+                                label="Include Summary Plot"
+                            />
+                        </Col>
+                    </Row>
+                </div>
+            )
+        } else {
+            return <div></div>
+        }
+    }
+
     function SpinnerComponent(props) {
         const show = props.spinnerStatus
         if (show) {
@@ -243,6 +270,7 @@ export default function ConfigureExplainer () {
                 dataLink: dataLink,
                 labelName: labelName,
                 backgroundValue: backgroundValue,
+                calculateSummary: calculateSummary,
                 example: selectedExample,
                 predictionDataLink: predictionDataLink,
                 fExampleArray: featureExampleArray
@@ -362,6 +390,8 @@ export default function ConfigureExplainer () {
                         <ExampleComponent example={selectedExample} features={featureArray}/>
                     </Col>
                 </Row>
+
+                <SummaryCheckComponent exist={summaryExist}/>
 
                 <Row>
                     <Col>

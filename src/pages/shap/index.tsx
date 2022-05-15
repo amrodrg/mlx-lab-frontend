@@ -225,6 +225,11 @@ const ShapIndex = () => {
             </Accordion.Body>
           </Accordion.Item>
 
+          <Accordion.Item eventKey="6">
+            <Accordion.Header> Workflow </Accordion.Header>
+            <Accordion.Body> </Accordion.Body>
+          </Accordion.Item>
+
           {/* https://neptune.ai/blog/explainability-auditability-ml-definitions-techniques-tools */}
 
         </Accordion>
