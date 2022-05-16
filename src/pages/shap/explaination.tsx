@@ -38,10 +38,20 @@ export default function ExplainationPlot () {
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header> Summary Plot </Accordion.Header>
                                     <Accordion.Body>
-                                        <img style={{paddingLeft: '300px'}}
-                                            src={"http://localhost:8000/static/" + explainerInformation.modelName  + "_summary_plot.png"}
-                                            alt="summary_plot"
-                                        />
+                                        <p>
+                                            The summary plot combines feature importance with feature effects.
+                                            Each point on the summary plot is a Shapley value for a feature and an instance.
+                                            The position on the y-axis is determined by the feature and on the x-axis by the Shapley value. 
+                                            The color represents the value of the feature from low to high.
+                                            Overlapping points are jittered in y-axis direction, so we get a sense of the distribution of the Shapley values per feature. 
+                                            The features are ordered according to their importance.
+                                        </p>
+                                        <p>
+                                            <img style={{paddingLeft: '300px'}}
+                                                src={"http://localhost:8000/static/" + explainerInformation.modelName  + "_summary_plot.png"}
+                                                alt="summary_plot"
+                                            />
+                                        </p>
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
@@ -158,7 +168,7 @@ export default function ExplainationPlot () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Modell Inforamtion </div>
+                        <div className={styles['component_title']}> Model Inforamtion </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
@@ -166,7 +176,7 @@ export default function ExplainationPlot () {
                         <Card className={styles['explaine_model_info_well']}>
                             <Card.Text> Model Name: {explainerInformation.modelName} </Card.Text>
                             <Card.Text> Created on: {explainerInformation.lastModified} </Card.Text>
-                            <Card.Text> Modell Base Value: {explainerInformation.baseValue} </Card.Text>
+                            <Card.Text> Model Base Value: {explainerInformation.baseValue} </Card.Text>
                             <Card.Text> Background data: {explainerInformation.backgroundData}% </Card.Text>
                             <Card.Text> Features: {explainerInformation.featuresString} </Card.Text>
                             <Card.Text> Label To Predict: {explainerInformation.labelToPredict} </Card.Text>
@@ -190,7 +200,7 @@ export default function ExplainationPlot () {
                     <Col>
                         <Accordion className={styles["shap_row_offset"]}>
                             <Accordion.Item eventKey="0">
-                            <Accordion.Header>  Visual Explanation </Accordion.Header>
+                            <Accordion.Header> Force Plot </Accordion.Header>
                             <Accordion.Body>
                                 <Image
                                     src={forcePlotUrl}

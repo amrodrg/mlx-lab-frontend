@@ -284,12 +284,12 @@ export default function ConfigureExplainer () {
         } else {
             setLoading(true);
             const explaindModel = await fetch('http://127.0.0.1:8000/shap/configure', requestArgs);
-            const explaindModeljs = await  explaindModel.json()
+            const explaindModeljs = await explaindModel.json()
 
             setShapValues(explaindModeljs)
 
+            setLoading(false);
             if (explaindModel.status === 200) {
-                setLoading(false);
                 router.push('/shap/explaination');
             } else {
                 toast.error('Explainer could not be build please make sure all your entries are currect');
@@ -303,7 +303,7 @@ export default function ConfigureExplainer () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Modell </div>
+                        <div className={styles['component_title']}> Model </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>
@@ -322,7 +322,7 @@ export default function ConfigureExplainer () {
 
                 <Row>
                     <Col>
-                        <div className={styles['component_title']}> Modell Inforamtion </div>
+                        <div className={styles['component_title']}> Model Inforamtion </div>
                     </Col>
                 </Row>
                 <Row className={styles["shap_row_offset"]}>

@@ -33,18 +33,12 @@ export default function FirstPage() {
         <Link href="/shap">
           <div className="py-12 px-4 border-t-2 border-indigo-900 sm:px-6 md:py-16 md:pr-0 md:pl-10 md:border-t-0 md:border-l lg:pl-16 hover:bg-secondary-blue hover:shadow-2xl">
             <div className="md:flex-shrink-0">
-              <img
-                className="h-12"
-                src="https://tailwindui.com/img/logos/workcation-logo-indigo-300.svg"
-                alt="Workcation"
-              />
+            <p className="relative text-2xl font-bold text-white md:flex-grow"> Explanation</p>
             </div>
             <blockquote className="mt-6 md:flex-grow md:flex md:flex-col">
               <div className="relative text-lg font-medium text-white md:flex-grow">
-                <p className="relative">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias
-                  molestiae. Numquam corrupti in laborum sed rerum et corporis. Nemo expedita voluptas culpa sapiente
-                  alias molestiae.
+                <p className="relative text-lg">
+                  An Educational User Interface for Explaining Blackbox Model decisions using SHAP Framework
                 </p>
               </div>
               <footer className="mt-8">

@@ -22,7 +22,7 @@ const ShapIndex = () => {
       <Container className={styles["shap_grid"]}>
         <Row className={styles["shap_row_offset shap_title_font"] + " " + styles["shap_title_font"]}>
           <Col>
-            Machine learning explainability 
+            Machine Learning explainability 
           </Col>
         </Row>
         <Row className={styles["shap_row_offset"]}>
@@ -44,12 +44,12 @@ const ShapIndex = () => {
           <Accordion.Item eventKey="0">
             <Accordion.Header>What is ML Explainability ?</Accordion.Header>
             <Accordion.Body>
-              <p style={{fontSize: 28, fontWeight: '900'}}>
+              <p style={{fontSize: 22, fontWeight: '600'}}>
                 Explainability in machine learning means that you can explain what happens in your 
                 model from input to output. It makes models transparent and solves the black box problem.
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900'}}>
+              <p style={{fontSize: 22, fontWeight: '600'}}>
                 Explainable AI (XAI) is the more formal way to describe this and applies 
                 to all artificial intelligence.
               </p>
@@ -68,7 +68,7 @@ const ShapIndex = () => {
           <Accordion.Item eventKey="1">
             <Accordion.Header>What is ML Explainability for ?</Accordion.Header>
             <Accordion.Body>
-            <p style={{fontSize: 28, fontWeight: '900'}}>
+            <p style={{fontSize: 22, fontWeight: '600'}}>
               you’re building a model that predicts pricing trends in the fashion industry.
               The model might be interpretable — you can see what you’re doing. But it’s not
               explainable yet. It will be explainable once you dig into the data and features
@@ -81,14 +81,14 @@ const ShapIndex = () => {
           <Accordion.Item eventKey="2">
             <Accordion.Header>Why is ML Explainability important ?</Accordion.Header>
             <Accordion.Body>
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600'}}>
                 When a model makes a wrong or rogue decision, knowing the factors that
                 caused that decision, or who is responsible for that failure, is necessary
                 to avoid similar problems in the future. With XAI, data science teams can 
                 give organizations more control over their AI tools
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 In high-risk domains (like healthcare or finance), trust is critical.
                 Before ML solutions can be used and trusted, all stakeholders must fully 
                 understand what the model does. If you claim that your model makes better decisions 
@@ -96,7 +96,7 @@ const ShapIndex = () => {
                 Domain experts will be naturally skeptical towards any technology that claims to see more than them.
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Model explainability is critical for data scientists, auditors, and business decision-makers
                 alike to ensure compliance with company policies, industry standards, and government regulations.
                 According to article 14 of the European data protection laws (GDPR), when a company uses automated
@@ -105,12 +105,12 @@ const ShapIndex = () => {
                 regulations are being put in place across the world. 
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Explainability can also improve performance. If you understand why and how your model works,
                 you know exactly what to fine-tune and optimize. 
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Understanding the decision-making process of your models shows you unknown vulnerabilities and flaws.
                 With these insights, control is easy. The ability to rapidly identify and correct mistakes in low-risk
                 situations adds up, especially when applied across all models in production.
@@ -121,12 +121,12 @@ const ShapIndex = () => {
           <Accordion.Item eventKey="3">
             <Accordion.Header> ML Explainability approaches </Accordion.Header>
             <Accordion.Body>
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left' }}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left' }}>
                 Model-agnostic techniques/tools can be used on any machine learning model, no matter how complicated.
                 These agnostic methods usually work by analyzing feature input and output pairs. A good example is LIME.
               </p>
               
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Model-specific techniques/tools are specific to a single type of model or a group of models.
                 They depend on the nature and functions of the specific model, for example, tree interpreters.
               </p>
@@ -136,27 +136,27 @@ const ShapIndex = () => {
           <Accordion.Item eventKey="4">
             <Accordion.Header> ML Explainability Techniques </Accordion.Header>
             <Accordion.Body>
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left' }}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left' }}>
                 Partial Dependence Plots (PDP): Get a global visual representation of how one or two features 
                 influence the predicted outcome of the model, with other features held constant. 
                 PDP tells you if the relationship between the target and chosen feature is linear or complex.
                 PDP is model-agnostic.  
               </p>
               
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Individual Condition Expectations plots (ICE): This gives you a local visual representation of the effect of a feature in the model with
                 respect to the target feature. Unlike PDP, ICE shows separate predictions of the dependence
                 on the feature with one line per sample. It’s also model-agnostic.
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Leave One Column Out (LOCO): This is a very simplistic approach. It leaves one column out, retrains the model, and then
                 computes the differences of each LOCO model to the original model prediction score. 
                 If the score changes a lot, the variable that was left out must be important. 
                 Depending on model width (amount of features), this approach can be time-consuming.
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Accumulated Local Effects (ALE): ALE plots were originally proposed by D. Apley (et al) 
                 in the paper “Visualizing the Effects of Predictor Variables in Black Box Supervised 
                 Learning Models”. It’s different from PDP in the way that it uses a small window on the features,
@@ -164,7 +164,7 @@ const ShapIndex = () => {
                 averages, ALE is less biased and has better performance. 
               </p>
 
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600', textAlign: 'left'}}>
                 Local Interpretable Model-Agnostic Explanations (LIME): LIME was developed by University Of Washington
                 researchers to see what happens inside an algorithm by capturing feature interactions. 
                 LIME performs various multi-feature perturbations around a particular prediction and measures the results.
@@ -208,19 +208,25 @@ const ShapIndex = () => {
                 </div>
               </p>
           
-              <p style={{fontSize: 28, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600'}}>
                 SHAP uses the game theory concept of Shapley values to optimally assign feature importances.
               </p>
 
-              <p style={{fontSize: 24, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600'}}>
                 The Shapley Value SHAP (SHapley Additive exPlanations) is the average marginal contribution
                 of a feature value over all possible coalitions. 
               </p>
 
-              <p style={{fontSize: 24, fontWeight: '900', textAlign: 'left'}}>
+              <p style={{fontSize: 22, fontWeight: '600'}}>
                 Coalitions are combinations of features used to estimate the Shapley value of a specific feature.
                 It’s a unified approach to explain the output of machine learning models like linear- and logistics
                 regression, NLP, boosted tree model, and addictive models. 
+              </p>
+
+              <p style={{fontSize: 22, fontWeight: '600'}}>
+                <Col xl className={styles["shap_youtube_frame"]}>
+                  <YouTube videoId='VB9uV-x0gtg' opts={opts}/>
+                </Col>
               </p>
             </Accordion.Body>
           </Accordion.Item>
