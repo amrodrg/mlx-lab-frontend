@@ -6,9 +6,6 @@ module.exports = {
     'node': true,
   },
   'extends': [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
     // Add specific rules for NextJS
     'plugin:@next/next/core-web-vitals',
   ],

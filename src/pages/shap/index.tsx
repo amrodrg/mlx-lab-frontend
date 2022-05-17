@@ -3,13 +3,13 @@ import shapLogoUrl from '../../static-images/shap_header.png';
 import trainingDataUrl from '../../static-images/xai_pipeline.png';
 import logoUrl from '../../static-images/xai_logo.png';
 import Image from 'next/image';
-import { Container, Row, Col } from "reactstrap";
-import Card from 'react-bootstrap/Card'
-import Accordion from 'react-bootstrap/Accordion'
+import { Container, Row, Col } from 'reactstrap';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
 import styles from '../../styles/Home.module.css';
 import YouTube from 'react-youtube';
 import NextLink from 'next/link';
-import { List } from 'semantic-ui-react'
+import { List } from 'semantic-ui-react';
 
 const ShapIndex = () => {
   const opts = {
@@ -19,22 +19,22 @@ const ShapIndex = () => {
 
   return (
     <div>
-      <Container className={styles["shap_grid"]}>
-        <Row className={styles["shap_row_offset shap_title_font"] + " " + styles["shap_title_font"]}>
+      <Container className={styles['shap_grid']}>
+        <Row className={styles['shap_row_offset shap_title_font'] + ' ' + styles['shap_title_font']}>
           <Col>
             Machine Learning explainability 
           </Col>
         </Row>
-        <Row className={styles["shap_row_offset"]}>
+        <Row className={styles['shap_row_offset']}>
           <Col>
             <a  href='https://www.darpa.mil/program/explainable-artificial-intelligence' 
-                target="_blank"
-                style={{textDecoration: 'none'}}>
-                  <Image
-                    src={logoUrl}
-                    width={700}
-                    height={400}
-                  />
+              target="_blank"
+              style={{textDecoration: 'none'}} rel="noreferrer">
+              <Image
+                src={logoUrl}
+                width={700}
+                height={400}
+              />
             </a>
           </Col>
         </Row>
@@ -68,13 +68,13 @@ const ShapIndex = () => {
           <Accordion.Item eventKey="1">
             <Accordion.Header>What is ML Explainability for ?</Accordion.Header>
             <Accordion.Body>
-            <p style={{fontSize: 22, fontWeight: '600'}}>
+              <p style={{fontSize: 22, fontWeight: '600'}}>
               you’re building a model that predicts pricing trends in the fashion industry.
               The model might be interpretable — you can see what you’re doing. But it’s not
               explainable yet. It will be explainable once you dig into the data and features
               behind the generated results. Understanding what features contribute to the 
               model’s prediction and why they do is what explainability is all about.
-            </p>
+              </p>
             </Accordion.Body>
           </Accordion.Item>
 
@@ -185,24 +185,24 @@ const ShapIndex = () => {
             <Accordion.Body>
               <p>
                 <Image
-                src={shapLogoUrl}
-                width={800}
-                height={370}
+                  src={shapLogoUrl}
+                  width={800}
+                  height={370}
                 />
               </p>
 
               <p>
-                <div role="group" aria-label="Button group" className={styles["configure_explaine_button"]}>
+                <div role="group" aria-label="Button group" className={styles['configure_explaine_button']}>
                   <a href='https://christophm.github.io/interpretable-ml-book/shapley.html#general-idea' 
                     target="_blank"
                     style={{textDecoration: 'none'}}
-                    className={"py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-l-lg focus:shadow-outline"}>
+                    className={'py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-l-lg focus:shadow-outline'} rel="noreferrer">
                     Shapley Values
                   </a>
                   <a href='https://shap-lrjball.readthedocs.io/en/latest/index.html' 
                     target="_blank"
                     style={{textDecoration: 'none'}}
-                    className={"py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-r-lg focus:shadow-outline"}>
+                    className={'py-2 px-4 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-r-lg focus:shadow-outline'} rel="noreferrer">
                       SHAP Documentation
                   </a>
                 </div>
@@ -224,7 +224,7 @@ const ShapIndex = () => {
               </p>
 
               <p style={{fontSize: 22, fontWeight: '600'}}>
-                <Col xl className={styles["shap_youtube_frame"]}>
+                <Col xl className={styles['shap_youtube_frame']}>
                   <YouTube videoId='VB9uV-x0gtg' opts={opts}/>
                 </Col>
               </p>
@@ -302,7 +302,7 @@ const ShapIndex = () => {
         </Row> */}
 
 
-            {/* <Row className={styles["shap_row_offset"] + " " + styles["shap_default_font"]}>
+        {/* <Row className={styles["shap_row_offset"] + " " + styles["shap_default_font"]}>
               <Col>
                 For Explaining the Model Prediction SHAP (SHapley Additive exPlanations) is used.  
                 SHAP is a game theoretic approach to explain the output of any machine learning model. 
@@ -434,17 +434,17 @@ const ShapIndex = () => {
               </Col>
             </Row> */}
 
-            <div className={styles["shap_sticky_button"]}>
-              <NextLink href="/shap/configure">
-                  <a className="py-2 px-20 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-lg focus:shadow-outline"
-                      style={{textDecoration: 'none'}}> 
+        <div className={styles['shap_sticky_button']}>
+          <NextLink href="/shap/configure">
+            <a className="py-2 px-20 border border-gray-200 text-indigo-100 transition-colors duration-150 bg-[#0079C1] rounded-lg focus:shadow-outline"
+              style={{textDecoration: 'none'}}> 
                     Start Configuring 
-                  </a>
-              </NextLink>
-            </div>
-          </Container>
-      </div>
+            </a>
+          </NextLink>
+        </div>
+      </Container>
+    </div>
   );
-}
+};
 
 export default ShapIndex;

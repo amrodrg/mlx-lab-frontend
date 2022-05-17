@@ -33,8 +33,8 @@ export default function PredictionPage() {
 
   // for explainations
   const [shapValues, setShapValues] = useLocalStorage('shapValues', []);
-  const [selectedExample, setExampleState] = useLocalStorage('example', "2");
-  const [backgroundValue, setBackgroundValue] = useLocalStorage('backgroundValue', "20");
+  const [selectedExample, setExampleState] = useLocalStorage('example', '2');
+  const [backgroundValue, setBackgroundValue] = useLocalStorage('backgroundValue', '20');
 
   const linkInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredLink = event.target.value;
@@ -102,8 +102,8 @@ export default function PredictionPage() {
       const shapValuesData = await fetch('http://127.0.0.1:8000/shap/prediction_shap_values', requestShapOptions);
       const shapValuesDatajs = await  shapValuesData.json();
       await setShapValues(shapValuesDatajs);
-      await setExampleState("2");
-      await setBackgroundValue("20")
+      await setExampleState('2');
+      await setBackgroundValue('20');
       await setLoading(false);
       router.push('/shap/explaination');
     }
