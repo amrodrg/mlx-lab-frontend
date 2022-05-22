@@ -288,6 +288,8 @@ export default function ConfigureExplainer () {
 
             setShapValues(explaindModeljs)
 
+            console.log(shapValues)
+
             setLoading(false);
             if (explaindModel.status === 200) {
                 router.push('/shap/explaination');
@@ -432,8 +434,7 @@ export default function ConfigureExplainer () {
                         reframing what it means to omit a feature. Rather then omit a feature entirely 
                         from the model input, they instead replace it with a variety of its typical values,
                         called the background (noise) of the feature. This background feature values are
-                        taken from a background dataset, a set of around 100 or so typical inputs to 
-                        the model. Instead of computing the marginal contribution as the difference between
+                        taken from a background dataset. Instead of computing the marginal contribution as the difference between
                         the model output with the feature included versus excluded, we instead find the
                         difference between the model output with the desired feature value versus a 
                         background value of that feature. We do this for every background feature value
