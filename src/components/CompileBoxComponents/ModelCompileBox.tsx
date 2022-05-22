@@ -15,7 +15,7 @@ type Props = {
 const ModelCompileBox: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimizer, learningRate, setLearningRate}) => {
   return(
     <div className="flex flex-col bg-main-blue p-1 items-center rounded-2xl">
-      <button className="bg-white hover:ring-4 hover:ring-white hover:shadow-2xl text-main-blue w-3/5 py-2 mb-3 mt-2.5 rounded-full font-bold text-lg">Learn More</button>
+      <div className="bg-main-blue w-3/5 py-2 mb-3 mt-2.5 rounded-full font-bold text-lg"></div>
 
       <div className="flex flex-col bg-white h-full w-full pt-16 pb-12 rounded-b-2xl space-y-10">
 

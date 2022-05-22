@@ -47,7 +47,7 @@ export default function RegressionPage() {
   // Training Optimizer
   const [optimizer, setOptimizer] = useState('adam');
   // Learning Rate
-  const [learningRate, setLearningRate] = useState(0.01);
+  const [learningRate, setLearningRate] = useState(0.001);
   // Normalize Data
   const [doNormalize, setDoNormalize] = useLocalStorage('DoNormalize', false);
 

@@ -1,8 +1,9 @@
 import {makeStyles} from '@material-ui/core/styles';
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle';
 import Face from '@material-ui/icons/Face';
-import Chat from '@material-ui/icons/Chat';
-import Build from '@material-ui/icons/Build';
+import InputIcon from '@mui/icons-material/Input';
+import OutputIcon from '@mui/icons-material/Output';
+import LayersIcon from '@mui/icons-material/Layers';
 import BuildTab from './BuildTab';
 import React, {Dispatch, FC, SetStateAction} from 'react';
 import ButtonLeadingIcon from '../Buttons/ButtonLeadingIcon';
@@ -51,7 +52,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsLis
 
         {
           tabName: 'Hidden Layers',
-          tabIcon: Face,
+          tabIcon: LayersIcon,
           tabContent: (
             <>
 
@@ -99,7 +100,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsLis
 
         {
           tabName: 'Input Layer',
-          tabIcon: Chat,
+          tabIcon: InputIcon,
           tabContent: (
             <p className={classes.textCenter}>
                     I think that’s a responsibility that I have, to push
@@ -115,7 +116,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsLis
         },
         {
           tabName: 'Output Layer',
-          tabIcon: Build,
+          tabIcon: OutputIcon,
           tabContent: (
             <p className={classes.textCenter}>
                     think that’s a responsibility that I have, to push
