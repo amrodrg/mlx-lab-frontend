@@ -55,8 +55,8 @@ export default function EvaluationPage() {
           .then(evaluationData => {
             console.log(evaluationData);
             setEvaluationValues({
-              loss: evaluationData.loss,
-              mae: evaluationData.loss,
+              loss: evaluationData.mae,
+              mae: evaluationData.mae,
               accuracy: evaluationData.accuracy,
               median: evaluationData.median,
               mean: evaluationData.mean
