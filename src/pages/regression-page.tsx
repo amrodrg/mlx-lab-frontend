@@ -87,7 +87,9 @@ export default function RegressionPage() {
         lossFunction: lossFunc,
         optimizer: optimizer,
         learningRate: learningRate,
-        doNormalize: doNormalize
+        doNormalize: doNormalize,
+        isClassification: false,
+        predictionClassesNum: 1
       })
     };
 
