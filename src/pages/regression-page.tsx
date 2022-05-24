@@ -50,6 +50,10 @@ export default function RegressionPage() {
   const [learningRate, setLearningRate] = useState(0.001);
   // Normalize Data
   const [doNormalize, setDoNormalize] = useLocalStorage('DoNormalize', false);
+  // Number of Labels Classes
+  const [predictionClassesNum, setPredictionClassesNum] = useLocalStorage('PredictionClassesNum', 0);
+  // Find the Labels classes Number automatically
+  const [automatedClassesNum, setAutomatedClassesNum] = useLocalStorage('AutomatedClassesNum', false);
 
 
   const [loading, setLoading] = useState(false);
@@ -89,7 +93,8 @@ export default function RegressionPage() {
         learningRate: learningRate,
         doNormalize: doNormalize,
         isClassification: false,
-        predictionClassesNum: 1
+        predictionClassesNum: predictionClassesNum,
+        automatedClassesNum: automatedClassesNum
       })
     };
 
