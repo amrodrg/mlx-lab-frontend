@@ -44,7 +44,8 @@ export default function PredictionPage() {
         originalDataLink: originalDataLink,
         labelsName: labelsName,
         testingPercentage: testPercentage,
-        doNormalize: doNormalize
+        doNormalize: doNormalize,
+        isClassification: false,
       })
     };
 

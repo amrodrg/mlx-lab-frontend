@@ -39,7 +39,8 @@ export default function EvaluationPage() {
         labelsName: labelsColumnName,
         modelName: modelName,
         testingPercentage: testPercentage,
-        doNormalize: doNormalize
+        doNormalize: doNormalize,
+        isClassification: false,
       })
     };
     const evaluationData = await fetch('http://127.0.0.1:8000/evaluate', requestOptions);
