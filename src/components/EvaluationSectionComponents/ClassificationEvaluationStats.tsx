@@ -14,7 +14,7 @@ type Props = {
     mean?: number
 }
 
-const EvaluationStats: FC<Props> = ({ loss, mae, accuracy, median, mean}) => {
+const ClassificationEvaluationStats: FC<Props> = ({ loss, mae, accuracy, median, mean}) => {
 
   const [lossToMean, setLossToMean] = useState(0);
   const [lossToMedian, setLossToMedian] = useState(0);
@@ -38,7 +38,7 @@ const EvaluationStats: FC<Props> = ({ loss, mae, accuracy, median, mean}) => {
   const stats = [
     { name: 'Loss in Prediction to Mean Value', positiveEffect: false, stat: loss||loss === 0? loss: '0', previousStat: mean||mean === 0? mean: '0', change: (lossToMean).toFixed(2) + '%', changeType: 'decrease' },
     { name: 'Loss in Prediction to Median Value', positiveEffect: false, stat: mae||mae === 0? mae: '0', previousStat: median||median === 0? median: '0', change: (lossToMedian.toFixed(2)) + '%', changeType: 'decrease' },
-    { name: 'Model Accuracy', positiveEffect: true, stat: accuracyVal.toFixed(2) + '%', previousStat: '100%', change: (accuracyLoss.toFixed(2)) + '%', changeType: 'decrease' },
+    { name: 'Model Accuracy', positiveEffect: true, stat: accuracy||accuracy === 0? accuracy * 100: '0' + '%', previousStat: '100%', change: ((1 - accuracy) * 100) + '%', changeType: 'decrease' },
   ];
 
   useEffect(() => {
@@ -89,4 +89,4 @@ const EvaluationStats: FC<Props> = ({ loss, mae, accuracy, median, mean}) => {
   );
 };
 
-export default EvaluationStats;
+export default ClassificationEvaluationStats;

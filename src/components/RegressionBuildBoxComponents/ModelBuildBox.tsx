@@ -94,40 +94,34 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsLis
 
 
 
-
-
-
-
         {
           tabName: 'Input Layer',
           tabIcon: InputIcon,
           tabContent: (
-            <p className={classes.textCenter}>
-                    I think that’s a responsibility that I have, to push
-                    possibilities, to show people, this is the level that
-                    things could be at. I will be the leader of a company
-                    that ends up being worth billions of dollars, because I
-                    got the answers. I understand culture. I am the nucleus.
-                    I think that’s a responsibility that I have, to push
-                    possibilities, to show people, this is the level that
-                    things could be at.
-            </p>
+            <div className="flex flex-row">
+              <div className="flex mr-1.5">
+                <QuestionButton/>
+              </div>
+              <p className={classes.textCenterBold}>
+                      The input layer has the same shape of your data
+                      (same number for neurals and features)
+                      so you don’t have to change anything in it.
+              </p>
+            </div>
           ),
         },
         {
           tabName: 'Output Layer',
           tabIcon: OutputIcon,
           tabContent: (
-            <p className={classes.textCenter}>
-                    think that’s a responsibility that I have, to push
-                    possibilities, to show people, this is the level that
-                    things could be at. So when you get something that has
-                    the name Kanye West on it, it’s supposed to be pushing
-                    the furthest possibilities. I will be the leader of a
-                    company that ends up being worth billions of dollars,
-                    because I got the answers. I understand culture. I am
-                    the nucleus.
-            </p>
+            <div className="flex flex-row">
+              <div className="flex mr-1.5">
+                <QuestionButton/>
+              </div>
+              <p className={classes.textCenterBold}>
+                      Regression has only one neural in the output layer.
+              </p>
+            </div>
           ),
         },
       ]}

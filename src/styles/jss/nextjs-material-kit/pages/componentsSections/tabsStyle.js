@@ -10,6 +10,11 @@ const tabsStyle = {
   textCenter: {
     textAlign: 'center',
   },
+  textCenterBold: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 500
+  },
   buildSection: {
     background: '#faf5fb',
     padding: '70px 0',

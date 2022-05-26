@@ -4,9 +4,10 @@ import QuestionButton from '../Buttons/QuestionButton';
 
 type Props = {
     modelType: string
+    pageLink: string
 }
 
-const ChoosingBox: FC<Props> = ({modelType}) => {
+const ChoosingBox: FC<Props> = ({modelType, pageLink}) => {
   return (
     <div className="flex bg-main-blue w-5/12 h-64 rounded-2xl">
       <div className="flex flex-col w-full justify-around items-center py-4">
@@ -16,7 +17,7 @@ const ChoosingBox: FC<Props> = ({modelType}) => {
           <QuestionButton/>
         </div>
 
-        <Link href="/regression-page"><button className="bg-white hover:ring-4 hover:ring-white hover:shadow-2xl text-main-blue w-3/5 py-2 rounded-full font-bold text-lg">BUILD</button></Link>
+        <Link href={pageLink}><button className="bg-white hover:ring-4 hover:ring-white hover:shadow-2xl text-main-blue w-3/5 py-2 rounded-full font-bold text-lg">BUILD</button></Link>
       </div>
     </div>
   );

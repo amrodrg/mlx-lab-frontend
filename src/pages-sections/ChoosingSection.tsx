@@ -47,8 +47,8 @@ export default function ChoosingSection() {
 
           <div className="flex flex-row justify-between my-5 mx-12">
 
-            <ChoosingBox modelType={'Regression'}/>
-            <ChoosingBox modelType={'Classification'}/>
+            <ChoosingBox modelType={'Regression'} pageLink={'/regression-page'}/>
+            <ChoosingBox modelType={'Classification'} pageLink={'/classification-page'}/>
 
           </div>
 

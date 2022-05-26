@@ -8,8 +8,8 @@ import GridContainer from '../components/Grid/GridContainer.js';
 import GridItem from '../components/Grid/GridItem.js';
 
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
-import EvaluationStats from '../components/EvaluationSectionComponents/EvaluationStats';
 import Link from 'next/link';
+import ClassificationEvaluationStats from '../components/EvaluationSectionComponents/ClassificationEvaluationStats';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -23,7 +23,7 @@ type Props = {
     mean?: number
 }
 
-const EvaluationSection: FC<Props> = ({loss, mae, accuracy, median, mean}) => {
+const ClassificationEvaluationSection: FC<Props> = ({loss, mae, accuracy, median, mean}) => {
 
   const classes = useStyles();
   return (
@@ -42,7 +42,7 @@ const EvaluationSection: FC<Props> = ({loss, mae, accuracy, median, mean}) => {
 
           <div className="flex flex-col">
 
-            <EvaluationStats loss={loss} mae={mae} accuracy={accuracy} median={median} mean={mean}/>
+            <ClassificationEvaluationStats loss={loss} mae={mae} accuracy={accuracy} median={median} mean={mean}/>
 
 
           </div>
@@ -59,4 +59,4 @@ const EvaluationSection: FC<Props> = ({loss, mae, accuracy, median, mean}) => {
   );
 };
 
-export default EvaluationSection;
+export default ClassificationEvaluationSection;

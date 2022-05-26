@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {QuestionMarkCircleIcon} from '@heroicons/react/solid';
 import QuestionButtonBlue from '../Buttons/QuestionButtonBlue';
-import {ExplainModalDataLink, ExplainModalLabelName} from './ExplainModals';
+import {ExplainModalDataLink, ExplainModalLabelName} from '../ExplainModals';
 import {toast} from 'react-toastify';
 import {ClipLoader, RiseLoader} from 'react-spinners';
 import {Clipboard} from 'react-bootstrap-icons';

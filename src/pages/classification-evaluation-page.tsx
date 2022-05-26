@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import EvaluationHeader from '../components/EvaluationSectionComponents/EvaluationHeader';
-import EvaluationSection from '../pages-sections/EvaluationSection';
+import RegressionEvaluationSection from '../pages-sections/RegressionEvaluationSection';
 import {useSelector} from 'react-redux';
 import {getSavedValue} from '@/hooks/useLocalStorage';
+import ClassificationEvaluationSection from '../pages-sections/ClassificationEvaluationSection';
 
 const initialEvaluationValues = {
   loss: 0,
@@ -13,7 +14,7 @@ const initialEvaluationValues = {
 };
 
 
-export default function EvaluationPage() {
+export default function ClassificationEvaluationPage() {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -40,7 +41,7 @@ export default function EvaluationPage() {
         modelName: modelName,
         testingPercentage: testPercentage,
         doNormalize: doNormalize,
-        isClassification: false,
+        isClassification: true,
       })
     };
     const evaluationData = await fetch('http://127.0.0.1:8000/evaluate', requestOptions);
@@ -72,7 +73,7 @@ export default function EvaluationPage() {
   return(
     <div>
       <EvaluationHeader/>
-      <EvaluationSection
+      <ClassificationEvaluationSection
         loss={evaluationValues.loss}
         mae={evaluationValues.mae}
         accuracy={evaluationValues.accuracy}

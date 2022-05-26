@@ -8,7 +8,7 @@ import GridContainer from '../components/Grid/GridContainer.js';
 import GridItem from '../components/Grid/GridItem.js';
 
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
-import ModelBuildBox from '../components/BuildBoxComponents/ModelBuildBox';
+import ModelBuildBox from '../components/RegressionBuildBoxComponents/ModelBuildBox';
 import {Layer} from '../Interfaces';
 import {ToastContainer} from 'react-toastify';
 
@@ -25,7 +25,7 @@ type Props = {
   setActivationList: Dispatch<SetStateAction<string[]>>
 }
 
-const BuildingSection: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsList, activationList, setActivationList}) => {
+const RegressionBuildingSection: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsList, activationList, setActivationList}) => {
   const classes = useStyles();
   return (
     <div className={classes.buildSection}>
@@ -54,4 +54,4 @@ const BuildingSection: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsL
   );
 };
 
-export default BuildingSection;
+export default RegressionBuildingSection;

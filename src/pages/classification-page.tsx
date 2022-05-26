@@ -1,9 +1,7 @@
-import BuildindSection from '../pages-sections/RegressionBuildingSection';
 import NamingSection from '../pages-sections/NamingSection';
 import DataImportingSection from '../pages-sections/DataImportingSection';
 import CompilingSection from '../pages-sections/CompilingSection';
 import DataFittingSection from '../pages-sections/DataFittingSection';
-import RegressionHeader from '../components/RegressionHeader';
 import React, {useState} from 'react';
 import {toast} from 'react-toastify';
 import useLocalStorage from '@/hooks/useLocalStorage';
@@ -13,9 +11,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {ModelNameActionCreator} from '../redux/index';
 import {useRouter} from 'next/router';
+import ClassificationHeader from '../components/ClassificationHeader';
+import ClassificationBuildingSection from '../pages-sections/ClassificationBuildingSection';
 
 
-export default function RegressionPage() {
+export default function ClassificationPage() {
 
   const router = useRouter();
 
@@ -54,6 +54,8 @@ export default function RegressionPage() {
   const [predictionClassesNum, setPredictionClassesNum] = useLocalStorage('PredictionClassesNum', 0);
   // Find the Labels classes Number automatically
   const [automatedClassesNum, setAutomatedClassesNum] = useLocalStorage('AutomatedClassesNum', false);
+  // Output Layer Activation Function
+  const [outputActivation, setOutputActivation] = useState('softmax');
 
 
   const [loading, setLoading] = useState(false);
@@ -92,10 +94,10 @@ export default function RegressionPage() {
         optimizer: optimizer,
         learningRate: learningRate,
         doNormalize: doNormalize,
-        isClassification: false,
+        isClassification: true,
         predictionClassesNum: predictionClassesNum,
         automatedClassesNum: automatedClassesNum,
-        outputActivation: 'relu'
+        outputActivation: outputActivation
       })
     };
 
@@ -124,7 +126,7 @@ export default function RegressionPage() {
           const mlModel = data.json();
           console.log(mlModel);
           setLoading(false);
-          router.push('/regression-evaluation-page');
+          router.push('/classification-evaluation-page');
         } else if (data.status === 503) {
           setLoading(false);
           toast.error(' Invalid data link or incorrect labels column name!');
@@ -146,13 +148,15 @@ export default function RegressionPage() {
 
   return (
     <div>
-      <RegressionHeader/>
+      <ClassificationHeader/>
       <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} labelsColumnName={labelsColumnName}
         setLabelsColumnName={labelsNameHandler} doNormalize={doNormalize} setDoNormalize={setDoNormalize}/>
       <NamingSection modelName={modelName} setName={nameInputHandler}/>
-      <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList}
+      <ClassificationBuildingSection layers={layers} setLayers={setLayers} neuronsList={neuronsList}
         setNeuronsList={setNeuronsList} activationList={activationList}
-        setActivationList={setActivationList}/>
+        setActivationList={setActivationList} predictionClassesNum={predictionClassesNum}
+        setPredictionClassesNum={setPredictionClassesNum} automatedClassesNum={automatedClassesNum}
+        setAutomatedClassesNum={setAutomatedClassesNum} outputActivation={outputActivation} setOutputActivation={setOutputActivation}/>
       <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer}
         setOptimizer={setOptimizer} learningRate={learningRate}
         setLearningRate={setLearningRate}/>
