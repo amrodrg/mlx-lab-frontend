@@ -51,9 +51,9 @@ export default function ClassificationPage() {
   // Normalize Data
   const [doNormalize, setDoNormalize] = useLocalStorage('DoNormalize', false);
   // Number of Labels Classes
-  const [predictionClassesNum, setPredictionClassesNum] = useLocalStorage('PredictionClassesNum', 0);
+  const [predictionClassesNum, setPredictionClassesNum] = useLocalStorage('PredictionClassesNum', 2);
   // Find the Labels classes Number automatically
-  const [automatedClassesNum, setAutomatedClassesNum] = useLocalStorage('AutomatedClassesNum', false);
+  const [automatedClassesNum, setAutomatedClassesNum] = useLocalStorage('AutomatedClassesNum', true);
   // Output Layer Activation Function
   const [outputActivation, setOutputActivation] = useState('softmax');
 

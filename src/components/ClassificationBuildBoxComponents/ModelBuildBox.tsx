@@ -54,6 +54,13 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
     setActivationList(prevState => [...prevState.slice(0, -1)]);
   };
 
+  const predictionClassesNumberHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const enteredNumber = parseInt(event.target.value);
+    if(enteredNumber>=2) {
+      setPredictionClassesNum(enteredNumber);
+    }
+  };
+
   const handleSwitchAutomatedClassesNum = () => {
     setAutomatedClassesNum(prevState => !prevState);
   };
@@ -118,8 +125,8 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
               </div>
               <p className={classes.textCenterBold}>
                       The input layer has the same shape of your data
-                      (same number for neurals and features)
-                      so you don’t have to change anything in it.
+                      (same number for neurons and features).
+                      You don’t have to change anything here.
               </p>
             </div>
           ),
@@ -141,9 +148,11 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
               <div className="flex flex-row m-3 justify-around">
 
                 <TextField
+                  onChange={predictionClassesNumberHandler}
                   id="classes-number"
                   label="Number of classes"
                   type="number"
+                  value={predictionClassesNum}
                   size='small'
                   color="primary"
                   inputProps={{ style: { fontFamily: 'nunito', fontSize: 18, fontWeight: 'bold',}}}
@@ -162,7 +171,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
                       checked={automatedClassesNum}
                       onChange={() => handleSwitchAutomatedClassesNum()}/>
                   }
-                  label={<p className="text-lg text-primary-purple"> Choose classes number and activation function automatically </p>} />
+                  label={<p className="text-lg text-primary-purple"> Set classes number and activation function automatically </p>} />
               </FormGroup>
             </div>
           ),
