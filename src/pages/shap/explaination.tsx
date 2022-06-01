@@ -13,9 +13,7 @@ import Accordion from 'react-bootstrap/Accordion';
 
 export default function ExplainationPlot () {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const {modelName} = useSelector((state) => state);
+    const modelName = getSavedValue('modelName', "");
 
     const shapValues = getSavedValue('shapValues', []);
     const [selectedExample, setExampleState] = getSavedValue('example', "2");
@@ -65,6 +63,9 @@ export default function ExplainationPlot () {
     }
 
     const getExplainerInformation = async (backgroundValue) => {
+
+        console.log("explanation model name: ", modelName)
+        console.log("explanation background value: ", backgroundValue)
 
         const requestArgs = {
             method: 'POST',

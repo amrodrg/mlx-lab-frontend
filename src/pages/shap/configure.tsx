@@ -3,7 +3,6 @@ import {useEffect, useState } from 'react'
 import { Container, Row, Col } from "reactstrap"
 import styles from '../../styles/Home.module.css'
 import Form from 'react-bootstrap/Form'
-import FormCheck from 'react-bootstrap/FormCheck'
 import NumericInput from 'react-numeric-input'
 import useLocalStorage from '@/hooks/useLocalStorage';
 import {toast, ToastContainer} from 'react-toastify';
@@ -12,16 +11,10 @@ import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
-import {getSavedValue} from '@/hooks/useLocalStorage'
 import Card from 'react-bootstrap/Card'
 import {useRouter} from 'next/router';
 import Spinner from 'react-bootstrap/Spinner'
 import 'react-toastify/dist/ReactToastify.css';
-import {useDispatch, useSelector} from 'react-redux';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import {bindActionCreators} from 'redux';
-import {ModelNameActionCreator} from  '../../redux/index';
 
 interface IFeatures {
     featuresData:{name:string}[];
@@ -30,14 +23,6 @@ interface IFeatures {
 export default function ConfigureExplainer () {
 
     const router = useRouter();
-
-    // Action Creators of Redux
-    const dispatch = useDispatch();
-    const modelNameAC = bindActionCreators(ModelNameActionCreator, dispatch);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const {modelName} = useSelector((state) => state);
 
     const updateModelInformation = async (modelName) => {
 
@@ -63,46 +48,38 @@ export default function ConfigureExplainer () {
             median: modelInformationJs.median,
             mean: modelInformationJs.mean
         });
-
+    
         setFeatureArray(modelInformationJs.featureArray);
-        setModelList(modelInformationJs.modelList)
+        setDataLink(modelInformationJs.dataLink);
+        setLabelName(modelInformationJs.labelName);
+        setSummaryExist(modelInformationJs.summaryExist);
     }
 
-    const getModelInformation = async () => {
+    const getModelList = async () => {
         const requestArgs = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                modelName: modelName
-            })
+            method: 'GET',
         };
 
-        const modelInformation = await fetch('http://127.0.0.1:8000/shap/model_information', requestArgs);
+        const modelInformation = await fetch('http://127.0.0.1:8000/shap/model_list', requestArgs);
         const modelInformationJs = await  modelInformation.json();
-        return modelInformationJs;
+
+        setModelList(modelInformationJs.modelList);
+        modelList = modelInformationJs.modelList;
+
+        if (modelInformationJs.modelList.length !== 0) {
+            setModelName(modelInformationJs.modelList[0])
+            modelName = modelInformationJs.modelList[0]
+
+            updateModelInformation(modelName)
+        }
     }
+
+    // model array 
+    let [modelList, setModelList] = useState([]);
   
     useEffect(
         () => {
-        getModelInformation()
-            .then(modelInformation => {
-
-              setModelInformation({
-                  modelName: modelInformation.modelName,
-                  lastModified: modelInformation.lastModified,
-                  featuresString: modelInformation.modelFeaturesString,
-                  labelName: modelInformation.labelName,
-                  dataLink: modelInformation.dataLink,
-                  loss: modelInformation.loss,
-                  accuracy: modelInformation.accuracy,
-                  median: modelInformation.median,
-                  mean: modelInformation.mean
-              });
-              setFeatureArray(modelInformation.featureArray);
-              setModelList(modelInformation.modelList);
-              setSummaryExist(modelInformation.summaryExist);
-            }
-          );
+            getModelList();
     }, []);
     
     const exampleList = [
@@ -127,7 +104,11 @@ export default function ConfigureExplainer () {
          
     // choose an example (instance)
     const [selectedExample, setExampleState] = useLocalStorage('example', "2");
-        
+
+    let [modelName, setModelName] = useLocalStorage("modelName", "")
+    let [dataLink, setDataLink] = useLocalStorage("dataLink", "")
+    let [labelName, setLabelName] = useLocalStorage("labelName", "")
+
     // modal
     const [showTestdataModal, setShowTestdataModal] = useState(false);
         
@@ -135,8 +116,6 @@ export default function ConfigureExplainer () {
     const [modelInformation, setModelInformation] = useState(initModelInfo);
     // feature Array
     const [featureArray, setFeatureArray] = useState([]);
-    // modell array 
-    const [modelList, setModelList] = useState([]);
 
     // feature Example Array
     const [featureExampleArray] = useState({});
@@ -161,7 +140,6 @@ export default function ConfigureExplainer () {
 
     const modelNameInputHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const enterdName = event.target.value;
-        modelNameAC.enterModelName(enterdName);
         updateModelInformation(enterdName);
     } 
 
@@ -225,6 +203,8 @@ export default function ConfigureExplainer () {
     function SummaryCheckComponent(props) {
         const exist = props.exist;
 
+        console.log("summary exists? : ", exist)
+
         if (exist === false) {
             return (
                 <div>
@@ -259,9 +239,6 @@ export default function ConfigureExplainer () {
     }
 
     const exlpaineModel = async () => {
-        const dataLink = getSavedValue('DataLink', '');
-        const labelName = getSavedValue('LabelsColumnName', ''); 
-
         const requestArgs = {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
@@ -288,8 +265,6 @@ export default function ConfigureExplainer () {
 
             setShapValues(explaindModeljs)
 
-            console.log(shapValues)
-
             setLoading(false);
             if (explaindModel.status === 200) {
                 router.push('/shap/explaination');
@@ -311,8 +286,7 @@ export default function ConfigureExplainer () {
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
                         <Form.Select className={styles['configure_component_style']}
-                                     onChange={modelNameInputHandler} 
-                                     value={modelName}>
+                                     onChange={modelNameInputHandler}>
                             {modelList.map((item) => {
                                 return (
                                     <option value={item}>{item}</option>
