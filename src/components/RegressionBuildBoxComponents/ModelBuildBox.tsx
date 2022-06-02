@@ -23,9 +23,11 @@ type Props = {
     setNeuronsList: Dispatch<SetStateAction<number[]>>
     activationList: string[]
     setActivationList: Dispatch<SetStateAction<string[]>>
+    setShowExplainBuilding: Dispatch<SetStateAction<boolean>>
 }
 
-const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsList, activationList, setActivationList}) => {
+const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
+  setNeuronsList, activationList, setActivationList, setShowExplainBuilding}) => {
   const classes = useStyles();
 
 
@@ -60,7 +62,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsLis
 
               <div className="flex flex-row">
                 <div className="flex my-2 mr-1">
-                  <QuestionButton/>
+                  <QuestionButton setShowExplain={setShowExplainBuilding}/>
                 </div>
                 <ButtonLeadingIcon onClick={()=> addLayer(layers.length+1, 1, 'relu')}/>
               </div>
@@ -100,7 +102,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsLis
           tabContent: (
             <div className="flex flex-row">
               <div className="flex mr-1.5">
-                <QuestionButton/>
+                <QuestionButton setShowExplain={setShowExplainBuilding}/>
               </div>
               <p className={classes.textCenterBold}>
                       The input layer has the same shape of your data
@@ -116,7 +118,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsLis
           tabContent: (
             <div className="flex flex-row">
               <div className="flex mr-1.5">
-                <QuestionButton/>
+                <QuestionButton setShowExplain={setShowExplainBuilding}/>
               </div>
               <p className={classes.textCenterBold}>
                       Regression has only one neural in the output layer.

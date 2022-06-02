@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {applyMiddleware, createStore} from 'redux';
 import reducers from './reducers';
 import thunk from 'redux-thunk';

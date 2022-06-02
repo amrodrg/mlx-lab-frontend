@@ -4,7 +4,7 @@ import InputIcon from '@mui/icons-material/Input';
 import OutputIcon from '@mui/icons-material/Output';
 import LayersIcon from '@mui/icons-material/Layers';
 import BuildTab from './BuildTab';
-import React, {Dispatch, FC, SetStateAction} from 'react';
+import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 import ButtonLeadingIcon from '../Buttons/ButtonLeadingIcon';
 import HiddenLayer from './HiddenLayer';
 import QuestionButton from '../Buttons/QuestionButton';
@@ -31,11 +31,13 @@ type Props = {
     setAutomatedClassesNum: Dispatch<SetStateAction<boolean>>
     outputActivation: string
     setOutputActivation: Dispatch<SetStateAction<string>>
+    setShowExplainBuilding: Dispatch<SetStateAction<boolean>>
 }
 
 const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
   setNeuronsList, activationList, setActivationList, predictionClassesNum,
-  setPredictionClassesNum, automatedClassesNum, setAutomatedClassesNum, outputActivation, setOutputActivation
+  setPredictionClassesNum, automatedClassesNum, setAutomatedClassesNum,
+  outputActivation, setOutputActivation, setShowExplainBuilding
 }) => {
   const classes = useStyles();
 
@@ -65,7 +67,6 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
     setAutomatedClassesNum(prevState => !prevState);
   };
 
-
   return(
     <BuildTab
       headerColor="main"
@@ -81,7 +82,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
 
               <div className="flex flex-row">
                 <div className="flex my-2 mr-1">
-                  <QuestionButton/>
+                  <QuestionButton setShowExplain={setShowExplainBuilding}/>
                 </div>
                 <ButtonLeadingIcon onClick={()=> addLayer(layers.length+1, 1, 'relu')}/>
               </div>
@@ -121,7 +122,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
           tabContent: (
             <div className="flex flex-row">
               <div className="flex mr-1.5">
-                <QuestionButton/>
+                <QuestionButton setShowExplain={setShowExplainBuilding}/>
               </div>
               <p className={classes.textCenterBold}>
                       The input layer has the same shape of your data
@@ -138,7 +139,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
             <div className="flex flex-col">
               <div className="flex flex-row">
                 <div className="flex mr-1.5">
-                  <QuestionButton/>
+                  <QuestionButton setShowExplain={setShowExplainBuilding}/>
                 </div>
                 <p className={classes.textCenterBold}>
                         Enter the number of prediction classes und the right activation function for output layer.
@@ -173,6 +174,7 @@ const ModelBuildBox: FC<Props> = ({layers, setLayers, neuronsList,
                   }
                   label={<p className="text-lg text-primary-purple"> Set classes number and activation function automatically </p>} />
               </FormGroup>
+
             </div>
           ),
         },

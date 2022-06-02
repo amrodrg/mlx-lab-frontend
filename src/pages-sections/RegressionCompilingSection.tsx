@@ -8,7 +8,7 @@ import GridContainer from '../components/Grid/GridContainer.js';
 import GridItem from '../components/Grid/GridItem.js';
 
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
-import ModelCompileBox from '../components/CompileBoxComponents/ModelCompileBox';
+import ModelCompileBox from '../components/CompileBoxComponents/Regression/ModelCompileBox';
 import ArrowDown from '../components/Buttons/ArrowDown';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -24,7 +24,7 @@ type Props = {
   setLearningRate:  React.Dispatch<React.SetStateAction<number>>
 }
 
-const CompilingSection: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimizer, learningRate, setLearningRate}) => {
+const RegressionCompilingSection: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimizer, learningRate, setLearningRate}) => {
   const classes = useStyles();
   return (
     <div className={classes.compileSection}>
@@ -53,4 +53,4 @@ const CompilingSection: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimi
   );
 };
 
-export default CompilingSection;
+export default RegressionCompilingSection;

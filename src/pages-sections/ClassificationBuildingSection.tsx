@@ -1,4 +1,4 @@
-import React, {Dispatch, FC, SetStateAction} from 'react';
+import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -11,6 +11,7 @@ import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/ta
 import ModelBuildBox from '../components/ClassificationBuildBoxComponents/ModelBuildBox';
 import {Layer} from '../Interfaces';
 import {ToastContainer} from 'react-toastify';
+import {ExplainBuilding} from '../components/ExplainModals';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -36,6 +37,9 @@ const ClassificationBuildingSection: FC<Props> = ({layers, setLayers, neuronsLis
   automatedClassesNum, setAutomatedClassesNum, outputActivation, setOutputActivation
 }) => {
   const classes = useStyles();
+
+  const [showExplainBuilding , setShowExplainBuilding] = useState(false);
+
   return (
     <div className={classes.buildSection}>
       <div className={classes.container}>
@@ -58,8 +62,10 @@ const ClassificationBuildingSection: FC<Props> = ({layers, setLayers, neuronsLis
               setNeuronsList={setNeuronsList} activationList={activationList} 
               setActivationList={setActivationList} predictionClassesNum={predictionClassesNum}
               setPredictionClassesNum={setPredictionClassesNum} automatedClassesNum={automatedClassesNum}
-              setAutomatedClassesNum={setAutomatedClassesNum} outputActivation={outputActivation} setOutputActivation={setOutputActivation}
+              setAutomatedClassesNum={setAutomatedClassesNum} outputActivation={outputActivation}
+              setOutputActivation={setOutputActivation} setShowExplainBuilding={setShowExplainBuilding}
             />
+            <ExplainBuilding showExampleModal={showExplainBuilding} setShowExampleModal={setShowExplainBuilding}/>
             <ToastContainer/>
           </div>
         </div>

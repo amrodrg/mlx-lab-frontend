@@ -1,7 +1,7 @@
 import BuildindSection from '../pages-sections/RegressionBuildingSection';
 import NamingSection from '../pages-sections/NamingSection';
 import DataImportingSection from '../pages-sections/DataImportingSection';
-import CompilingSection from '../pages-sections/CompilingSection';
+import RegressionCompilingSection from '../pages-sections/RegressionCompilingSection';
 import DataFittingSection from '../pages-sections/DataFittingSection';
 import RegressionHeader from '../components/RegressionHeader';
 import React, {useState} from 'react';
@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {ModelNameActionCreator} from '../redux/index';
 import {useRouter} from 'next/router';
+import RegressionBuildingSection from '../pages-sections/RegressionBuildingSection';
 
 
 export default function RegressionPage() {
@@ -43,11 +44,11 @@ export default function RegressionPage() {
   // The testing percentage of data set
   const [testingPercentage, setTestingPercentage] = useLocalStorage('TestPercentage', 20);
   // The Lost function
-  const [lossFunc, setLossFunc] = useState('mae');
+  const [lossFunc, setLossFunc] = useLocalStorage('LossFunc', 'mae');
   // Training Optimizer
-  const [optimizer, setOptimizer] = useState('adam');
+  const [optimizer, setOptimizer] = useLocalStorage('Optimizer', 'adam');
   // Learning Rate
-  const [learningRate, setLearningRate] = useState(0.001);
+  const [learningRate, setLearningRate] = useLocalStorage('LearningRate', 0.01);
   // Normalize Data
   const [doNormalize, setDoNormalize] = useLocalStorage('DoNormalize', false);
   // Number of Labels Classes
@@ -150,10 +151,10 @@ export default function RegressionPage() {
       <DataImportingSection dataLinkValue={linkValue} setLink={linkInputHandler} labelsColumnName={labelsColumnName}
         setLabelsColumnName={labelsNameHandler} doNormalize={doNormalize} setDoNormalize={setDoNormalize}/>
       <NamingSection modelName={modelName} setName={nameInputHandler}/>
-      <BuildindSection layers={layers} setLayers={setLayers} neuronsList={neuronsList}
+      <RegressionBuildingSection layers={layers} setLayers={setLayers} neuronsList={neuronsList}
         setNeuronsList={setNeuronsList} activationList={activationList}
         setActivationList={setActivationList}/>
-      <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer}
+      <RegressionCompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer}
         setOptimizer={setOptimizer} learningRate={learningRate}
         setLearningRate={setLearningRate}/>
       <DataFittingSection epochsNum={epochsNumber} setEpochsNum={setEpochsNumber} testingPer={testingPercentage}

@@ -1,6 +1,6 @@
 import NamingSection from '../pages-sections/NamingSection';
 import DataImportingSection from '../pages-sections/DataImportingSection';
-import CompilingSection from '../pages-sections/CompilingSection';
+import RegressionCompilingSection from '../pages-sections/RegressionCompilingSection';
 import DataFittingSection from '../pages-sections/DataFittingSection';
 import React, {useState} from 'react';
 import {toast} from 'react-toastify';
@@ -13,6 +13,7 @@ import {ModelNameActionCreator} from '../redux/index';
 import {useRouter} from 'next/router';
 import ClassificationHeader from '../components/ClassificationHeader';
 import ClassificationBuildingSection from '../pages-sections/ClassificationBuildingSection';
+import ClassificationCompilingSection from '../pages-sections/ClassificationCompilingSection';
 
 
 export default function ClassificationPage() {
@@ -43,11 +44,11 @@ export default function ClassificationPage() {
   // The testing percentage of data set
   const [testingPercentage, setTestingPercentage] = useLocalStorage('TestPercentage', 20);
   // The Lost function
-  const [lossFunc, setLossFunc] = useState('mae');
+  const [lossFunc, setLossFunc] = useLocalStorage('LossFunc', 'categorical_crossentropy');
   // Training Optimizer
-  const [optimizer, setOptimizer] = useState('adam');
+  const [optimizer, setOptimizer] = useLocalStorage('Optimizer', 'adam');
   // Learning Rate
-  const [learningRate, setLearningRate] = useState(0.001);
+  const [learningRate, setLearningRate] = useLocalStorage('LearningRate', 0.01);
   // Normalize Data
   const [doNormalize, setDoNormalize] = useLocalStorage('DoNormalize', false);
   // Number of Labels Classes
@@ -157,7 +158,7 @@ export default function ClassificationPage() {
         setActivationList={setActivationList} predictionClassesNum={predictionClassesNum}
         setPredictionClassesNum={setPredictionClassesNum} automatedClassesNum={automatedClassesNum}
         setAutomatedClassesNum={setAutomatedClassesNum} outputActivation={outputActivation} setOutputActivation={setOutputActivation}/>
-      <CompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer}
+      <ClassificationCompilingSection lossFunc={lossFunc} setLosFunc={setLossFunc} optimizer={optimizer}
         setOptimizer={setOptimizer} learningRate={learningRate}
         setLearningRate={setLearningRate}/>
       <DataFittingSection epochsNum={epochsNumber} setEpochsNum={setEpochsNumber} testingPer={testingPercentage}

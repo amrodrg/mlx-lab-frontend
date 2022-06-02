@@ -21,9 +21,15 @@ type Props = {
     accuracy?: number
     median?: number
     mean?: number
+    isBinary?: boolean
+    truePositives?: number
+    trueNegatives?: number
+    falsePositives?: number
+    falseNegatives?: number
 }
 
-const ClassificationEvaluationSection: FC<Props> = ({loss, mae, accuracy, median, mean}) => {
+const ClassificationEvaluationSection: FC<Props> = ({loss, mae, accuracy, median, mean,
+  isBinary, truePositives, trueNegatives, falseNegatives, falsePositives}) => {
 
   const classes = useStyles();
   return (
@@ -42,7 +48,12 @@ const ClassificationEvaluationSection: FC<Props> = ({loss, mae, accuracy, median
 
           <div className="flex flex-col">
 
-            <ClassificationEvaluationStats loss={loss} mae={mae} accuracy={accuracy} median={median} mean={mean}/>
+            <ClassificationEvaluationStats loss={loss} mae={mae} accuracy={accuracy} median={median} mean={mean}
+              isBinary={isBinary}
+              truePositives={truePositives}
+              trueNegatives={trueNegatives}
+              falseNegatives={falseNegatives}
+              falsePositives={falsePositives}/>
 
 
           </div>

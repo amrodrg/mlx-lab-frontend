@@ -4,6 +4,7 @@ import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/ta
 import {makeStyles} from '@material-ui/core/styles';
 import {ArrowNarrowUpIcon} from '@heroicons/react/outline';
 import React from 'react';
+import Link from 'next/link';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -15,9 +16,13 @@ export default function ExamplesSection(){
   return(
     <div className="flex flex-col">
       <ExamplesHeader></ExamplesHeader>
-      <img src="/img/Clas_Reg_Example 1.png" className="px-52 2xl:px-96 py-12"></img>
+      <Link href="https://www.springboard.com/blog/data-science/regression-vs-classification/">
+        <img src="/img/Clas_Reg_Example 1.png" className="mx-52 2xl:mx-96 my-12 hover:shadow-2xl"></img>
+      </Link>
       <hr className="bg-secondary-blue"/>
-      <img src="/img/Clas_Reg2.png" className="px-52 2xl:px-96 py-12"></img>
+      <Link href="https://medium.datadriveninvestor.com/problems-with-classification-examples-from-real-life-645b7b756e96">
+        <img src="/img/Clas_Reg2.png" className="mx-52 2xl:mx-96 my-12 p-2 hover:shadow-2xl"></img>
+      </Link>
 
       <div className=" bg-secondary-blue text-white border-2 border-main-blue mx-48 mt-16 text-xl font-bold p-3 rounded-2xl">
         <text>
@@ -26,7 +31,9 @@ export default function ExamplesSection(){
         </text>
       </div>
 
-      <img src="/img/reg_class3.png" className="px-52 2xl:px-96 py-12"></img>
+      <Link href="https://www.engineersgarage.com/machine-learning-algorithms-classification/">
+        <img src="/img/reg_class3.png" className="mx-52 2xl:mx-96 my-12 hover:shadow-2xl"></img>
+      </Link>
 
       <button
         onClick={() => {

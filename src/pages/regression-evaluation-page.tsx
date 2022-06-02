@@ -9,7 +9,7 @@ const initialEvaluationValues = {
   mae : 0,
   accuracy: 0,
   median: 0,
-  mean: 0
+  mean: 0,
 };
 
 
@@ -26,10 +26,11 @@ export default function RegressionEvaluationPage() {
     const labelsColumnName = getSavedValue('LabelsColumnName', '');
     const testPercentage = getSavedValue('TestPercentage', 20);
     const doNormalize = getSavedValue('DoNormalize', false);
-    return {dataLink, labelsColumnName, testPercentage, doNormalize};
+    const lossFunc = getSavedValue('LossFunc', 'mae');
+    return {dataLink, labelsColumnName, testPercentage, doNormalize, lossFunc};
   };
 
-  const makeEvaluationFetch = async (linkValue, labelsColumnName, testPercentage, doNormalize) => {
+  const makeEvaluationFetch = async (linkValue, labelsColumnName, testPercentage, doNormalize, lossFunc) => {
     // POST request using fetch with async/await
     const requestOptions = {
       method: 'POST',
@@ -41,6 +42,7 @@ export default function RegressionEvaluationPage() {
         testingPercentage: testPercentage,
         doNormalize: doNormalize,
         isClassification: false,
+        lossFunc: lossFunc
       })
     };
     const evaluationData = await fetch('http://127.0.0.1:8000/evaluate', requestOptions);
@@ -52,7 +54,7 @@ export default function RegressionEvaluationPage() {
   useEffect(() => {
     getValues()
       .then(values => {
-        makeEvaluationFetch(values.dataLink, values.labelsColumnName, values.testPercentage, values.doNormalize)
+        makeEvaluationFetch(values.dataLink, values.labelsColumnName, values.testPercentage, values.doNormalize, values.lossFunc)
           .then(evaluationData => {
             console.log(evaluationData);
             setEvaluationValues({
@@ -60,7 +62,7 @@ export default function RegressionEvaluationPage() {
               mae: evaluationData.mae,
               accuracy: evaluationData.accuracy,
               median: evaluationData.median,
-              mean: evaluationData.mean
+              mean: evaluationData.mean,
             });
           }
           );

@@ -9,6 +9,7 @@ const NameInputBox : FC<Props> = ({modelName, setName}) => {
   return (
     <div className=" flex flex-col w-full p-10 ml-5 mr-32">
       <label htmlFor="model name" className="block text-sm font-medium text-white">
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
                 Model's name
       </label>
       <div className="flex w-full mt-1 justify-center">

@@ -11,6 +11,8 @@ import DataLinkGroup from '../components/DataImportingSectionComponents/DataLink
 import {FormControlLabel, FormGroup, Switch} from '@mui/material';
 import {MaterialUISwitch} from '../components/DataImportingSectionComponents/MaterialUISwitch';
 import {padding} from '@mui/system';
+import {QuestionMarkCircleIcon} from '@heroicons/react/solid';
+import {ExplainNormalization} from '../components/ExplainModals';
 
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -33,6 +35,8 @@ const DataImportingSection: FC<Props> = ({dataLinkValue ,setLink, labelsColumnNa
   const handleSwitchNormalization = () => {
     setDoNormalize(prevState => !prevState);
   };
+
+  const [showExplainNormalization , setShowExplainNormalization] = useState(false);
 
   return (
     <div className={classes.dataSection}>
@@ -60,16 +64,29 @@ const DataImportingSection: FC<Props> = ({dataLinkValue ,setLink, labelsColumnNa
               setLabelsColumnName={setLabelsColumnName}
             />
 
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <MaterialUISwitch
-                    value={doNormalize}
-                    checked={doNormalize}
-                    onChange={() => handleSwitchNormalization()}/>
-                }
-                label={<p className="text-lg text-primary-purple"> Data Normalization</p>} />
-            </FormGroup>
+
+            <div className="flex flex-row">
+
+              <button
+                onClick={() => setShowExplainNormalization(true)}
+                type="button"
+                className="flex h-8 w-8 justify-content-center items-center rounded-full text-primary-purple bg-transparent hover:text-purple-500"
+              >
+                <QuestionMarkCircleIcon className="h-10 w-10 bg-white rounded-full"/>
+              </button>
+
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <MaterialUISwitch
+                      value={doNormalize}
+                      checked={doNormalize}
+                      onChange={() => handleSwitchNormalization()}/>
+                  }
+                  label={<p className="text-lg text-primary-purple"> Data Normalization</p>} />
+              </FormGroup>
+
+            </div>
 
             <ArrowDown/>
 
@@ -78,6 +95,9 @@ const DataImportingSection: FC<Props> = ({dataLinkValue ,setLink, labelsColumnNa
           
         </div>
       </div>
+
+      <ExplainNormalization showExampleModal={showExplainNormalization} setShowExampleModal={setShowExplainNormalization}/>
+
     </div>
   );
 };

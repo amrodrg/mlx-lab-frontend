@@ -1,4 +1,4 @@
-import React, {Dispatch, FC, SetStateAction} from 'react';
+import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -11,6 +11,7 @@ import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/ta
 import ModelBuildBox from '../components/RegressionBuildBoxComponents/ModelBuildBox';
 import {Layer} from '../Interfaces';
 import {ToastContainer} from 'react-toastify';
+import {ExplainBuilding} from '../components/ExplainModals';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -27,6 +28,9 @@ type Props = {
 
 const RegressionBuildingSection: FC<Props> = ({layers, setLayers, neuronsList, setNeuronsList, activationList, setActivationList}) => {
   const classes = useStyles();
+
+  const [showExplainBuilding , setShowExplainBuilding] = useState(false);
+
   return (
     <div className={classes.buildSection}>
       <div className={classes.container}>
@@ -45,7 +49,11 @@ const RegressionBuildingSection: FC<Props> = ({layers, setLayers, neuronsList, s
             </GridItem>
           </GridContainer>
           <div className="py-10 px-8">
-            <ModelBuildBox layers={layers} setLayers={setLayers} neuronsList={neuronsList} setNeuronsList={setNeuronsList} activationList={activationList} setActivationList={setActivationList}/>
+            <ModelBuildBox layers={layers} setLayers={setLayers} neuronsList={neuronsList}
+              setNeuronsList={setNeuronsList} activationList={activationList}
+              setActivationList={setActivationList} setShowExplainBuilding={setShowExplainBuilding}/>
+
+            <ExplainBuilding showExampleModal={showExplainBuilding} setShowExampleModal={setShowExplainBuilding}/>
             <ToastContainer/>
           </div>
         </div>

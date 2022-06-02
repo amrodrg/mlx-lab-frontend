@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -7,6 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import styles from '@/styles/jss/nextjs-material-kit/pages/componentsSections/tabsStyle.js';
 import ArrowDown from '../components/Buttons/ArrowDown';
 import ChoosingBox from '../components/ChoosingSectionCompenents/ChoosingBox';
+import {ExplainClassification, ExplainModalDataLink, ExplainRegression} from '../components/ExplainModals';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -14,6 +15,9 @@ const useStyles = makeStyles(styles);
 
 export default function ChoosingSection() {
   const classes = useStyles();
+
+  const [showExplainRegression , setShowExplainRegression] = useState(false);
+  const [showExplainClassification , setShowExplainClassification] = useState(false);
 
   return (
     <div className={classes.chooseSection}>
@@ -47,8 +51,8 @@ export default function ChoosingSection() {
 
           <div className="flex flex-row justify-between my-5 mx-12">
 
-            <ChoosingBox modelType={'Regression'} pageLink={'/regression-page'}/>
-            <ChoosingBox modelType={'Classification'} pageLink={'/classification-page'}/>
+            <ChoosingBox modelType={'Regression'} pageLink={'/regression-page'} setShowExplain={setShowExplainRegression}/>
+            <ChoosingBox modelType={'Classification'} pageLink={'/classification-page'} setShowExplain={setShowExplainClassification}/>
 
           </div>
 
@@ -56,6 +60,9 @@ export default function ChoosingSection() {
           <ArrowDown/>
         </div>
       </div>
+
+      <ExplainRegression showExampleModal={showExplainRegression} setShowExampleModal={setShowExplainRegression}/>
+      <ExplainClassification showExampleModal={showExplainClassification} setShowExampleModal={setShowExplainClassification}/>
     </div>
   );
 }

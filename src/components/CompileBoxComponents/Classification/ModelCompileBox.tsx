@@ -1,7 +1,7 @@
 import React, {Dispatch, FC, SetStateAction} from 'react';
-import SelectionComponent from './SelectionComponent';
-import QuestionButtonBlue from '../Buttons/QuestionButtonBlue';
-import LearningRateInput from './LearningRateInput';
+import SelectionComponent from '../SelectionComponent';
+import QuestionButtonBlue from '../../Buttons/QuestionButtonBlue';
+import LearningRateInput from '../LearningRateInput';
 
 type Props = {
     lossFunc: string
@@ -24,7 +24,7 @@ const ModelCompileBox: FC<Props> = ({lossFunc, setLosFunc, optimizer, setOptimiz
             text>Choose the loss function: </text>
           <QuestionButtonBlue/>
           </div>
-          <SelectionComponent options={['mae', 'mse']} defaultValue={lossFunc} setValue={setLosFunc}/>
+          <SelectionComponent options={['binary_crossentropy', 'categorical_crossentropy']} defaultValue={lossFunc} setValue={setLosFunc}/>
         </div>
 
         <div className="flex flex-row justify-between px-16 font-bold text-gray-600 items-center">

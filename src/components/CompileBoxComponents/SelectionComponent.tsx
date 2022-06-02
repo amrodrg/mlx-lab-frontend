@@ -23,7 +23,7 @@ const SelectionComponent: FC<Props> = ({options, defaultValue, setValue}) => {
         onChange={lossFunctionHandler}
         id="activation"
         name="activation"
-        className="block w-full px-32 py-1 text-xl border-2 border-main-blue outline-secondary-blue focus:ring-main-blue rounded-pill font-bold text-main-blue"
+        className="block w-full px-30 py-1 text-xl border-2 border-main-blue outline-secondary-blue focus:ring-main-blue rounded-pill font-bold text-main-blue"
         defaultValue={defaultValue}
       >
         {options.map(option => {
