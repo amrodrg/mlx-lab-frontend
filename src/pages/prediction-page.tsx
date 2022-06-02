@@ -6,7 +6,8 @@ import { ExplainationButton } from 'components/PredectionComponents/Explaination
 import {toast, ToastContainer} from 'react-toastify';
 import {useSelector} from 'react-redux';
 import PredictionList from '../components/PredectionComponents/PredictionList';
-import {getSavedValue} from '@/hooks/useLocalStorage';
+import useLocalStorage, {getSavedValue} from '@/hooks/useLocalStorage';
+import {router} from 'next/client';
 
 export interface PredictionObjekt {
   idx: number
@@ -26,6 +27,12 @@ export default function PredictionPage() {
   const [predictionDataLink, setPredictionDataLink] = useState('');
   const [predictionItems, setPredictionItems] = useState();
   const [loading, setLoading] = useState(false);
+
+  // for explainations
+  const [modelNameShap, setModelNameShap] = useLocalStorage('modelName', '');
+  const [shapValues, setShapValues] = useLocalStorage('shapValues', []);
+  const [selectedExample, setExampleState] = useLocalStorage('example', '2');
+  const [backgroundValue, setBackgroundValue] = useLocalStorage('backgroundValue', '20');
 
   const linkInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const enteredLink = event.target.value;
@@ -63,6 +70,42 @@ export default function PredictionPage() {
       await setPredictionItems(predictionString);
       await setLoading(false);
       await console.log(predictionString);
+    }
+  };
+
+  const makeExplainationFetch = async () => {
+    // POST request using fetch with async/await
+    const dataLink = getSavedValue('DataLink', '');
+    const labelsColumnName = getSavedValue('LabelsColumnName', '');
+    setModelNameShap(modelName);
+
+    const requestShapOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        modelName: modelName,
+        predictionDataLink: predictionDataLink,
+        dataLink: dataLink,
+        labelName: labelsColumnName
+      })
+    };
+
+    if (predictionDataLink == '') {
+      toast.error(' Please enter a data link!');
+      window.scrollTo({
+        top: 100,
+        behavior: 'smooth',
+      });
+    }
+    else {
+      setLoading(true);
+      const shapValuesData = await fetch('http://127.0.0.1:8000/shap/prediction_shap_values', requestShapOptions);
+      const shapValuesDatajs = await  shapValuesData.json();
+      await setShapValues(shapValuesDatajs);
+      await setExampleState('2');
+      await setBackgroundValue('20');
+      await setLoading(false);
+      router.push('/shap/explaination');
     }
   };
 
