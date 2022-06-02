@@ -63,11 +63,15 @@ export default function ConfigureExplainer () {
         const modelInformation = await fetch('http://127.0.0.1:8000/shap/model_list', requestArgs);
         const modelInformationJs = await  modelInformation.json();
 
-        setModelList(modelInformationJs.modelList);
-        modelList = modelInformationJs.modelList;
-
-        if (modelInformationJs.modelList.length !== 0) {
-            updateModelInformation(modelName)
+        if (modelInformation.status === 503) {
+            toast.error('No models were found');
+        } else {
+            setModelList(modelInformationJs.modelList);
+            modelList = modelInformationJs.modelList;
+    
+            if (modelInformationJs.modelList.length !== 0) {
+                updateModelInformation(modelName)
+            }
         }
     }
 
