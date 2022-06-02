@@ -96,7 +96,6 @@ export default function ExplainationPlot () {
                     featuresString: explainsationInformation.modelFeaturesString,
                     labelToPredict: explainsationInformation.labelToPredict,
                     loss: explainsationInformation.loss,
-                    accuracy: explainsationInformation.accuracy,
                     median: explainsationInformation.median,
                     mean: explainsationInformation.mean
                 });
@@ -118,7 +117,6 @@ export default function ExplainationPlot () {
         featuresString: "",
         labelToPredict: "",
         loss: "",
-        accuracy: "",
         median: "",
         mean: ""
     }
@@ -182,7 +180,6 @@ export default function ExplainationPlot () {
                             <Card.Text> Features: {explainerInformation.featuresString} </Card.Text>
                             <Card.Text> Label To Predict: {explainerInformation.labelToPredict} </Card.Text>
                             <Card.Text> Loss: {explainerInformation.loss} </Card.Text>
-                            <Card.Text> Accuracy: {explainerInformation.accuracy} </Card.Text>
                             <Card.Text> Median: {explainerInformation.median} </Card.Text>
                             <Card.Text> Mean: {explainerInformation.mean} </Card.Text>
 

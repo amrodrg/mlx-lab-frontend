@@ -15,6 +15,7 @@ import Card from 'react-bootstrap/Card'
 import {useRouter} from 'next/router';
 import Spinner from 'react-bootstrap/Spinner'
 import 'react-toastify/dist/ReactToastify.css';
+import {getSavedValue} from '@/hooks/useLocalStorage';
 
 interface IFeatures {
     featuresData:{name:string}[];
@@ -44,7 +45,6 @@ export default function ConfigureExplainer () {
             labelName: modelInformationJs.labelName,
             dataLink: modelInformationJs.dataLink,
             loss: modelInformationJs.loss,
-            accuracy: modelInformationJs.accuracy,
             median: modelInformationJs.median,
             mean: modelInformationJs.mean
         });
@@ -67,9 +67,6 @@ export default function ConfigureExplainer () {
         modelList = modelInformationJs.modelList;
 
         if (modelInformationJs.modelList.length !== 0) {
-            setModelName(modelInformationJs.modelList[0])
-            modelName = modelInformationJs.modelList[0]
-
             updateModelInformation(modelName)
         }
     }
@@ -94,7 +91,6 @@ export default function ConfigureExplainer () {
         labelName: "",
         dataLink: "",
         loss: "",
-        accuracy: "",
         median: "",
         mean: ""
     }
@@ -105,9 +101,9 @@ export default function ConfigureExplainer () {
     // choose an example (instance)
     const [selectedExample, setExampleState] = useLocalStorage('example', "2");
 
-    let [modelName, setModelName] = useLocalStorage("modelName", "")
-    let [dataLink, setDataLink] = useLocalStorage("dataLink", "")
-    let [labelName, setLabelName] = useLocalStorage("labelName", "")
+    const [modelName, setModelName] = useLocalStorage("modelName", "");
+    let [dataLink, setDataLink] = useLocalStorage("dataLink", "");
+    let [labelName, setLabelName] = useLocalStorage("labelName", "");
 
     // modal
     const [showTestdataModal, setShowTestdataModal] = useState(false);
@@ -140,6 +136,7 @@ export default function ConfigureExplainer () {
 
     const modelNameInputHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const enterdName = event.target.value;
+        setModelName(enterdName);
         updateModelInformation(enterdName);
     } 
 
@@ -203,8 +200,6 @@ export default function ConfigureExplainer () {
     function SummaryCheckComponent(props) {
         const exist = props.exist;
 
-        console.log("summary exists? : ", exist)
-
         if (exist === false) {
             return (
                 <div>
@@ -239,6 +234,7 @@ export default function ConfigureExplainer () {
     }
 
     const exlpaineModel = async () => {
+
         const requestArgs = {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
@@ -286,7 +282,8 @@ export default function ConfigureExplainer () {
                 <Row className={styles["shap_row_offset"]}>
                     <Col>
                         <Form.Select className={styles['configure_component_style']}
-                                     onChange={modelNameInputHandler}>
+                                     onChange={modelNameInputHandler}
+                                     value={modelName}>
                             {modelList.map((item) => {
                                 return (
                                     <option value={item}>{item}</option>
@@ -318,7 +315,6 @@ export default function ConfigureExplainer () {
                             </Card.Text>
 
                             <Card.Text> Loss: {modelInformation.loss} </Card.Text>
-                            <Card.Text> Accuracy: {modelInformation.accuracy} </Card.Text>
                             <Card.Text> Median: {modelInformation.median} </Card.Text>
                             <Card.Text> Mean: {modelInformation.mean} </Card.Text>
                         </Card>

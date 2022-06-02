@@ -280,6 +280,7 @@ const ShapIndex = () => {
                   height={100}
                 />
               </p>
+
             </Accordion.Body>
           </Accordion.Item>
 
