@@ -32,6 +32,7 @@ export default function PredictionPage() {
   const [loading, setLoading] = useState(false);
 
   // for explainations
+  const [modelNameShap, setModelNameShap] = useLocalStorage("modelName", "");
   const [shapValues, setShapValues] = useLocalStorage('shapValues', []);
   const [selectedExample, setExampleState] = useLocalStorage('example', "2");
   const [backgroundValue, setBackgroundValue] = useLocalStorage('backgroundValue', "20");
@@ -78,6 +79,7 @@ export default function PredictionPage() {
     // POST request using fetch with async/await
     const dataLink = getSavedValue('DataLink', '');
     const labelsColumnName = getSavedValue('LabelsColumnName', '');
+    setModelNameShap(modelName);
 
     const requestShapOptions = {
       method: 'POST',
