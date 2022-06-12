@@ -44,7 +44,7 @@ export default function ClassificationPage() {
   // The testing percentage of data set
   const [testingPercentage, setTestingPercentage] = useLocalStorage('TestPercentage', 20);
   // The Lost function
-  const [lossFunc, setLossFunc] = useLocalStorage('LossFunc', 'categorical_crossentropy');
+  const [lossFunc, setLossFunc] = useLocalStorage('ClassLossFunc', 'categorical_crossentropy');
   // Training Optimizer
   const [optimizer, setOptimizer] = useLocalStorage('Optimizer', 'adam');
   // Learning Rate

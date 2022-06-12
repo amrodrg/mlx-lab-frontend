@@ -26,7 +26,7 @@ export default function RegressionEvaluationPage() {
     const labelsColumnName = getSavedValue('LabelsColumnName', '');
     const testPercentage = getSavedValue('TestPercentage', 20);
     const doNormalize = getSavedValue('DoNormalize', false);
-    const lossFunc = getSavedValue('LossFunc', 'mae');
+    const lossFunc = getSavedValue('RegLossFunc', 'mae');
     return {dataLink, labelsColumnName, testPercentage, doNormalize, lossFunc};
   };
 
