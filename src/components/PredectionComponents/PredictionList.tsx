@@ -1,6 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import React, {FC} from 'react';
-import {PredictionObjekt} from '../../pages/prediction-page';
+import {PredictionObjekt} from '../../pages/regression-prediction-page';
 import {GridLoader, RiseLoader} from 'react-spinners';
 
 type Props = {

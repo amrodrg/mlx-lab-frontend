@@ -13,7 +13,7 @@ export interface PredictionObjekt {
   prediction: number
 }
 
-export default function PredictionPage() {
+export default function RegressionPredictionPage() {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
