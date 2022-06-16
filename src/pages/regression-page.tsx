@@ -44,7 +44,7 @@ export default function RegressionPage() {
   // The testing percentage of data set
   const [testingPercentage, setTestingPercentage] = useLocalStorage('TestPercentage', 20);
   // The Lost function
-  const [lossFunc, setLossFunc] = useLocalStorage('LossFunc', 'mae');
+  const [lossFunc, setLossFunc] = useLocalStorage('RegLossFunc', 'mae');
   // Training Optimizer
   const [optimizer, setOptimizer] = useLocalStorage('Optimizer', 'adam');
   // Learning Rate

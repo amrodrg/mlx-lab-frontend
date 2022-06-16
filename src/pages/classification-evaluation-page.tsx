@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import EvaluationHeader from '../components/EvaluationSectionComponents/EvaluationHeader';
-import RegressionEvaluationSection from '../pages-sections/RegressionEvaluationSection';
 import {useSelector} from 'react-redux';
 import {getSavedValue} from '@/hooks/useLocalStorage';
 import ClassificationEvaluationSection from '../pages-sections/ClassificationEvaluationSection';
@@ -32,7 +31,7 @@ export default function ClassificationEvaluationPage() {
     const labelsColumnName = getSavedValue('LabelsColumnName', '');
     const testPercentage = getSavedValue('TestPercentage', 20);
     const doNormalize = getSavedValue('DoNormalize', false);
-    const lossFunc = getSavedValue('LossFunc', 'sparse_categorical_crossentropy');
+    const lossFunc = getSavedValue('ClassLossFunc', 'sparse_categorical_crossentropy');
     return {dataLink, labelsColumnName, testPercentage, doNormalize, lossFunc};
   };
 

@@ -63,8 +63,8 @@ const ClassificationEvaluationSection: FC<Props> = ({loss, mae, accuracy, median
       </div>
 
       <div className="flex flex-row justify-around p-5">
-        <Link href="/prediction-page"><button className="bg-primary-purple hover:ring-4 hover:ring-white hover:shadow-2xl text-white w-2/5 py-2 rounded-full font-bold text-lg">TRY IT</button></Link>
-        <Link href="/regression-page"><button className="bg-main-blue hover:ring-4 hover:ring-white hover:shadow-2xl text-white w-2/5 py-2 rounded-full font-bold text-lg">SAVE TO USE LATER</button></Link>
+        <Link href="/classification-prediction-page"><button className="bg-primary-purple hover:ring-4 hover:ring-white hover:shadow-2xl text-white w-2/5 py-2 rounded-full font-bold text-lg">TRY IT</button></Link>
+        <Link href="/classification-page"><button className="bg-main-blue hover:ring-4 hover:ring-white hover:shadow-2xl text-white w-2/5 py-2 rounded-full font-bold text-lg">SAVE TO USE LATER</button></Link>
       </div>
     </div>
   );
